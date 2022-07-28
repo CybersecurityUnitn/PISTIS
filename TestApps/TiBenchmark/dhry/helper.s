@@ -1,0 +1,93 @@
+
+
+
+	.global memcpy
+	.type memcpy, @function
+memcpy:
+	nop
+	nop
+	pushm.a	#1,	r10	;20-bit words
+
+	pushm.a	#1,	r8	;20-bit words
+
+	mova	r12,	r8	;
+	mova	r14,	r15	;
+
+	clr.b	r12		;
+
+.L3:
+	cmpa	r12,	r15	;
+	jnz	.L8     	;abs 0x4c3a
+
+	mova	r8,	r12	;
+
+	popm.a	#1,	r8	;20-bit words
+
+	popm.a	#1,	r10	;20-bit words
+
+	reta			;
+
+.L8:
+	mova	r8,	r14	;
+	adda	r12,	r14	;
+
+	mova	r13,	r10	;
+	adda	r12,	r10	;
+
+	mov.b	@r10,	0(r14)	;
+	adda	#1,	r12	;
+
+	jmp .L3	;mova	#19502,	r0	;0x04c2e
+
+
+
+	.global strcmp
+	.type strcmp, @function
+strcmp:
+	nop
+	nop
+	mova	r13,	r14	;
+
+.L12:
+	mov.b	@r12+,	r13	;
+
+	mov.b	@r14+,	r15	;
+
+	cmp	#0,	r13	;r3 As==00
+	jz	.L16      	;abs 0x4c5c
+
+	cmp	r15,	r13	;
+	jz	.L12     	;abs 0x4c50
+
+.L16:
+	mov	r13,	r12	;
+	sub	r15,	r12	;
+
+	reta			;
+
+
+
+	.global memset
+	.type memset, @function
+memset:
+	nop
+	nop
+	pushm.a	#1,	r10	;20-bit words
+
+	adda	r12,	r14	;
+
+	mova	r12,	r10	;
+
+.L20:
+	cmpa	r14,	r10	;
+	jnz	.L23      	;abs 0x4c70
+
+	popm.a	#1,	r10	;20-bit words
+
+	reta			;
+
+.L23:
+	adda	#1,	r10	;
+
+	mov.b	r13,	-1(r10)	; 0xffff
+	jmp .L20	;mova	#19560,	r0	;0x04c68

@@ -1,0 +1,1777 @@
+In archive libcrt.a.small:
+
+crt_bss.o:     file format elf32-msp430
+
+
+Disassembly of section .crt_0100init_bss:
+
+00000000 <__crt0_init_bss>:
+   0:	8c 00 00 00 	mova	#0,	r12	;
+
+00000004 <.Loc.76.1>:
+   4:	0d 43       	clr	r13		;
+
+00000006 <.Loc.77.1>:
+   6:	8e 00 00 00 	mova	#0,	r14	;
+
+0000000a <.Loc.79.1>:
+   a:	0f 43       	clr	r15		;
+
+0000000c <.Loc.81.1>:
+   c:	b0 12 00 00 	call	#0		;
+
+00000010 <.Loc.82.1>:
+  10:	03 43       	nop			
+
+00000012 <.Loc.83.1>:
+  12:	03 43       	nop			
+
+Disassembly of section .debug_line:
+
+00000000 <.Ldebug_line_start>:
+   0:	00 00       	beq			
+   2:	00 00       	beq			
+   4:	03 00       	mova	@r0,	r3	;
+   6:	46 00       	rrcm.a	#1,	r6	;
+	...
+
+0000000a <L0^A>:
+   a:	01 01       	mova	@r1,	r1	;
+   c:	fb 0e       	suba	r14,	r11	;
+   e:	0d 00       	mova	@r0,	r13	;
+  10:	01 01       	mova	@r1,	r1	;
+  12:	01 01       	mova	@r1,	r1	;
+  14:	00 00       	beq			
+  16:	00 01       	bra	@r1		;
+  18:	00 00       	beq			
+  1a:	01 2e       	jc	$-1020   	;abs 0xfffffffffffffc1e
+  1c:	2e 2f       	jc	$-418    	;abs 0xfffffffffffffe7a
+  1e:	2e 2e       	jc	$-930    	;abs 0xfffffffffffffc7c
+  20:	2f 2e       	jc	$-928    	;abs 0xfffffffffffffc80
+  22:	2e 2f       	jc	$-418    	;abs 0xfffffffffffffe80
+  24:	2e 2e       	jc	$-930    	;abs 0xfffffffffffffc82
+  26:	2f 2e       	jc	$-928    	;abs 0xfffffffffffffc86
+  28:	2e 2f       	jc	$-418    	;abs 0xfffffffffffffe86
+  2a:	2e 2e       	jc	$-930    	;abs 0xfffffffffffffc88
+  2c:	2f 2e       	jc	$-928    	;abs 0xfffffffffffffc8c
+  2e:	2e 2f       	jc	$-418    	;abs 0xfffffffffffffe8c
+  30:	67 63       	addc.b	#2,	r7	;r3 As==10
+  32:	63 2f       	jc	$-312    	;abs 0xfffffffffffffefa
+  34:	6c 69       	addc.b	@r9,	r12	;
+  36:	62 67       	addc.b	@r7,	r2	;
+  38:	6c 6f       	addc.b	@r15,	r12	;
+  3a:	
+Disassembly of section .debug_line.crt_0100init_bss:
+
+00000000 <.debug_line.crt_0100init_bss>:
+   0:	00 05       	bra	@r5		;
+   2:	02 00       	mova	@r0,	r2	;
+   4:	00 00       	beq			
+   6:	00 03       	bra	@r3		;
+   8:	ca 00       	mova	r0,	r10	;
+   a:	01 03       	mova	@r3,	r1	;
+   c:	01 09       	mova	@r9,	r1	;
+   e:	00 00       	beq			
+  10:	01 03       	mova	@r3,	r1	;
+  12:	01 09       	mova	@r9,	r1	;
+  14:	00 00       	beq			
+  16:	01 03       	mova	@r3,	r1	;
+  18:	02 09       	mova	@r9,	r2	;
+  1a:	00 00       	beq			
+  1c:	01 03       	mova	@r3,	r1	;
+  1e:	02 09       	mova	@r9,	r2	;
+  20:	00 00       	beq			
+  22:	01 03       	mova	@r3,	r1	;
+  24:	01 09       	mova	@r9,	r1	;
+  26:	00 00       	beq			
+  28:	01 03       	mova	@r3,	r1	;
+  2a:	01 09       	mova	@r9,	r1	;
+  2c:	00 00       	beq			
+  2e:	01 09       	mova	@r9,	r1	;
+  30:	02 00       	mova	@r0,	r2	;
+  32:	00 01       	bra	@r1		;
+  34:	
+Disassembly of section .debug_info:
+
+00000000 <.Ldebug_line_start>:
+   0:	00 00       	beq			
+   2:	00 00       	beq			
+   4:	02 00       	mova	@r0,	r2	;
+   6:	00 00       	beq			
+   8:	00 00       	beq			
+   a:	04 01       	mova	@r1,	r4	;
+	...
+  24:	01 80       	sub	r0,	r1	;
+
+Disassembly of section .debug_abbrev:
+
+00000000 <.debug_abbrev>:
+   0:	01 11       	rra	r1		;
+   2:	00 10       	rrc	r0		;
+   4:	06 11       	rra	r6		;
+   6:	01 12       	push	r1		;
+   8:	01 03       	mova	@r3,	r1	;
+   a:	0e 1b 0e 25 	rpt #15 { jzx.?	$+542    	;abs 0x22a, Warning: reserved use of A/L and B/W bits detected
+   e:	0e 13       	reti			;return from interupt
+  10:	05 00       	mova	@r0,	r5	;
+	...
+
+Disassembly of section .debug_aranges:
+
+00000000 <.Ldebug_line_start>:
+   0:	00 00       	beq			
+   2:	00 00       	beq			
+   4:	02 00       	mova	@r0,	r2	;
+   6:	00 00       	beq			
+   8:	00 00       	beq			
+   a:	04 00       	mova	@r0,	r4	;
+	...
+  14:	14 00       	mova	@r0+,	r4	;
+	...
+
+Disassembly of section .debug_str:
+
+00000000 <.debug_str>:
+   0:	2e 2e       	jc	$-930    	;abs 0xfffffffffffffc5e
+   2:	2f 2e       	jc	$-928    	;abs 0xfffffffffffffc62
+   4:	2e 2f       	jc	$-418    	;abs 0xfffffffffffffe62
+   6:	2e 2e       	jc	$-930    	;abs 0xfffffffffffffc64
+   8:	2f 2e       	jc	$-928    	;abs 0xfffffffffffffc68
+   a:	2e 2f       	jc	$-418    	;abs 0xfffffffffffffe68
+   c:	2e 2e       	jc	$-930    	;abs 0xfffffffffffffc6a
+   e:	2f 2e       	jc	$-928    	;abs 0xfffffffffffffc6e
+  10:	2e 2f       	jc	$-418    	;abs 0xfffffffffffffe6e
+  12:	2e 2e       	jc	$-930    	;abs 0xfffffffffffffc70
+  14:	2f 67       	addc	@r7,	r15	;
+  16:	
+Disassembly of section .MSP430.attributes:
+
+00000000 <.MSP430.attributes>:
+   0:	41 16       	popm.a	#5,	r5	;20-bit words
+   2:	00 00       	beq			
+   4:	00 6d       	addc	r13,	r0	;
+   6:	
+crt_high_bss.o:     file format elf32-msp430
+
+
+Disassembly of section .crt_0200init_highbss:
+
+00000000 <__crt0_init_highbss>:
+   0:	8c 00 00 00 	mova	#0,	r12	;
+
+00000004 <.Loc.97.1>:
+   4:	0d 43       	clr	r13		;
+
+00000006 <.Loc.98.1>:
+   6:	8e 00 00 00 	mova	#0,	r14	;
+
+0000000a <.Loc.101.1>:
+   a:	0e 93       	cmp	#0,	r14	;r3 As==00
+
+0000000c <.Loc.102.1>:
+   c:	00 24       	jz	$+2      	;abs 0xe
+
+0000000e <.Loc.103.1>:
+   e:	b0 12 00 00 	call	#0		;
+
+00000012 <.Loc.104.1>:
+  12:	03 43       	nop			
+
+00000014 <.Loc.105.1>:
+  14:	03 43       	nop			
+
+Disassembly of section .debug_line:
+
+00000000 <.Ldebug_line_start>:
+   0:	00 00       	beq			
+   2:	00 00       	beq			
+   4:	03 00       	mova	@r0,	r3	;
+   6:	46 00       	rrcm.a	#1,	r6	;
+	...
+
+0000000a <L0^A>:
+   a:	01 01       	mova	@r1,	r1	;
+   c:	fb 0e       	suba	r14,	r11	;
+   e:	0d 00       	mova	@r0,	r13	;
+  10:	01 01       	mova	@r1,	r1	;
+  12:	01 01       	mova	@r1,	r1	;
+  14:	00 00       	beq			
+  16:	00 01       	bra	@r1		;
+  18:	00 00       	beq			
+  1a:	01 2e       	jc	$-1020   	;abs 0xfffffffffffffc1e
+  1c:	2e 2f       	jc	$-418    	;abs 0xfffffffffffffe7a
+  1e:	2e 2e       	jc	$-930    	;abs 0xfffffffffffffc7c
+  20:	2f 2e       	jc	$-928    	;abs 0xfffffffffffffc80
+  22:	2e 2f       	jc	$-418    	;abs 0xfffffffffffffe80
+  24:	2e 2e       	jc	$-930    	;abs 0xfffffffffffffc82
+  26:	2f 2e       	jc	$-928    	;abs 0xfffffffffffffc86
+  28:	2e 2f       	jc	$-418    	;abs 0xfffffffffffffe86
+  2a:	2e 2e       	jc	$-930    	;abs 0xfffffffffffffc88
+  2c:	2f 2e       	jc	$-928    	;abs 0xfffffffffffffc8c
+  2e:	2e 2f       	jc	$-418    	;abs 0xfffffffffffffe8c
+  30:	67 63       	addc.b	#2,	r7	;r3 As==10
+  32:	63 2f       	jc	$-312    	;abs 0xfffffffffffffefa
+  34:	6c 69       	addc.b	@r9,	r12	;
+  36:	62 67       	addc.b	@r7,	r2	;
+  38:	6c 6f       	addc.b	@r15,	r12	;
+  3a:	
+Disassembly of section .debug_line.crt_0200init_highbss:
+
+00000000 <.debug_line.crt_0200init_highbss>:
+   0:	00 05       	bra	@r5		;
+   2:	02 00       	mova	@r0,	r2	;
+   4:	00 00       	beq			
+   6:	00 03       	bra	@r3		;
+   8:	df 00       	cmpa	r0,	r15	;
+   a:	01 03       	mova	@r3,	r1	;
+   c:	01 09       	mova	@r9,	r1	;
+   e:	00 00       	beq			
+  10:	01 03       	mova	@r3,	r1	;
+  12:	01 09       	mova	@r9,	r1	;
+  14:	00 00       	beq			
+  16:	01 03       	mova	@r3,	r1	;
+  18:	03 09       	mova	@r9,	r3	;
+  1a:	00 00       	beq			
+  1c:	01 03       	mova	@r3,	r1	;
+  1e:	01 09       	mova	@r9,	r1	;
+  20:	00 00       	beq			
+  22:	01 03       	mova	@r3,	r1	;
+  24:	01 09       	mova	@r9,	r1	;
+  26:	00 00       	beq			
+  28:	01 03       	mova	@r3,	r1	;
+  2a:	01 09       	mova	@r9,	r1	;
+  2c:	00 00       	beq			
+  2e:	01 03       	mova	@r3,	r1	;
+  30:	01 09       	mova	@r9,	r1	;
+  32:	00 00       	beq			
+  34:	01 09       	mova	@r9,	r1	;
+  36:	02 00       	mova	@r0,	r2	;
+  38:	00 01       	bra	@r1		;
+  3a:	
+Disassembly of section .debug_info:
+
+00000000 <.Ldebug_line_start>:
+   0:	00 00       	beq			
+   2:	00 00       	beq			
+   4:	02 00       	mova	@r0,	r2	;
+   6:	00 00       	beq			
+   8:	00 00       	beq			
+   a:	04 01       	mova	@r1,	r4	;
+	...
+  24:	01 80       	sub	r0,	r1	;
+
+Disassembly of section .debug_abbrev:
+
+00000000 <.debug_abbrev>:
+   0:	01 11       	rra	r1		;
+   2:	00 10       	rrc	r0		;
+   4:	06 11       	rra	r6		;
+   6:	01 12       	push	r1		;
+   8:	01 03       	mova	@r3,	r1	;
+   a:	0e 1b 0e 25 	rpt #15 { jzx.?	$+542    	;abs 0x22a, Warning: reserved use of A/L and B/W bits detected
+   e:	0e 13       	reti			;return from interupt
+  10:	05 00       	mova	@r0,	r5	;
+	...
+
+Disassembly of section .debug_aranges:
+
+00000000 <.Ldebug_line_start>:
+   0:	00 00       	beq			
+   2:	00 00       	beq			
+   4:	02 00       	mova	@r0,	r2	;
+   6:	00 00       	beq			
+   8:	00 00       	beq			
+   a:	04 00       	mova	@r0,	r4	;
+	...
+  14:	16 00       	mova	@r0+,	r6	;
+	...
+
+Disassembly of section .debug_str:
+
+00000000 <.debug_str>:
+   0:	2e 2e       	jc	$-930    	;abs 0xfffffffffffffc5e
+   2:	2f 2e       	jc	$-928    	;abs 0xfffffffffffffc62
+   4:	2e 2f       	jc	$-418    	;abs 0xfffffffffffffe62
+   6:	2e 2e       	jc	$-930    	;abs 0xfffffffffffffc64
+   8:	2f 2e       	jc	$-928    	;abs 0xfffffffffffffc68
+   a:	2e 2f       	jc	$-418    	;abs 0xfffffffffffffe68
+   c:	2e 2e       	jc	$-930    	;abs 0xfffffffffffffc6a
+   e:	2f 2e       	jc	$-928    	;abs 0xfffffffffffffc6e
+  10:	2e 2f       	jc	$-418    	;abs 0xfffffffffffffe6e
+  12:	2e 2e       	jc	$-930    	;abs 0xfffffffffffffc70
+  14:	2f 67       	addc	@r7,	r15	;
+  16:	
+Disassembly of section .MSP430.attributes:
+
+00000000 <.MSP430.attributes>:
+   0:	41 16       	popm.a	#5,	r5	;20-bit words
+   2:	00 00       	beq			
+   4:	00 6d       	addc	r13,	r0	;
+   6:	
+crt_movedata.o:     file format elf32-msp430
+
+
+Disassembly of section .crt_0300movedata:
+
+00000000 <__crt0_movedata>:
+   0:	8c 00 00 00 	mova	#0,	r12	;
+
+00000004 <.Loc.120.1>:
+   4:	8d 00 00 00 	mova	#0,	r13	;
+
+00000008 <.Loc.123.1>:
+   8:	dd 0c       	cmpa	r12,	r13	;
+
+0000000a <.Loc.124.1>:
+   a:	00 24       	jz	$+2      	;abs 0xc
+
+0000000c <.Loc.126.1>:
+   c:	8e 00 00 00 	mova	#0,	r14	;
+
+00000010 <.Loc.128.1>:
+  10:	b0 12 00 00 	call	#0		;
+
+00000014 <.Loc.129.1>:
+  14:	03 43       	nop			
+
+00000016 <.Loc.130.1>:
+  16:	03 43       	nop			
+
+Disassembly of section .debug_line:
+
+00000000 <.Ldebug_line_start>:
+   0:	00 00       	beq			
+   2:	00 00       	beq			
+   4:	03 00       	mova	@r0,	r3	;
+   6:	46 00       	rrcm.a	#1,	r6	;
+	...
+
+0000000a <L0^A>:
+   a:	01 01       	mova	@r1,	r1	;
+   c:	fb 0e       	suba	r14,	r11	;
+   e:	0d 00       	mova	@r0,	r13	;
+  10:	01 01       	mova	@r1,	r1	;
+  12:	01 01       	mova	@r1,	r1	;
+  14:	00 00       	beq			
+  16:	00 01       	bra	@r1		;
+  18:	00 00       	beq			
+  1a:	01 2e       	jc	$-1020   	;abs 0xfffffffffffffc1e
+  1c:	2e 2f       	jc	$-418    	;abs 0xfffffffffffffe7a
+  1e:	2e 2e       	jc	$-930    	;abs 0xfffffffffffffc7c
+  20:	2f 2e       	jc	$-928    	;abs 0xfffffffffffffc80
+  22:	2e 2f       	jc	$-418    	;abs 0xfffffffffffffe80
+  24:	2e 2e       	jc	$-930    	;abs 0xfffffffffffffc82
+  26:	2f 2e       	jc	$-928    	;abs 0xfffffffffffffc86
+  28:	2e 2f       	jc	$-418    	;abs 0xfffffffffffffe86
+  2a:	2e 2e       	jc	$-930    	;abs 0xfffffffffffffc88
+  2c:	2f 2e       	jc	$-928    	;abs 0xfffffffffffffc8c
+  2e:	2e 2f       	jc	$-418    	;abs 0xfffffffffffffe8c
+  30:	67 63       	addc.b	#2,	r7	;r3 As==10
+  32:	63 2f       	jc	$-312    	;abs 0xfffffffffffffefa
+  34:	6c 69       	addc.b	@r9,	r12	;
+  36:	62 67       	addc.b	@r7,	r2	;
+  38:	6c 6f       	addc.b	@r15,	r12	;
+  3a:	
+Disassembly of section .debug_line.crt_0300movedata:
+
+00000000 <.debug_line.crt_0300movedata>:
+   0:	00 05       	bra	@r5		;
+   2:	02 00       	mova	@r0,	r2	;
+   4:	00 00       	beq			
+   6:	00 03       	bra	@r3		;
+   8:	f6 00       	suba	r0,	r6	;
+   a:	01 03       	mova	@r3,	r1	;
+   c:	01 09       	mova	@r9,	r1	;
+   e:	00 00       	beq			
+  10:	01 03       	mova	@r3,	r1	;
+  12:	03 09       	mova	@r9,	r3	;
+  14:	00 00       	beq			
+  16:	01 03       	mova	@r3,	r1	;
+  18:	01 09       	mova	@r9,	r1	;
+  1a:	00 00       	beq			
+  1c:	01 03       	mova	@r3,	r1	;
+  1e:	02 09       	mova	@r9,	r2	;
+  20:	00 00       	beq			
+  22:	01 03       	mova	@r3,	r1	;
+  24:	02 09       	mova	@r9,	r2	;
+  26:	00 00       	beq			
+  28:	01 03       	mova	@r3,	r1	;
+  2a:	01 09       	mova	@r9,	r1	;
+  2c:	00 00       	beq			
+  2e:	01 03       	mova	@r3,	r1	;
+  30:	01 09       	mova	@r9,	r1	;
+  32:	00 00       	beq			
+  34:	01 09       	mova	@r9,	r1	;
+  36:	02 00       	mova	@r0,	r2	;
+  38:	00 01       	bra	@r1		;
+  3a:	
+Disassembly of section .debug_info:
+
+00000000 <.Ldebug_line_start>:
+   0:	00 00       	beq			
+   2:	00 00       	beq			
+   4:	02 00       	mova	@r0,	r2	;
+   6:	00 00       	beq			
+   8:	00 00       	beq			
+   a:	04 01       	mova	@r1,	r4	;
+	...
+  24:	01 80       	sub	r0,	r1	;
+
+Disassembly of section .debug_abbrev:
+
+00000000 <.debug_abbrev>:
+   0:	01 11       	rra	r1		;
+   2:	00 10       	rrc	r0		;
+   4:	06 11       	rra	r6		;
+   6:	01 12       	push	r1		;
+   8:	01 03       	mova	@r3,	r1	;
+   a:	0e 1b 0e 25 	rpt #15 { jzx.?	$+542    	;abs 0x22a, Warning: reserved use of A/L and B/W bits detected
+   e:	0e 13       	reti			;return from interupt
+  10:	05 00       	mova	@r0,	r5	;
+	...
+
+Disassembly of section .debug_aranges:
+
+00000000 <.Ldebug_line_start>:
+   0:	00 00       	beq			
+   2:	00 00       	beq			
+   4:	02 00       	mova	@r0,	r2	;
+   6:	00 00       	beq			
+   8:	00 00       	beq			
+   a:	04 00       	mova	@r0,	r4	;
+	...
+  14:	18 00       	mova	@r0+,	r8	;
+	...
+
+Disassembly of section .debug_str:
+
+00000000 <.debug_str>:
+   0:	2e 2e       	jc	$-930    	;abs 0xfffffffffffffc5e
+   2:	2f 2e       	jc	$-928    	;abs 0xfffffffffffffc62
+   4:	2e 2f       	jc	$-418    	;abs 0xfffffffffffffe62
+   6:	2e 2e       	jc	$-930    	;abs 0xfffffffffffffc64
+   8:	2f 2e       	jc	$-928    	;abs 0xfffffffffffffc68
+   a:	2e 2f       	jc	$-418    	;abs 0xfffffffffffffe68
+   c:	2e 2e       	jc	$-930    	;abs 0xfffffffffffffc6a
+   e:	2f 2e       	jc	$-928    	;abs 0xfffffffffffffc6e
+  10:	2e 2f       	jc	$-418    	;abs 0xfffffffffffffe6e
+  12:	2e 2e       	jc	$-930    	;abs 0xfffffffffffffc70
+  14:	2f 67       	addc	@r7,	r15	;
+  16:	
+Disassembly of section .MSP430.attributes:
+
+00000000 <.MSP430.attributes>:
+   0:	41 16       	popm.a	#5,	r5	;20-bit words
+   2:	00 00       	beq			
+   4:	00 6d       	addc	r13,	r0	;
+   6:	
+crt_move_highdata.o:     file format elf32-msp430
+
+
+Disassembly of section .crt_0400move_highdata:
+
+00000000 <__crt0_move_highdata>:
+   0:	3e 40 00 00 	mov	#0,	r14	;
+
+00000004 <.Loc.151.1>:
+   4:	0e 93       	cmp	#0,	r14	;r3 As==00
+
+00000006 <.Loc.152.1>:
+   6:	00 24       	jz	$+2      	;abs 0x8
+
+00000008 <.Loc.155.1>:
+   8:	40 18 82 93 	cmpx.w	#0,	&0x00000;r3 As==00
+   c:	00 00 
+
+0000000e <.Loc.156.1>:
+   e:	00 24       	jz	$+2      	;abs 0x10
+
+00000010 <.Loc.158.1>:
+  10:	8c 00 00 00 	mova	#0,	r12	;
+
+00000014 <.Loc.159.1>:
+  14:	8d 00 00 00 	mova	#0,	r13	;
+
+00000018 <.Loc.160.1>:
+  18:	00 3c       	jmp	$+2      	;abs 0x1a
+
+0000001a <.L1^B1>:
+  1a:	40 18 92 43 	movx.w	#1,	&0x00000;r3 As==01
+  1e:	00 00 
+
+00000020 <.Loc.164.1>:
+  20:	8c 00 00 00 	mova	#0,	r12	;
+
+00000024 <.Loc.165.1>:
+  24:	8d 00 00 00 	mova	#0,	r13	;
+
+00000028 <.L2^B1>:
+  28:	3e 40 00 00 	mov	#0,	r14	;
+
+0000002c <.Loc.170.1>:
+  2c:	b0 12 00 00 	call	#0		;
+
+00000030 <.Loc.171.1>:
+  30:	03 43       	nop			
+
+00000032 <.Loc.172.1>:
+  32:	03 43       	nop			
+
+Disassembly of section .debug_line:
+
+00000000 <.Ldebug_line_start>:
+   0:	00 00       	beq			
+   2:	00 00       	beq			
+   4:	03 00       	mova	@r0,	r3	;
+   6:	46 00       	rrcm.a	#1,	r6	;
+	...
+
+0000000a <L0^A>:
+   a:	01 01       	mova	@r1,	r1	;
+   c:	fb 0e       	suba	r14,	r11	;
+   e:	0d 00       	mova	@r0,	r13	;
+  10:	01 01       	mova	@r1,	r1	;
+  12:	01 01       	mova	@r1,	r1	;
+  14:	00 00       	beq			
+  16:	00 01       	bra	@r1		;
+  18:	00 00       	beq			
+  1a:	01 2e       	jc	$-1020   	;abs 0xfffffffffffffc1e
+  1c:	2e 2f       	jc	$-418    	;abs 0xfffffffffffffe7a
+  1e:	2e 2e       	jc	$-930    	;abs 0xfffffffffffffc7c
+  20:	2f 2e       	jc	$-928    	;abs 0xfffffffffffffc80
+  22:	2e 2f       	jc	$-418    	;abs 0xfffffffffffffe80
+  24:	2e 2e       	jc	$-930    	;abs 0xfffffffffffffc82
+  26:	2f 2e       	jc	$-928    	;abs 0xfffffffffffffc86
+  28:	2e 2f       	jc	$-418    	;abs 0xfffffffffffffe86
+  2a:	2e 2e       	jc	$-930    	;abs 0xfffffffffffffc88
+  2c:	2f 2e       	jc	$-928    	;abs 0xfffffffffffffc8c
+  2e:	2e 2f       	jc	$-418    	;abs 0xfffffffffffffe8c
+  30:	67 63       	addc.b	#2,	r7	;r3 As==10
+  32:	63 2f       	jc	$-312    	;abs 0xfffffffffffffefa
+  34:	6c 69       	addc.b	@r9,	r12	;
+  36:	62 67       	addc.b	@r7,	r2	;
+  38:	6c 6f       	addc.b	@r15,	r12	;
+  3a:	
+Disassembly of section .debug_line.crt_0400move_highdata:
+
+00000000 <.debug_line.crt_0400move_highdata>:
+   0:	00 05       	bra	@r5		;
+   2:	02 00       	mova	@r0,	r2	;
+   4:	00 00       	beq			
+   6:	00 03       	bra	@r3		;
+   8:	95 01 01 03 	cmpa	#66305,	r5	;0x10301
+   c:	01 09       	mova	@r9,	r1	;
+   e:	00 00       	beq			
+  10:	01 03       	mova	@r3,	r1	;
+  12:	01 09       	mova	@r9,	r1	;
+  14:	00 00       	beq			
+  16:	01 03       	mova	@r3,	r1	;
+  18:	03 09       	mova	@r9,	r3	;
+  1a:	00 00       	beq			
+  1c:	01 03       	mova	@r3,	r1	;
+  1e:	01 09       	mova	@r9,	r1	;
+  20:	00 00       	beq			
+  22:	01 03       	mova	@r3,	r1	;
+  24:	02 09       	mova	@r9,	r2	;
+  26:	00 00       	beq			
+  28:	01 03       	mova	@r3,	r1	;
+  2a:	01 09       	mova	@r9,	r1	;
+  2c:	00 00       	beq			
+  2e:	01 03       	mova	@r3,	r1	;
+  30:	01 09       	mova	@r9,	r1	;
+  32:	00 00       	beq			
+  34:	01 03       	mova	@r3,	r1	;
+  36:	03 09       	mova	@r9,	r3	;
+  38:	00 00       	beq			
+  3a:	01 03       	mova	@r3,	r1	;
+  3c:	01 09       	mova	@r9,	r1	;
+  3e:	00 00       	beq			
+  40:	01 03       	mova	@r3,	r1	;
+  42:	01 09       	mova	@r9,	r1	;
+  44:	00 00       	beq			
+  46:	01 03       	mova	@r3,	r1	;
+  48:	03 09       	mova	@r9,	r3	;
+  4a:	00 00       	beq			
+  4c:	01 03       	mova	@r3,	r1	;
+  4e:	02 09       	mova	@r9,	r2	;
+  50:	00 00       	beq			
+  52:	01 03       	mova	@r3,	r1	;
+  54:	01 09       	mova	@r9,	r1	;
+  56:	00 00       	beq			
+  58:	01 03       	mova	@r3,	r1	;
+  5a:	01 09       	mova	@r9,	r1	;
+  5c:	00 00       	beq			
+  5e:	01 09       	mova	@r9,	r1	;
+  60:	02 00       	mova	@r0,	r2	;
+  62:	00 01       	bra	@r1		;
+  64:	
+Disassembly of section .debug_info:
+
+00000000 <.Ldebug_line_start>:
+   0:	00 00       	beq			
+   2:	00 00       	beq			
+   4:	02 00       	mova	@r0,	r2	;
+   6:	00 00       	beq			
+   8:	00 00       	beq			
+   a:	04 01       	mova	@r1,	r4	;
+	...
+  24:	01 80       	sub	r0,	r1	;
+
+Disassembly of section .debug_abbrev:
+
+00000000 <.debug_abbrev>:
+   0:	01 11       	rra	r1		;
+   2:	00 10       	rrc	r0		;
+   4:	06 11       	rra	r6		;
+   6:	01 12       	push	r1		;
+   8:	01 03       	mova	@r3,	r1	;
+   a:	0e 1b 0e 25 	rpt #15 { jzx.?	$+542    	;abs 0x22a, Warning: reserved use of A/L and B/W bits detected
+   e:	0e 13       	reti			;return from interupt
+  10:	05 00       	mova	@r0,	r5	;
+	...
+
+Disassembly of section .debug_aranges:
+
+00000000 <.Ldebug_line_start>:
+   0:	00 00       	beq			
+   2:	00 00       	beq			
+   4:	02 00       	mova	@r0,	r2	;
+   6:	00 00       	beq			
+   8:	00 00       	beq			
+   a:	04 00       	mova	@r0,	r4	;
+	...
+  14:	34 00 00 00 	mova	0(r0),	r4	;
+	...
+
+Disassembly of section .debug_str:
+
+00000000 <.debug_str>:
+   0:	2e 2e       	jc	$-930    	;abs 0xfffffffffffffc5e
+   2:	2f 2e       	jc	$-928    	;abs 0xfffffffffffffc62
+   4:	2e 2f       	jc	$-418    	;abs 0xfffffffffffffe62
+   6:	2e 2e       	jc	$-930    	;abs 0xfffffffffffffc64
+   8:	2f 2e       	jc	$-928    	;abs 0xfffffffffffffc68
+   a:	2e 2f       	jc	$-418    	;abs 0xfffffffffffffe68
+   c:	2e 2e       	jc	$-930    	;abs 0xfffffffffffffc6a
+   e:	2f 2e       	jc	$-928    	;abs 0xfffffffffffffc6e
+  10:	2e 2f       	jc	$-418    	;abs 0xfffffffffffffe6e
+  12:	2e 2e       	jc	$-930    	;abs 0xfffffffffffffc70
+  14:	2f 67       	addc	@r7,	r15	;
+  16:	
+Disassembly of section .MSP430.attributes:
+
+00000000 <.MSP430.attributes>:
+   0:	41 16       	popm.a	#5,	r5	;20-bit words
+   2:	00 00       	beq			
+   4:	00 6d       	addc	r13,	r0	;
+   6:	
+crt_main.o:     file format elf32-msp430
+
+
+Disassembly of section .crt_0800callmain:
+
+00000000 <__crt0_callmain>:
+   0:	0c 43       	clr	r12		;
+
+00000002 <.Loc.272.1>:
+   2:	b0 12 00 00 	call	#0		;
+
+00000006 <.Loc.273.1>:
+   6:	03 43       	nop			
+
+00000008 <.Loc.274.1>:
+   8:	03 43       	nop			
+
+Disassembly of section .debug_line:
+
+00000000 <.Ldebug_line_start>:
+   0:	00 00       	beq			
+   2:	00 00       	beq			
+   4:	03 00       	mova	@r0,	r3	;
+   6:	46 00       	rrcm.a	#1,	r6	;
+	...
+
+0000000a <L0^A>:
+   a:	01 01       	mova	@r1,	r1	;
+   c:	fb 0e       	suba	r14,	r11	;
+   e:	0d 00       	mova	@r0,	r13	;
+  10:	01 01       	mova	@r1,	r1	;
+  12:	01 01       	mova	@r1,	r1	;
+  14:	00 00       	beq			
+  16:	00 01       	bra	@r1		;
+  18:	00 00       	beq			
+  1a:	01 2e       	jc	$-1020   	;abs 0xfffffffffffffc1e
+  1c:	2e 2f       	jc	$-418    	;abs 0xfffffffffffffe7a
+  1e:	2e 2e       	jc	$-930    	;abs 0xfffffffffffffc7c
+  20:	2f 2e       	jc	$-928    	;abs 0xfffffffffffffc80
+  22:	2e 2f       	jc	$-418    	;abs 0xfffffffffffffe80
+  24:	2e 2e       	jc	$-930    	;abs 0xfffffffffffffc82
+  26:	2f 2e       	jc	$-928    	;abs 0xfffffffffffffc86
+  28:	2e 2f       	jc	$-418    	;abs 0xfffffffffffffe86
+  2a:	2e 2e       	jc	$-930    	;abs 0xfffffffffffffc88
+  2c:	2f 2e       	jc	$-928    	;abs 0xfffffffffffffc8c
+  2e:	2e 2f       	jc	$-418    	;abs 0xfffffffffffffe8c
+  30:	67 63       	addc.b	#2,	r7	;r3 As==10
+  32:	63 2f       	jc	$-312    	;abs 0xfffffffffffffefa
+  34:	6c 69       	addc.b	@r9,	r12	;
+  36:	62 67       	addc.b	@r7,	r2	;
+  38:	6c 6f       	addc.b	@r15,	r12	;
+  3a:	
+Disassembly of section .debug_line.crt_0800callmain:
+
+00000000 <.debug_line.crt_0800callmain>:
+   0:	00 05       	bra	@r5		;
+   2:	02 00       	mova	@r0,	r2	;
+   4:	00 00       	beq			
+   6:	00 03       	bra	@r3		;
+   8:	8e 02 01 03 	mova	#131841,r14	;0x20301
+   c:	01 09       	mova	@r9,	r1	;
+   e:	00 00       	beq			
+  10:	01 03       	mova	@r3,	r1	;
+  12:	01 09       	mova	@r9,	r1	;
+  14:	00 00       	beq			
+  16:	01 03       	mova	@r3,	r1	;
+  18:	01 09       	mova	@r9,	r1	;
+  1a:	00 00       	beq			
+  1c:	01 09       	mova	@r9,	r1	;
+  1e:	02 00       	mova	@r0,	r2	;
+  20:	00 01       	bra	@r1		;
+  22:	
+Disassembly of section .debug_info:
+
+00000000 <.Ldebug_line_start>:
+   0:	00 00       	beq			
+   2:	00 00       	beq			
+   4:	02 00       	mova	@r0,	r2	;
+   6:	00 00       	beq			
+   8:	00 00       	beq			
+   a:	04 01       	mova	@r1,	r4	;
+	...
+  24:	01 80       	sub	r0,	r1	;
+
+Disassembly of section .debug_abbrev:
+
+00000000 <.debug_abbrev>:
+   0:	01 11       	rra	r1		;
+   2:	00 10       	rrc	r0		;
+   4:	06 11       	rra	r6		;
+   6:	01 12       	push	r1		;
+   8:	01 03       	mova	@r3,	r1	;
+   a:	0e 1b 0e 25 	rpt #15 { jzx.?	$+542    	;abs 0x22a, Warning: reserved use of A/L and B/W bits detected
+   e:	0e 13       	reti			;return from interupt
+  10:	05 00       	mova	@r0,	r5	;
+	...
+
+Disassembly of section .debug_aranges:
+
+00000000 <.Ldebug_line_start>:
+   0:	00 00       	beq			
+   2:	00 00       	beq			
+   4:	02 00       	mova	@r0,	r2	;
+   6:	00 00       	beq			
+   8:	00 00       	beq			
+   a:	04 00       	mova	@r0,	r4	;
+	...
+  14:	0a 00       	mova	@r0,	r10	;
+	...
+
+Disassembly of section .debug_str:
+
+00000000 <.debug_str>:
+   0:	2e 2e       	jc	$-930    	;abs 0xfffffffffffffc5e
+   2:	2f 2e       	jc	$-928    	;abs 0xfffffffffffffc62
+   4:	2e 2f       	jc	$-418    	;abs 0xfffffffffffffe62
+   6:	2e 2e       	jc	$-930    	;abs 0xfffffffffffffc64
+   8:	2f 2e       	jc	$-928    	;abs 0xfffffffffffffc68
+   a:	2e 2f       	jc	$-418    	;abs 0xfffffffffffffe68
+   c:	2e 2e       	jc	$-930    	;abs 0xfffffffffffffc6a
+   e:	2f 2e       	jc	$-928    	;abs 0xfffffffffffffc6e
+  10:	2e 2f       	jc	$-418    	;abs 0xfffffffffffffe6e
+  12:	2e 2e       	jc	$-930    	;abs 0xfffffffffffffc70
+  14:	2f 67       	addc	@r7,	r15	;
+  16:	
+Disassembly of section .MSP430.attributes:
+
+00000000 <.MSP430.attributes>:
+   0:	41 16       	popm.a	#5,	r5	;20-bit words
+   2:	00 00       	beq			
+   4:	00 6d       	addc	r13,	r0	;
+   6:	
+crt_callexit.o:     file format elf32-msp430
+
+
+Disassembly of section .crt_0900callexit:
+
+00000000 <__crt0_callexit>:
+   0:	b0 12 00 00 	call	#0		;
+
+00000004 <.Loc.288.1>:
+   4:	03 43       	nop			
+
+00000006 <.Loc.289.1>:
+   6:	03 43       	nop			
+
+Disassembly of section .debug_line:
+
+00000000 <.Ldebug_line_start>:
+   0:	00 00       	beq			
+   2:	00 00       	beq			
+   4:	03 00       	mova	@r0,	r3	;
+   6:	46 00       	rrcm.a	#1,	r6	;
+	...
+
+0000000a <L0^A>:
+   a:	01 01       	mova	@r1,	r1	;
+   c:	fb 0e       	suba	r14,	r11	;
+   e:	0d 00       	mova	@r0,	r13	;
+  10:	01 01       	mova	@r1,	r1	;
+  12:	01 01       	mova	@r1,	r1	;
+  14:	00 00       	beq			
+  16:	00 01       	bra	@r1		;
+  18:	00 00       	beq			
+  1a:	01 2e       	jc	$-1020   	;abs 0xfffffffffffffc1e
+  1c:	2e 2f       	jc	$-418    	;abs 0xfffffffffffffe7a
+  1e:	2e 2e       	jc	$-930    	;abs 0xfffffffffffffc7c
+  20:	2f 2e       	jc	$-928    	;abs 0xfffffffffffffc80
+  22:	2e 2f       	jc	$-418    	;abs 0xfffffffffffffe80
+  24:	2e 2e       	jc	$-930    	;abs 0xfffffffffffffc82
+  26:	2f 2e       	jc	$-928    	;abs 0xfffffffffffffc86
+  28:	2e 2f       	jc	$-418    	;abs 0xfffffffffffffe86
+  2a:	2e 2e       	jc	$-930    	;abs 0xfffffffffffffc88
+  2c:	2f 2e       	jc	$-928    	;abs 0xfffffffffffffc8c
+  2e:	2e 2f       	jc	$-418    	;abs 0xfffffffffffffe8c
+  30:	67 63       	addc.b	#2,	r7	;r3 As==10
+  32:	63 2f       	jc	$-312    	;abs 0xfffffffffffffefa
+  34:	6c 69       	addc.b	@r9,	r12	;
+  36:	62 67       	addc.b	@r7,	r2	;
+  38:	6c 6f       	addc.b	@r15,	r12	;
+  3a:	
+Disassembly of section .debug_line.crt_0900callexit:
+
+00000000 <.debug_line.crt_0900callexit>:
+   0:	00 05       	bra	@r5		;
+   2:	02 00       	mova	@r0,	r2	;
+   4:	00 00       	beq			
+   6:	00 03       	bra	@r3		;
+   8:	9e 02 01 03 	cmpa	#131841,r14	;0x20301
+   c:	01 09       	mova	@r9,	r1	;
+   e:	00 00       	beq			
+  10:	01 03       	mova	@r3,	r1	;
+  12:	01 09       	mova	@r9,	r1	;
+  14:	00 00       	beq			
+  16:	01 09       	mova	@r9,	r1	;
+  18:	02 00       	mova	@r0,	r2	;
+  1a:	00 01       	bra	@r1		;
+  1c:	
+Disassembly of section .debug_info:
+
+00000000 <.Ldebug_line_start>:
+   0:	00 00       	beq			
+   2:	00 00       	beq			
+   4:	02 00       	mova	@r0,	r2	;
+   6:	00 00       	beq			
+   8:	00 00       	beq			
+   a:	04 01       	mova	@r1,	r4	;
+	...
+  24:	01 80       	sub	r0,	r1	;
+
+Disassembly of section .debug_abbrev:
+
+00000000 <.debug_abbrev>:
+   0:	01 11       	rra	r1		;
+   2:	00 10       	rrc	r0		;
+   4:	06 11       	rra	r6		;
+   6:	01 12       	push	r1		;
+   8:	01 03       	mova	@r3,	r1	;
+   a:	0e 1b 0e 25 	rpt #15 { jzx.?	$+542    	;abs 0x22a, Warning: reserved use of A/L and B/W bits detected
+   e:	0e 13       	reti			;return from interupt
+  10:	05 00       	mova	@r0,	r5	;
+	...
+
+Disassembly of section .debug_aranges:
+
+00000000 <.Ldebug_line_start>:
+   0:	00 00       	beq			
+   2:	00 00       	beq			
+   4:	02 00       	mova	@r0,	r2	;
+   6:	00 00       	beq			
+   8:	00 00       	beq			
+   a:	04 00       	mova	@r0,	r4	;
+	...
+  14:	08 00       	mova	@r0,	r8	;
+	...
+
+Disassembly of section .debug_str:
+
+00000000 <.debug_str>:
+   0:	2e 2e       	jc	$-930    	;abs 0xfffffffffffffc5e
+   2:	2f 2e       	jc	$-928    	;abs 0xfffffffffffffc62
+   4:	2e 2f       	jc	$-418    	;abs 0xfffffffffffffe62
+   6:	2e 2e       	jc	$-930    	;abs 0xfffffffffffffc64
+   8:	2f 2e       	jc	$-928    	;abs 0xfffffffffffffc68
+   a:	2e 2f       	jc	$-418    	;abs 0xfffffffffffffe68
+   c:	2e 2e       	jc	$-930    	;abs 0xfffffffffffffc6a
+   e:	2f 2e       	jc	$-928    	;abs 0xfffffffffffffc6e
+  10:	2e 2f       	jc	$-418    	;abs 0xfffffffffffffe6e
+  12:	2e 2e       	jc	$-930    	;abs 0xfffffffffffffc70
+  14:	2f 67       	addc	@r7,	r15	;
+  16:	
+Disassembly of section .MSP430.attributes:
+
+00000000 <.MSP430.attributes>:
+   0:	41 16       	popm.a	#5,	r5	;20-bit words
+   2:	00 00       	beq			
+   4:	00 6d       	addc	r13,	r0	;
+   6:	
+crt_run_init_array.o:     file format elf32-msp430
+
+
+Disassembly of section .crt_0600run_init_array:
+
+00000000 <__crt0_run_init_array>:
+   0:	84 00 00 00 	mova	#0,	r4	;
+
+00000004 <.Loc.199.1>:
+   4:	85 00 00 00 	mova	#0,	r5	;
+
+00000008 <.Loc.200.1>:
+   8:	86 00 04 00 	mova	#4,	r6	;
+
+0000000c <.Loc.201.1>:
+   c:	b0 12 00 00 	call	#0		;
+
+00000010 <.Loc.202.1>:
+  10:	03 43       	nop			
+
+00000012 <.Loc.203.1>:
+  12:	03 43       	nop			
+
+Disassembly of section .debug_line:
+
+00000000 <.Ldebug_line_start>:
+   0:	00 00       	beq			
+   2:	00 00       	beq			
+   4:	03 00       	mova	@r0,	r3	;
+   6:	46 00       	rrcm.a	#1,	r6	;
+	...
+
+0000000a <L0^A>:
+   a:	01 01       	mova	@r1,	r1	;
+   c:	fb 0e       	suba	r14,	r11	;
+   e:	0d 00       	mova	@r0,	r13	;
+  10:	01 01       	mova	@r1,	r1	;
+  12:	01 01       	mova	@r1,	r1	;
+  14:	00 00       	beq			
+  16:	00 01       	bra	@r1		;
+  18:	00 00       	beq			
+  1a:	01 2e       	jc	$-1020   	;abs 0xfffffffffffffc1e
+  1c:	2e 2f       	jc	$-418    	;abs 0xfffffffffffffe7a
+  1e:	2e 2e       	jc	$-930    	;abs 0xfffffffffffffc7c
+  20:	2f 2e       	jc	$-928    	;abs 0xfffffffffffffc80
+  22:	2e 2f       	jc	$-418    	;abs 0xfffffffffffffe80
+  24:	2e 2e       	jc	$-930    	;abs 0xfffffffffffffc82
+  26:	2f 2e       	jc	$-928    	;abs 0xfffffffffffffc86
+  28:	2e 2f       	jc	$-418    	;abs 0xfffffffffffffe86
+  2a:	2e 2e       	jc	$-930    	;abs 0xfffffffffffffc88
+  2c:	2f 2e       	jc	$-928    	;abs 0xfffffffffffffc8c
+  2e:	2e 2f       	jc	$-418    	;abs 0xfffffffffffffe8c
+  30:	67 63       	addc.b	#2,	r7	;r3 As==10
+  32:	63 2f       	jc	$-312    	;abs 0xfffffffffffffefa
+  34:	6c 69       	addc.b	@r9,	r12	;
+  36:	62 67       	addc.b	@r7,	r2	;
+  38:	6c 6f       	addc.b	@r15,	r12	;
+  3a:	
+Disassembly of section .debug_line.crt_0600run_init_array:
+
+00000000 <.debug_line.crt_0600run_init_array>:
+   0:	00 05       	bra	@r5		;
+   2:	02 00       	mova	@r0,	r2	;
+   4:	00 00       	beq			
+   6:	00 03       	bra	@r3		;
+   8:	c5 01       	mova	r1,	r5	;
+   a:	01 03       	mova	@r3,	r1	;
+   c:	01 09       	mova	@r9,	r1	;
+   e:	00 00       	beq			
+  10:	01 03       	mova	@r3,	r1	;
+  12:	01 09       	mova	@r9,	r1	;
+  14:	00 00       	beq			
+  16:	01 03       	mova	@r3,	r1	;
+  18:	01 09       	mova	@r9,	r1	;
+  1a:	00 00       	beq			
+  1c:	01 03       	mova	@r3,	r1	;
+  1e:	01 09       	mova	@r9,	r1	;
+  20:	00 00       	beq			
+  22:	01 03       	mova	@r3,	r1	;
+  24:	01 09       	mova	@r9,	r1	;
+  26:	00 00       	beq			
+  28:	01 09       	mova	@r9,	r1	;
+  2a:	02 00       	mova	@r0,	r2	;
+  2c:	00 01       	bra	@r1		;
+  2e:	
+Disassembly of section .debug_info:
+
+00000000 <.Ldebug_line_start>:
+   0:	00 00       	beq			
+   2:	00 00       	beq			
+   4:	02 00       	mova	@r0,	r2	;
+   6:	00 00       	beq			
+   8:	00 00       	beq			
+   a:	04 01       	mova	@r1,	r4	;
+	...
+  24:	01 80       	sub	r0,	r1	;
+
+Disassembly of section .debug_abbrev:
+
+00000000 <.debug_abbrev>:
+   0:	01 11       	rra	r1		;
+   2:	00 10       	rrc	r0		;
+   4:	06 11       	rra	r6		;
+   6:	01 12       	push	r1		;
+   8:	01 03       	mova	@r3,	r1	;
+   a:	0e 1b 0e 25 	rpt #15 { jzx.?	$+542    	;abs 0x22a, Warning: reserved use of A/L and B/W bits detected
+   e:	0e 13       	reti			;return from interupt
+  10:	05 00       	mova	@r0,	r5	;
+	...
+
+Disassembly of section .debug_aranges:
+
+00000000 <.Ldebug_line_start>:
+   0:	00 00       	beq			
+   2:	00 00       	beq			
+   4:	02 00       	mova	@r0,	r2	;
+   6:	00 00       	beq			
+   8:	00 00       	beq			
+   a:	04 00       	mova	@r0,	r4	;
+	...
+  14:	14 00       	mova	@r0+,	r4	;
+	...
+
+Disassembly of section .debug_str:
+
+00000000 <.debug_str>:
+   0:	2e 2e       	jc	$-930    	;abs 0xfffffffffffffc5e
+   2:	2f 2e       	jc	$-928    	;abs 0xfffffffffffffc62
+   4:	2e 2f       	jc	$-418    	;abs 0xfffffffffffffe62
+   6:	2e 2e       	jc	$-930    	;abs 0xfffffffffffffc64
+   8:	2f 2e       	jc	$-928    	;abs 0xfffffffffffffc68
+   a:	2e 2f       	jc	$-418    	;abs 0xfffffffffffffe68
+   c:	2e 2e       	jc	$-930    	;abs 0xfffffffffffffc6a
+   e:	2f 2e       	jc	$-928    	;abs 0xfffffffffffffc6e
+  10:	2e 2f       	jc	$-418    	;abs 0xfffffffffffffe6e
+  12:	2e 2e       	jc	$-930    	;abs 0xfffffffffffffc70
+  14:	2f 67       	addc	@r7,	r15	;
+  16:	
+Disassembly of section .MSP430.attributes:
+
+00000000 <.MSP430.attributes>:
+   0:	41 16       	popm.a	#5,	r5	;20-bit words
+   2:	00 00       	beq			
+   4:	00 6d       	addc	r13,	r0	;
+   6:	
+crt_run_preinit_array.o:     file format elf32-msp430
+
+
+Disassembly of section .crt_0500run_preinit_array:
+
+00000000 <__crt0_run_preinit_array>:
+   0:	84 00 00 00 	mova	#0,	r4	;
+
+00000004 <.Loc.184.1>:
+   4:	85 00 00 00 	mova	#0,	r5	;
+
+00000008 <.Loc.185.1>:
+   8:	86 00 04 00 	mova	#4,	r6	;
+
+0000000c <.Loc.186.1>:
+   c:	b0 12 00 00 	call	#0		;
+
+00000010 <.Loc.187.1>:
+  10:	03 43       	nop			
+
+00000012 <.Loc.188.1>:
+  12:	03 43       	nop			
+
+Disassembly of section .debug_line:
+
+00000000 <.Ldebug_line_start>:
+   0:	00 00       	beq			
+   2:	00 00       	beq			
+   4:	03 00       	mova	@r0,	r3	;
+   6:	46 00       	rrcm.a	#1,	r6	;
+	...
+
+0000000a <L0^A>:
+   a:	01 01       	mova	@r1,	r1	;
+   c:	fb 0e       	suba	r14,	r11	;
+   e:	0d 00       	mova	@r0,	r13	;
+  10:	01 01       	mova	@r1,	r1	;
+  12:	01 01       	mova	@r1,	r1	;
+  14:	00 00       	beq			
+  16:	00 01       	bra	@r1		;
+  18:	00 00       	beq			
+  1a:	01 2e       	jc	$-1020   	;abs 0xfffffffffffffc1e
+  1c:	2e 2f       	jc	$-418    	;abs 0xfffffffffffffe7a
+  1e:	2e 2e       	jc	$-930    	;abs 0xfffffffffffffc7c
+  20:	2f 2e       	jc	$-928    	;abs 0xfffffffffffffc80
+  22:	2e 2f       	jc	$-418    	;abs 0xfffffffffffffe80
+  24:	2e 2e       	jc	$-930    	;abs 0xfffffffffffffc82
+  26:	2f 2e       	jc	$-928    	;abs 0xfffffffffffffc86
+  28:	2e 2f       	jc	$-418    	;abs 0xfffffffffffffe86
+  2a:	2e 2e       	jc	$-930    	;abs 0xfffffffffffffc88
+  2c:	2f 2e       	jc	$-928    	;abs 0xfffffffffffffc8c
+  2e:	2e 2f       	jc	$-418    	;abs 0xfffffffffffffe8c
+  30:	67 63       	addc.b	#2,	r7	;r3 As==10
+  32:	63 2f       	jc	$-312    	;abs 0xfffffffffffffefa
+  34:	6c 69       	addc.b	@r9,	r12	;
+  36:	62 67       	addc.b	@r7,	r2	;
+  38:	6c 6f       	addc.b	@r15,	r12	;
+  3a:	
+Disassembly of section .debug_line.crt_0500run_preinit_array:
+
+00000000 <.debug_line.crt_0500run_preinit_array>:
+   0:	00 05       	bra	@r5		;
+   2:	02 00       	mova	@r0,	r2	;
+   4:	00 00       	beq			
+   6:	00 03       	bra	@r3		;
+   8:	b6 01 01 03 	suba	#66305,	r6	;0x10301
+   c:	01 09       	mova	@r9,	r1	;
+   e:	00 00       	beq			
+  10:	01 03       	mova	@r3,	r1	;
+  12:	01 09       	mova	@r9,	r1	;
+  14:	00 00       	beq			
+  16:	01 03       	mova	@r3,	r1	;
+  18:	01 09       	mova	@r9,	r1	;
+  1a:	00 00       	beq			
+  1c:	01 03       	mova	@r3,	r1	;
+  1e:	01 09       	mova	@r9,	r1	;
+  20:	00 00       	beq			
+  22:	01 03       	mova	@r3,	r1	;
+  24:	01 09       	mova	@r9,	r1	;
+  26:	00 00       	beq			
+  28:	01 09       	mova	@r9,	r1	;
+  2a:	02 00       	mova	@r0,	r2	;
+  2c:	00 01       	bra	@r1		;
+  2e:	
+Disassembly of section .debug_info:
+
+00000000 <.Ldebug_line_start>:
+   0:	00 00       	beq			
+   2:	00 00       	beq			
+   4:	02 00       	mova	@r0,	r2	;
+   6:	00 00       	beq			
+   8:	00 00       	beq			
+   a:	04 01       	mova	@r1,	r4	;
+	...
+  24:	01 80       	sub	r0,	r1	;
+
+Disassembly of section .debug_abbrev:
+
+00000000 <.debug_abbrev>:
+   0:	01 11       	rra	r1		;
+   2:	00 10       	rrc	r0		;
+   4:	06 11       	rra	r6		;
+   6:	01 12       	push	r1		;
+   8:	01 03       	mova	@r3,	r1	;
+   a:	0e 1b 0e 25 	rpt #15 { jzx.?	$+542    	;abs 0x22a, Warning: reserved use of A/L and B/W bits detected
+   e:	0e 13       	reti			;return from interupt
+  10:	05 00       	mova	@r0,	r5	;
+	...
+
+Disassembly of section .debug_aranges:
+
+00000000 <.Ldebug_line_start>:
+   0:	00 00       	beq			
+   2:	00 00       	beq			
+   4:	02 00       	mova	@r0,	r2	;
+   6:	00 00       	beq			
+   8:	00 00       	beq			
+   a:	04 00       	mova	@r0,	r4	;
+	...
+  14:	14 00       	mova	@r0+,	r4	;
+	...
+
+Disassembly of section .debug_str:
+
+00000000 <.debug_str>:
+   0:	2e 2e       	jc	$-930    	;abs 0xfffffffffffffc5e
+   2:	2f 2e       	jc	$-928    	;abs 0xfffffffffffffc62
+   4:	2e 2f       	jc	$-418    	;abs 0xfffffffffffffe62
+   6:	2e 2e       	jc	$-930    	;abs 0xfffffffffffffc64
+   8:	2f 2e       	jc	$-928    	;abs 0xfffffffffffffc68
+   a:	2e 2f       	jc	$-418    	;abs 0xfffffffffffffe68
+   c:	2e 2e       	jc	$-930    	;abs 0xfffffffffffffc6a
+   e:	2f 2e       	jc	$-928    	;abs 0xfffffffffffffc6e
+  10:	2e 2f       	jc	$-418    	;abs 0xfffffffffffffe6e
+  12:	2e 2e       	jc	$-930    	;abs 0xfffffffffffffc70
+  14:	2f 67       	addc	@r7,	r15	;
+  16:	
+Disassembly of section .MSP430.attributes:
+
+00000000 <.MSP430.attributes>:
+   0:	41 16       	popm.a	#5,	r5	;20-bit words
+   2:	00 00       	beq			
+   4:	00 6d       	addc	r13,	r0	;
+   6:	
+crt_run_fini_array.o:     file format elf32-msp430
+
+
+Disassembly of section .crt_1000run_fini_array:
+
+00000000 <__crt0_run_fini_array>:
+   0:	84 00 00 00 	mova	#0,	r4	;
+
+00000004 <.Loc.303.1>:
+   4:	85 00 00 00 	mova	#0,	r5	;
+
+00000008 <.Loc.304.1>:
+   8:	86 0f fc ff 	mova	#-4,	r6	;0xfffffffc
+
+0000000c <.Loc.305.1>:
+   c:	b0 12 00 00 	call	#0		;
+
+00000010 <.Loc.306.1>:
+  10:	03 43       	nop			
+
+00000012 <.Loc.307.1>:
+  12:	03 43       	nop			
+
+Disassembly of section .debug_line:
+
+00000000 <.Ldebug_line_start>:
+   0:	00 00       	beq			
+   2:	00 00       	beq			
+   4:	03 00       	mova	@r0,	r3	;
+   6:	46 00       	rrcm.a	#1,	r6	;
+	...
+
+0000000a <L0^A>:
+   a:	01 01       	mova	@r1,	r1	;
+   c:	fb 0e       	suba	r14,	r11	;
+   e:	0d 00       	mova	@r0,	r13	;
+  10:	01 01       	mova	@r1,	r1	;
+  12:	01 01       	mova	@r1,	r1	;
+  14:	00 00       	beq			
+  16:	00 01       	bra	@r1		;
+  18:	00 00       	beq			
+  1a:	01 2e       	jc	$-1020   	;abs 0xfffffffffffffc1e
+  1c:	2e 2f       	jc	$-418    	;abs 0xfffffffffffffe7a
+  1e:	2e 2e       	jc	$-930    	;abs 0xfffffffffffffc7c
+  20:	2f 2e       	jc	$-928    	;abs 0xfffffffffffffc80
+  22:	2e 2f       	jc	$-418    	;abs 0xfffffffffffffe80
+  24:	2e 2e       	jc	$-930    	;abs 0xfffffffffffffc82
+  26:	2f 2e       	jc	$-928    	;abs 0xfffffffffffffc86
+  28:	2e 2f       	jc	$-418    	;abs 0xfffffffffffffe86
+  2a:	2e 2e       	jc	$-930    	;abs 0xfffffffffffffc88
+  2c:	2f 2e       	jc	$-928    	;abs 0xfffffffffffffc8c
+  2e:	2e 2f       	jc	$-418    	;abs 0xfffffffffffffe8c
+  30:	67 63       	addc.b	#2,	r7	;r3 As==10
+  32:	63 2f       	jc	$-312    	;abs 0xfffffffffffffefa
+  34:	6c 69       	addc.b	@r9,	r12	;
+  36:	62 67       	addc.b	@r7,	r2	;
+  38:	6c 6f       	addc.b	@r15,	r12	;
+  3a:	
+Disassembly of section .debug_line.crt_1000run_fini_array:
+
+00000000 <.debug_line.crt_1000run_fini_array>:
+   0:	00 05       	bra	@r5		;
+   2:	02 00       	mova	@r0,	r2	;
+   4:	00 00       	beq			
+   6:	00 03       	bra	@r3		;
+   8:	ad 02 01 03 	adda	#131841,r13	;0x20301
+   c:	01 09       	mova	@r9,	r1	;
+   e:	00 00       	beq			
+  10:	01 03       	mova	@r3,	r1	;
+  12:	01 09       	mova	@r9,	r1	;
+  14:	00 00       	beq			
+  16:	01 03       	mova	@r3,	r1	;
+  18:	01 09       	mova	@r9,	r1	;
+  1a:	00 00       	beq			
+  1c:	01 03       	mova	@r3,	r1	;
+  1e:	01 09       	mova	@r9,	r1	;
+  20:	00 00       	beq			
+  22:	01 03       	mova	@r3,	r1	;
+  24:	01 09       	mova	@r9,	r1	;
+  26:	00 00       	beq			
+  28:	01 09       	mova	@r9,	r1	;
+  2a:	02 00       	mova	@r0,	r2	;
+  2c:	00 01       	bra	@r1		;
+  2e:	
+Disassembly of section .debug_info:
+
+00000000 <.Ldebug_line_start>:
+   0:	00 00       	beq			
+   2:	00 00       	beq			
+   4:	02 00       	mova	@r0,	r2	;
+   6:	00 00       	beq			
+   8:	00 00       	beq			
+   a:	04 01       	mova	@r1,	r4	;
+	...
+  24:	01 80       	sub	r0,	r1	;
+
+Disassembly of section .debug_abbrev:
+
+00000000 <.debug_abbrev>:
+   0:	01 11       	rra	r1		;
+   2:	00 10       	rrc	r0		;
+   4:	06 11       	rra	r6		;
+   6:	01 12       	push	r1		;
+   8:	01 03       	mova	@r3,	r1	;
+   a:	0e 1b 0e 25 	rpt #15 { jzx.?	$+542    	;abs 0x22a, Warning: reserved use of A/L and B/W bits detected
+   e:	0e 13       	reti			;return from interupt
+  10:	05 00       	mova	@r0,	r5	;
+	...
+
+Disassembly of section .debug_aranges:
+
+00000000 <.Ldebug_line_start>:
+   0:	00 00       	beq			
+   2:	00 00       	beq			
+   4:	02 00       	mova	@r0,	r2	;
+   6:	00 00       	beq			
+   8:	00 00       	beq			
+   a:	04 00       	mova	@r0,	r4	;
+	...
+  14:	14 00       	mova	@r0+,	r4	;
+	...
+
+Disassembly of section .debug_str:
+
+00000000 <.debug_str>:
+   0:	2e 2e       	jc	$-930    	;abs 0xfffffffffffffc5e
+   2:	2f 2e       	jc	$-928    	;abs 0xfffffffffffffc62
+   4:	2e 2f       	jc	$-418    	;abs 0xfffffffffffffe62
+   6:	2e 2e       	jc	$-930    	;abs 0xfffffffffffffc64
+   8:	2f 2e       	jc	$-928    	;abs 0xfffffffffffffc68
+   a:	2e 2f       	jc	$-418    	;abs 0xfffffffffffffe68
+   c:	2e 2e       	jc	$-930    	;abs 0xfffffffffffffc6a
+   e:	2f 2e       	jc	$-928    	;abs 0xfffffffffffffc6e
+  10:	2e 2f       	jc	$-418    	;abs 0xfffffffffffffe6e
+  12:	2e 2e       	jc	$-930    	;abs 0xfffffffffffffc70
+  14:	2f 67       	addc	@r7,	r15	;
+  16:	
+Disassembly of section .MSP430.attributes:
+
+00000000 <.MSP430.attributes>:
+   0:	41 16       	popm.a	#5,	r5	;20-bit words
+   2:	00 00       	beq			
+   4:	00 6d       	addc	r13,	r0	;
+   6:	
+crt_run_array.o:     file format elf32-msp430
+
+
+Disassembly of section .crt_1100run_array:
+
+00000000 <__crt0_run_array>:
+   0:	d5 04       	cmpa	r4,	r5	;
+
+00000002 <.Loc.318.1>:
+   2:	00 24       	jz	$+2      	;abs 0x4
+
+00000004 <.Loc.319.1>:
+   4:	07 04       	mova	@r4,	r7	;
+
+00000006 <.Loc.320.1>:
+   6:	e4 06       	adda	r6,	r4	;
+
+00000008 <.Loc.321.1>:
+   8:	87 12       	call	r7		;
+
+0000000a <.Loc.322.1>:
+   a:	03 43       	nop			
+
+0000000c <.Loc.323.1>:
+   c:	03 43       	nop			
+
+0000000e <.Loc.324.1>:
+   e:	80 00 00 00 	mova	#0,	r0	;
+
+00000012 <_msp430_run_done>:
+  12:	10 01       	reta			;
+
+Disassembly of section .debug_line:
+
+00000000 <.Ldebug_line_start>:
+   0:	00 00       	beq			
+   2:	00 00       	beq			
+   4:	03 00       	mova	@r0,	r3	;
+   6:	46 00       	rrcm.a	#1,	r6	;
+	...
+
+0000000a <L0^A>:
+   a:	01 01       	mova	@r1,	r1	;
+   c:	fb 0e       	suba	r14,	r11	;
+   e:	0d 00       	mova	@r0,	r13	;
+  10:	01 01       	mova	@r1,	r1	;
+  12:	01 01       	mova	@r1,	r1	;
+  14:	00 00       	beq			
+  16:	00 01       	bra	@r1		;
+  18:	00 00       	beq			
+  1a:	01 2e       	jc	$-1020   	;abs 0xfffffffffffffc1e
+  1c:	2e 2f       	jc	$-418    	;abs 0xfffffffffffffe7a
+  1e:	2e 2e       	jc	$-930    	;abs 0xfffffffffffffc7c
+  20:	2f 2e       	jc	$-928    	;abs 0xfffffffffffffc80
+  22:	2e 2f       	jc	$-418    	;abs 0xfffffffffffffe80
+  24:	2e 2e       	jc	$-930    	;abs 0xfffffffffffffc82
+  26:	2f 2e       	jc	$-928    	;abs 0xfffffffffffffc86
+  28:	2e 2f       	jc	$-418    	;abs 0xfffffffffffffe86
+  2a:	2e 2e       	jc	$-930    	;abs 0xfffffffffffffc88
+  2c:	2f 2e       	jc	$-928    	;abs 0xfffffffffffffc8c
+  2e:	2e 2f       	jc	$-418    	;abs 0xfffffffffffffe8c
+  30:	67 63       	addc.b	#2,	r7	;r3 As==10
+  32:	63 2f       	jc	$-312    	;abs 0xfffffffffffffefa
+  34:	6c 69       	addc.b	@r9,	r12	;
+  36:	62 67       	addc.b	@r7,	r2	;
+  38:	6c 6f       	addc.b	@r15,	r12	;
+  3a:	
+Disassembly of section .debug_line.crt_1100run_array:
+
+00000000 <.debug_line.crt_1100run_array>:
+   0:	00 05       	bra	@r5		;
+   2:	02 00       	mova	@r0,	r2	;
+   4:	00 00       	beq			
+   6:	00 03       	bra	@r3		;
+   8:	bc 02 01 03 	suba	#131841,r12	;0x20301
+   c:	01 09       	mova	@r9,	r1	;
+   e:	00 00       	beq			
+  10:	01 03       	mova	@r3,	r1	;
+  12:	01 09       	mova	@r9,	r1	;
+  14:	00 00       	beq			
+  16:	01 03       	mova	@r3,	r1	;
+  18:	01 09       	mova	@r9,	r1	;
+  1a:	00 00       	beq			
+  1c:	01 03       	mova	@r3,	r1	;
+  1e:	01 09       	mova	@r9,	r1	;
+  20:	00 00       	beq			
+  22:	01 03       	mova	@r3,	r1	;
+  24:	01 09       	mova	@r9,	r1	;
+  26:	00 00       	beq			
+  28:	01 03       	mova	@r3,	r1	;
+  2a:	01 09       	mova	@r9,	r1	;
+  2c:	00 00       	beq			
+  2e:	01 03       	mova	@r3,	r1	;
+  30:	01 09       	mova	@r9,	r1	;
+  32:	00 00       	beq			
+  34:	01 03       	mova	@r3,	r1	;
+  36:	05 09       	mova	@r9,	r5	;
+  38:	00 00       	beq			
+  3a:	01 09       	mova	@r9,	r1	;
+  3c:	02 00       	mova	@r0,	r2	;
+  3e:	00 01       	bra	@r1		;
+  40:	
+Disassembly of section .debug_info:
+
+00000000 <.Ldebug_line_start>:
+   0:	00 00       	beq			
+   2:	00 00       	beq			
+   4:	02 00       	mova	@r0,	r2	;
+   6:	00 00       	beq			
+   8:	00 00       	beq			
+   a:	04 01       	mova	@r1,	r4	;
+	...
+  24:	01 80       	sub	r0,	r1	;
+
+Disassembly of section .debug_abbrev:
+
+00000000 <.debug_abbrev>:
+   0:	01 11       	rra	r1		;
+   2:	00 10       	rrc	r0		;
+   4:	06 11       	rra	r6		;
+   6:	01 12       	push	r1		;
+   8:	01 03       	mova	@r3,	r1	;
+   a:	0e 1b 0e 25 	rpt #15 { jzx.?	$+542    	;abs 0x22a, Warning: reserved use of A/L and B/W bits detected
+   e:	0e 13       	reti			;return from interupt
+  10:	05 00       	mova	@r0,	r5	;
+	...
+
+Disassembly of section .debug_aranges:
+
+00000000 <.Ldebug_line_start>:
+   0:	00 00       	beq			
+   2:	00 00       	beq			
+   4:	02 00       	mova	@r0,	r2	;
+   6:	00 00       	beq			
+   8:	00 00       	beq			
+   a:	04 00       	mova	@r0,	r4	;
+	...
+  14:	14 00       	mova	@r0+,	r4	;
+	...
+
+Disassembly of section .debug_str:
+
+00000000 <.debug_str>:
+   0:	2e 2e       	jc	$-930    	;abs 0xfffffffffffffc5e
+   2:	2f 2e       	jc	$-928    	;abs 0xfffffffffffffc62
+   4:	2e 2f       	jc	$-418    	;abs 0xfffffffffffffe62
+   6:	2e 2e       	jc	$-930    	;abs 0xfffffffffffffc64
+   8:	2f 2e       	jc	$-928    	;abs 0xfffffffffffffc68
+   a:	2e 2f       	jc	$-418    	;abs 0xfffffffffffffe68
+   c:	2e 2e       	jc	$-930    	;abs 0xfffffffffffffc6a
+   e:	2f 2e       	jc	$-928    	;abs 0xfffffffffffffc6e
+  10:	2e 2f       	jc	$-418    	;abs 0xfffffffffffffe6e
+  12:	2e 2e       	jc	$-930    	;abs 0xfffffffffffffc70
+  14:	2f 67       	addc	@r7,	r15	;
+  16:	
+Disassembly of section .MSP430.attributes:
+
+00000000 <.MSP430.attributes>:
+   0:	41 16       	popm.a	#5,	r5	;20-bit words
+   2:	00 00       	beq			
+   4:	00 6d       	addc	r13,	r0	;
+   6:	
+crt_run_smi_location_init_array.o:     file format elf32-msp430
+
+
+Disassembly of section .crt_0710run_smi_location_init_array:
+
+00000000 <__crt0_run_smi_location_init_array>:
+   0:	84 00 00 00 	mova	#0,	r4	;
+
+00000004 <.L1^B1>:
+   4:	c5 04       	mova	r4,	r5	;
+
+00000006 <.Loc.233.1>:
+   6:	a5 00 04 00 	adda	#4,	r5	;
+
+0000000a <.Loc.234.1>:
+   a:	c6 05       	mova	r5,	r6	;
+
+0000000c <.Loc.235.1>:
+   c:	a6 00 04 00 	adda	#4,	r6	;
+
+00000010 <.Loc.237.1>:
+  10:	0c 04       	mova	@r4,	r12	;
+
+00000012 <.Loc.238.1>:
+  12:	0d 05       	mova	@r5,	r13	;
+
+00000014 <.Loc.239.1>:
+  14:	0e 06       	mova	@r6,	r14	;
+
+00000016 <.Loc.241.1>:
+  16:	9e 00 00 00 	cmpa	#0,	r14	;
+
+0000001a <.Loc.243.1>:
+  1a:	00 24       	jz	$+2      	;abs 0x1c
+
+0000001c <.Loc.246.1>:
+  1c:	3d 93       	cmp	#-1,	r13	;r3 As==11
+
+0000001e <.Loc.247.1>:
+  1e:	00 20       	jnz	$+2      	;abs 0x20
+
+00000020 <.Loc.248.1>:
+  20:	8d 00 00 00 	mova	#0,	r13	;
+
+00000024 <.Loc.249.1>:
+  24:	b0 12 00 00 	call	#0		;
+
+00000028 <.Loc.250.1>:
+  28:	03 43       	nop			
+
+0000002a <.Loc.251.1>:
+  2a:	03 43       	nop			
+
+0000002c <.Loc.252.1>:
+  2c:	00 3c       	jmp	$+2      	;abs 0x2e
+
+0000002e <.L3^B1>:
+  2e:	b0 12 00 00 	call	#0		;
+
+00000032 <.Loc.255.1>:
+  32:	03 43       	nop			
+
+00000034 <.Loc.256.1>:
+  34:	03 43       	nop			
+
+00000036 <.L4^B1>:
+  36:	c4 06       	mova	r6,	r4	;
+
+00000038 <.Loc.259.1>:
+  38:	a4 00 04 00 	adda	#4,	r4	;
+
+0000003c <.Loc.260.1>:
+  3c:	00 3c       	jmp	$+2      	;abs 0x3e
+
+Disassembly of section .debug_line:
+
+00000000 <.Ldebug_line_start>:
+   0:	00 00       	beq			
+   2:	00 00       	beq			
+   4:	03 00       	mova	@r0,	r3	;
+   6:	46 00       	rrcm.a	#1,	r6	;
+	...
+
+0000000a <L0^A>:
+   a:	01 01       	mova	@r1,	r1	;
+   c:	fb 0e       	suba	r14,	r11	;
+   e:	0d 00       	mova	@r0,	r13	;
+  10:	01 01       	mova	@r1,	r1	;
+  12:	01 01       	mova	@r1,	r1	;
+  14:	00 00       	beq			
+  16:	00 01       	bra	@r1		;
+  18:	00 00       	beq			
+  1a:	01 2e       	jc	$-1020   	;abs 0xfffffffffffffc1e
+  1c:	2e 2f       	jc	$-418    	;abs 0xfffffffffffffe7a
+  1e:	2e 2e       	jc	$-930    	;abs 0xfffffffffffffc7c
+  20:	2f 2e       	jc	$-928    	;abs 0xfffffffffffffc80
+  22:	2e 2f       	jc	$-418    	;abs 0xfffffffffffffe80
+  24:	2e 2e       	jc	$-930    	;abs 0xfffffffffffffc82
+  26:	2f 2e       	jc	$-928    	;abs 0xfffffffffffffc86
+  28:	2e 2f       	jc	$-418    	;abs 0xfffffffffffffe86
+  2a:	2e 2e       	jc	$-930    	;abs 0xfffffffffffffc88
+  2c:	2f 2e       	jc	$-928    	;abs 0xfffffffffffffc8c
+  2e:	2e 2f       	jc	$-418    	;abs 0xfffffffffffffe8c
+  30:	67 63       	addc.b	#2,	r7	;r3 As==10
+  32:	63 2f       	jc	$-312    	;abs 0xfffffffffffffefa
+  34:	6c 69       	addc.b	@r9,	r12	;
+  36:	62 67       	addc.b	@r7,	r2	;
+  38:	6c 6f       	addc.b	@r15,	r12	;
+  3a:	
+Disassembly of section .debug_line.crt_0710run_smi_location_init_array:
+
+00000000 <.debug_line.crt_0710run_smi_location_init_array>:
+   0:	00 05       	bra	@r5		;
+   2:	02 00       	mova	@r0,	r2	;
+   4:	00 00       	beq			
+   6:	00 03       	bra	@r3		;
+   8:	e5 01       	adda	r1,	r5	;
+   a:	01 03       	mova	@r3,	r1	;
+   c:	02 09       	mova	@r9,	r2	;
+   e:	00 00       	beq			
+  10:	01 03       	mova	@r3,	r1	;
+  12:	01 09       	mova	@r9,	r1	;
+  14:	00 00       	beq			
+  16:	01 03       	mova	@r3,	r1	;
+  18:	01 09       	mova	@r9,	r1	;
+  1a:	00 00       	beq			
+  1c:	01 03       	mova	@r3,	r1	;
+  1e:	01 09       	mova	@r9,	r1	;
+  20:	00 00       	beq			
+  22:	01 03       	mova	@r3,	r1	;
+  24:	02 09       	mova	@r9,	r2	;
+  26:	00 00       	beq			
+  28:	01 03       	mova	@r3,	r1	;
+  2a:	01 09       	mova	@r9,	r1	;
+  2c:	00 00       	beq			
+  2e:	01 03       	mova	@r3,	r1	;
+  30:	01 09       	mova	@r9,	r1	;
+  32:	00 00       	beq			
+  34:	01 03       	mova	@r3,	r1	;
+  36:	02 09       	mova	@r9,	r2	;
+  38:	00 00       	beq			
+  3a:	01 03       	mova	@r3,	r1	;
+  3c:	02 09       	mova	@r9,	r2	;
+  3e:	00 00       	beq			
+  40:	01 03       	mova	@r3,	r1	;
+  42:	03 09       	mova	@r9,	r3	;
+  44:	00 00       	beq			
+  46:	01 03       	mova	@r3,	r1	;
+  48:	01 09       	mova	@r9,	r1	;
+  4a:	00 00       	beq			
+  4c:	01 03       	mova	@r3,	r1	;
+  4e:	01 09       	mova	@r9,	r1	;
+  50:	00 00       	beq			
+  52:	01 03       	mova	@r3,	r1	;
+  54:	01 09       	mova	@r9,	r1	;
+  56:	00 00       	beq			
+  58:	01 03       	mova	@r3,	r1	;
+  5a:	01 09       	mova	@r9,	r1	;
+  5c:	00 00       	beq			
+  5e:	01 03       	mova	@r3,	r1	;
+  60:	01 09       	mova	@r9,	r1	;
+  62:	00 00       	beq			
+  64:	01 03       	mova	@r3,	r1	;
+  66:	01 09       	mova	@r9,	r1	;
+  68:	00 00       	beq			
+  6a:	01 03       	mova	@r3,	r1	;
+  6c:	02 09       	mova	@r9,	r2	;
+  6e:	00 00       	beq			
+  70:	01 03       	mova	@r3,	r1	;
+  72:	01 09       	mova	@r9,	r1	;
+  74:	00 00       	beq			
+  76:	01 03       	mova	@r3,	r1	;
+  78:	01 09       	mova	@r9,	r1	;
+  7a:	00 00       	beq			
+  7c:	01 03       	mova	@r3,	r1	;
+  7e:	02 09       	mova	@r9,	r2	;
+  80:	00 00       	beq			
+  82:	01 03       	mova	@r3,	r1	;
+  84:	01 09       	mova	@r9,	r1	;
+  86:	00 00       	beq			
+  88:	01 03       	mova	@r3,	r1	;
+  8a:	01 09       	mova	@r9,	r1	;
+  8c:	00 00       	beq			
+  8e:	01 09       	mova	@r9,	r1	;
+  90:	02 00       	mova	@r0,	r2	;
+  92:	00 01       	bra	@r1		;
+  94:	
+Disassembly of section .debug_info:
+
+00000000 <.Ldebug_line_start>:
+   0:	00 00       	beq			
+   2:	00 00       	beq			
+   4:	02 00       	mova	@r0,	r2	;
+   6:	00 00       	beq			
+   8:	00 00       	beq			
+   a:	04 01       	mova	@r1,	r4	;
+	...
+  24:	01 80       	sub	r0,	r1	;
+
+Disassembly of section .debug_abbrev:
+
+00000000 <.debug_abbrev>:
+   0:	01 11       	rra	r1		;
+   2:	00 10       	rrc	r0		;
+   4:	06 11       	rra	r6		;
+   6:	01 12       	push	r1		;
+   8:	01 03       	mova	@r3,	r1	;
+   a:	0e 1b 0e 25 	rpt #15 { jzx.?	$+542    	;abs 0x22a, Warning: reserved use of A/L and B/W bits detected
+   e:	0e 13       	reti			;return from interupt
+  10:	05 00       	mova	@r0,	r5	;
+	...
+
+Disassembly of section .debug_aranges:
+
+00000000 <.Ldebug_line_start>:
+   0:	00 00       	beq			
+   2:	00 00       	beq			
+   4:	02 00       	mova	@r0,	r2	;
+   6:	00 00       	beq			
+   8:	00 00       	beq			
+   a:	04 00       	mova	@r0,	r4	;
+	...
+  14:	3e 00 00 00 	mova	0(r0),	r14	;
+	...
+
+Disassembly of section .debug_str:
+
+00000000 <.debug_str>:
+   0:	2e 2e       	jc	$-930    	;abs 0xfffffffffffffc5e
+   2:	2f 2e       	jc	$-928    	;abs 0xfffffffffffffc62
+   4:	2e 2f       	jc	$-418    	;abs 0xfffffffffffffe62
+   6:	2e 2e       	jc	$-930    	;abs 0xfffffffffffffc64
+   8:	2f 2e       	jc	$-928    	;abs 0xfffffffffffffc68
+   a:	2e 2f       	jc	$-418    	;abs 0xfffffffffffffe68
+   c:	2e 2e       	jc	$-930    	;abs 0xfffffffffffffc6a
+   e:	2f 2e       	jc	$-928    	;abs 0xfffffffffffffc6e
+  10:	2e 2f       	jc	$-418    	;abs 0xfffffffffffffe6e
+  12:	2e 2e       	jc	$-930    	;abs 0xfffffffffffffc70
+  14:	2f 67       	addc	@r7,	r15	;
+  16:	
+Disassembly of section .MSP430.attributes:
+
+00000000 <.MSP430.attributes>:
+   0:	41 16       	popm.a	#5,	r5	;20-bit words
+   2:	00 00       	beq			
+   4:	00 6d       	addc	r13,	r0	;
+   6:	
+crt_init.o:     file format elf32-msp430
+
+
+Disassembly of section .MSP430.attributes:
+
+00000000 <.MSP430.attributes>:
+   0:	41 16       	popm.a	#5,	r5	;20-bit words
+   2:	00 00       	beq			
+   4:	00 6d       	addc	r13,	r0	;
+   6:	

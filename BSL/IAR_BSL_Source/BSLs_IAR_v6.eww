@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<workspace>
+  <project>
+    <path>$WS_DIR$\IAR_v6_CC430F614x_USCI_UART\CC430F614x_USCI_UART.ewp</path>
+  </project>
+  <project>
+    <path>$WS_DIR$\IAR_v6_MSP430F522x_I2C\MSP430F522x_I2C.ewp</path>
+  </project>
+  <project>
+    <path>$WS_DIR$\IAR_v6_MSP430F543xA_TA_UART\MSP430F543xA_TA_UART.ewp</path>
+  </project>
+  <project>
+    <path>$WS_DIR$\IAR_v6_MSP430F552x_TA_UART\MSP430F552x_TA_UART.ewp</path>
+  </project>
+  <project>
+    <path>$WS_DIR$\IAR_v6_MSP430F552x_USB\MSP430F552x_USB.ewp</path>
+  </project>
+  <project>
+    <path>$WS_DIR$\IAR_v6_MSP430G2xx_TA_UART\G2xxx_BSL\G2xxx_BSL.ewp</path>
+  </project>
+  <project>
+    <path>$WS_DIR$\IAR_v6_MSP430G2xx_TA_UART\G2xxx_MainApp_ASM\G2xxx_MainApp_ASM.ewp</path>
+  </project>
+    <project>
+    <path>$WS_DIR$\IAR_v6_MSP430G2xx_TA_UART\G2xxx_MainApp_C\G2xxx_MainApp_C.ewp</path>
+  </project>
+  <batchBuild/>
+</workspace>
+
+

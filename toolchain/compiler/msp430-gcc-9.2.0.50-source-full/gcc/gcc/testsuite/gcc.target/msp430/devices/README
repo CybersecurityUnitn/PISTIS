@@ -1,0 +1,15 @@
+Some tests in this directory are run in a msp430-specific "torture" style,
+where all target specific options (that change code generation) that are
+expected to produce an executable for the given MCU without error are each used
+on each test source file in turn.
+
+The criteria for this torture style of testing is:
+  - The source file has a .c suffix
+  - The source file is in this "devices" subdirectory of the msp430 tests
+  - Somewhere in the test file name matches the regex:
+    [a-z0-9]+430[a-z0-9_]+(?=\.c).
+    The non-capturing part of this regex will be used as the MCU name, to
+    ascertain which multilib this device supports.
+
+Some of the options used to run the tests will produce warnings for the mcus,
+so ensure the test has dg-warning directives as appropriate.

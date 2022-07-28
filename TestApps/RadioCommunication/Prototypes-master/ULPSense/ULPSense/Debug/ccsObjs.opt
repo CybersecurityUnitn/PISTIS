@@ -1,0 +1,1 @@
+"./adxl.obj" "./cc1101.obj" "./main.obj" "./spi.obj" "../lnk_msp430fr5989.cmd" -llibmpu_init.a -llibmath.a -llibc.a 

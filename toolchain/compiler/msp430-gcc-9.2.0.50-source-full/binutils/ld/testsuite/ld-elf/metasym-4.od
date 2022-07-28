@@ -1,0 +1,38 @@
+# Pass -u fn_no_retain_3 on the command line to pull in the symbols from
+# metasym-3.o, which has been built into libmeta.a.
+# Test that all the "retain" symbols from this file are retained, but none of
+# the "retain" symbols from metasym-2.o.
+.*:.*
+
+SYMBOL TABLE:
+#...
+.*(var_global_retain|var_static_retain|fn_global_retain|fn_static_retain)(_3)*
+#...
+.*(var_global_retain|var_static_retain|fn_global_retain|fn_static_retain)(_3)*
+#...
+.*(var_global_retain|var_static_retain|fn_global_retain|fn_static_retain)(_3)*
+#...
+.*(var_global_retain|var_static_retain|fn_global_retain|fn_static_retain)(_3)*
+#...
+.*(var_global_retain|var_static_retain|fn_global_retain|fn_static_retain)(_3)*
+#...
+.*(var_global_retain|var_static_retain|fn_global_retain|fn_static_retain)(_3)*
+#...
+.*(var_global_retain|var_static_retain|fn_global_retain|fn_static_retain)(_3)*
+#...
+.*(var_global_retain|var_static_retain|fn_global_retain|fn_static_retain)(_3)*
+#...
+SYMBOL META-INFORMATION TABLE:
+Idx[ 	]+Kind[ 	]+Value[ 	]+Sym idx[ 	]+Name
+0:[ 	]+SMK_RETAIN[ 	]+0x1[ 	]+[0-9]+[ 	]+var_static_retain_3
+1:[ 	]+SMK_RETAIN[ 	]+0x1[ 	]+[0-9]+[ 	]+var_global_retain_no_sec
+2:[ 	]+SMK_RETAIN[ 	]+0x1[ 	]+[0-9]+[ 	]+var_static_retain_no_sec
+3:[ 	]+SMK_RETAIN[ 	]+0x1[ 	]+[0-9]+[ 	]+var_global_retain
+4:[ 	]+SMK_RETAIN[ 	]+0x1[ 	]+[0-9]+[ 	]+var_static_retain
+5:[ 	]+SMK_RETAIN[ 	]+0x1[ 	]+[0-9]+[ 	]+fn_static_retain_no_sec
+6:[ 	]+SMK_RETAIN[ 	]+0x1[ 	]+[0-9]+[ 	]+fn_static_retain_3
+7:[ 	]+SMK_RETAIN[ 	]+0x1[ 	]+[0-9]+[ 	]+fn_global_retain_no_sec
+8:[ 	]+SMK_RETAIN[ 	]+0x1[ 	]+[0-9]+[ 	]+fn_static_retain
+9:[ 	]+SMK_RETAIN[ 	]+0x1[ 	]+[0-9]+[ 	]+fn_global_retain
+10:[ 	]+SMK_RETAIN[ 	]+0x1[ 	]+[0-9]+[ 	]+fn_global_retain_3
+11:[ 	]+SMK_RETAIN[ 	]+0x1[ 	]+[0-9]+[ 	]+var_global_retain_3

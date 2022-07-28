@@ -1,0 +1,27 @@
+
+############# THE FOLLOWING FILES DETERMINE THE SOURCE FILES TO BE COMPILED
+APPSRC_DIR = ./app/src
+APPASM_DIR = ./app/asm
+# Add or modify the files as required
+
+APPSRC_FILES := $(wildcard $(APPSRC_DIR)/*.c)
+APPASM_FILES := $(patsubst $(APPSRC_DIR)/%.c,$(APPASM_DIR)/%.s,$(APPSRC_FILES))
+APPASM_FILES += $(wildcard $(APPASM_DIR)/*.s)
+
+##### Compiling arguments
+
+OPTIMISATION_APP := -O3
+
+# '-c' Compile and assemble, but do not link.
+# '-mdata-region=lower' the compiler assumes data is in the lower region of memory
+ASSEMBLER_ARGS_APP := -c -mmcu=msp430f5529 -mhwmult=f5series -I"$(INCLUDE_GCC)" -I"$(ROOT_DIR)" -I"$(APPSRC_DIR)" -I"$(CORESRC_DIR)" -I"$(COMP_INCLUDE)" \
+$(OPTIMISATION_APP) -Wall -mlarge -mcode-region=none -mdata-region=none -ffixed-R4 -ffixed-R5 -ffixed-R6  -S
+
+#Create assembly files
+$(APPASM_DIR)/%.s : $(APPSRC_DIR)/%.c
+	@echo 'Creating ASM file: "$@"'
+	$(COMPILER) $(ASSEMBLER_ARGS_APP) -o"$@" "$<"
+	@echo 'Finished creating: "$@"'
+	@echo ' '
+
+

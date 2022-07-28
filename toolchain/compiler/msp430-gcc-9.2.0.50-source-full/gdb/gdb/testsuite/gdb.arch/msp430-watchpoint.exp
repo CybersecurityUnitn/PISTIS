@@ -1,0 +1,59 @@
+# Copyright 2020-2020 Free Software Foundation, Inc.
+
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+standard_testfile
+
+if [get_compiler_info] {
+    return -1
+}
+
+if  { [gdb_compile "${srcdir}/${subdir}/${srcfile}" "${binfile}" executable {debug}] != "" } {
+     untested "failed to compile"
+     return -1
+}
+
+global gdb_prompt
+
+global testfile
+global no_hw
+
+clean_restart $testfile
+gdb_test_no_output "set can-use-hw-watchpoints 0" ""
+gdb_test "break main" "Breakpoint.*at.*"
+gdb_run_cmd
+
+with_test_prefix "local_x_recurser_1" {
+    gdb_test "tbreak recurser_1" ".*breakpoint.*"
+    gdb_test "cont" "Continuing.*recurser_1.*"
+    gdb_test "next" "if \\(x > 0.*" "next past local_x initialization"
+    gdb_test "watch local_x" ".*\[Ww\]atchpoint \[0-9\]*: local_x" \
+        "set local watch in recursive call"
+    gdb_test "cont" "Continuing.*\[Ww\]atchpoint .*: local_x.*New value = 2.*" \
+        "trigger local watch in recursive call"
+    gdb_test "cont" "Continuing.*\[Ww\]atchpoint .* deleted because the program has left the block in.*which its expression is valid.*" \
+        "self-delete local watch in recursive call"
+}
+
+with_test_prefix "local_x_recurser_2" {
+    gdb_test "tbreak recurser_2" ".*breakpoint.*"
+    gdb_test "cont" "Continuing.*recurser_2.*"
+    gdb_test "next" "if \\(x > 0.*" "next past local_x initialization"
+    gdb_test "watch local_x" ".*\[Ww\]atchpoint \[0-9\]*: local_x" \
+        "set local watch in recursive call"
+    gdb_test "cont" "Continuing.*\[Ww\]atchpoint .*: local_x.*New value = 3.*" \
+        "trigger local watch in recursive call"
+    gdb_test "cont" "Continuing.*\[Ww\]atchpoint .* deleted because the program has left the block in.*which its expression is valid.*" \
+        "self-delete local watch in recursive call"
+}

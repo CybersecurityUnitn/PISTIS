@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE eagle SYSTEM "eagle.dtd">
+<eagle version="7.2.0">
+<drawing>
+<settings>
+<setting alwaysvectorfont="no"/>
+<setting verticaltext="up"/>
+</settings>
+<grid distance="0.1" unitdist="inch" unit="inch" style="lines" multiple="1" display="no" altdistance="0.01" altunitdist="inch" altunit="inch"/>
+<layers>
+<layer number="1" name="Top" color="4" fill="1" visible="yes" active="yes"/>
+<layer number="2" name="Route2" color="1" fill="3" visible="no" active="yes"/>
+<layer number="3" name="Route3" color="4" fill="3" visible="no" active="yes"/>
+<layer number="4" name="Route4" color="1" fill="4" visible="no" active="yes"/>
+<layer number="5" name="Route5" color="4" fill="4" visible="no" active="yes"/>
+<layer number="6" name="Route6" color="1" fill="8" visible="no" active="yes"/>
+<layer number="7" name="Route7" color="4" fill="8" visible="no" active="yes"/>
+<layer number="8" name="Route8" color="1" fill="2" visible="no" active="yes"/>
+<layer number="9" name="Route9" color="4" fill="2" visible="no" active="yes"/>
+<layer number="10" name="Route10" color="1" fill="7" visible="no" active="yes"/>
+<layer number="11" name="Route11" color="4" fill="7" visible="no" active="yes"/>
+<layer number="12" name="Route12" color="1" fill="5" visible="no" active="yes"/>
+<layer number="13" name="Route13" color="4" fill="5" visible="no" active="yes"/>
+<layer number="14" name="Route14" color="1" fill="6" visible="no" active="yes"/>
+<layer number="15" name="Route15" color="4" fill="6" visible="no" active="yes"/>
+<layer number="16" name="Bottom" color="1" fill="1" visible="yes" active="yes"/>
+<layer number="17" name="Pads" color="2" fill="1" visible="yes" active="yes"/>
+<layer number="18" name="Vias" color="2" fill="1" visible="yes" active="yes"/>
+<layer number="19" name="Unrouted" color="6" fill="1" visible="yes" active="yes"/>
+<layer number="20" name="Dimension" color="15" fill="1" visible="yes" active="yes"/>
+<layer number="21" name="tPlace" color="7" fill="1" visible="yes" active="yes"/>
+<layer number="22" name="bPlace" color="7" fill="1" visible="yes" active="yes"/>
+<layer number="23" name="tOrigins" color="15" fill="1" visible="yes" active="yes"/>
+<layer number="24" name="bOrigins" color="15" fill="1" visible="yes" active="yes"/>
+<layer number="25" name="tNames" color="7" fill="1" visible="yes" active="yes"/>
+<layer number="26" name="bNames" color="7" fill="1" visible="yes" active="yes"/>
+<layer number="27" name="tValues" color="7" fill="1" visible="yes" active="yes"/>
+<layer number="28" name="bValues" color="7" fill="1" visible="yes" active="yes"/>
+<layer number="29" name="tStop" color="7" fill="3" visible="no" active="yes"/>
+<layer number="30" name="bStop" color="7" fill="6" visible="no" active="yes"/>
+<layer number="31" name="tCream" color="7" fill="4" visible="no" active="yes"/>
+<layer number="32" name="bCream" color="7" fill="5" visible="no" active="yes"/>
+<layer number="33" name="tFinish" color="6" fill="3" visible="no" active="yes"/>
+<layer number="34" name="bFinish" color="6" fill="6" visible="no" active="yes"/>
+<layer number="35" name="tGlue" color="7" fill="4" visible="no" active="yes"/>
+<layer number="36" name="bGlue" color="7" fill="5" visible="no" active="yes"/>
+<layer number="37" name="tTest" color="7" fill="1" visible="no" active="yes"/>
+<layer number="38" name="bTest" color="7" fill="1" visible="no" active="yes"/>
+<layer number="39" name="tKeepout" color="4" fill="11" visible="yes" active="yes"/>
+<layer number="40" name="bKeepout" color="1" fill="11" visible="yes" active="yes"/>
+<layer number="41" name="tRestrict" color="4" fill="10" visible="yes" active="yes"/>
+<layer number="42" name="bRestrict" color="1" fill="10" visible="yes" active="yes"/>
+<layer number="43" name="vRestrict" color="2" fill="10" visible="yes" active="yes"/>
+<layer number="44" name="Drills" color="7" fill="1" visible="no" active="yes"/>
+<layer number="45" name="Holes" color="7" fill="1" visible="no" active="yes"/>
+<layer number="46" name="Milling" color="3" fill="1" visible="no" active="yes"/>
+<layer number="47" name="Measures" color="7" fill="1" visible="no" active="yes"/>
+<layer number="48" name="Document" color="7" fill="1" visible="yes" active="yes"/>
+<layer number="49" name="Reference" color="7" fill="1" visible="yes" active="yes"/>
+<layer number="51" name="tDocu" color="7" fill="1" visible="yes" active="yes"/>
+<layer number="52" name="bDocu" color="7" fill="1" visible="yes" active="yes"/>
+<layer number="90" name="Modules" color="5" fill="1" visible="yes" active="yes"/>
+<layer number="91" name="Nets" color="2" fill="1" visible="yes" active="yes"/>
+<layer number="92" name="Busses" color="1" fill="1" visible="yes" active="yes"/>
+<layer number="93" name="Pins" color="2" fill="1" visible="yes" active="yes"/>
+<layer number="94" name="Symbols" color="4" fill="1" visible="yes" active="yes"/>
+<layer number="95" name="Names" color="7" fill="1" visible="yes" active="yes"/>
+<layer number="96" name="Values" color="7" fill="1" visible="yes" active="yes"/>
+<layer number="97" name="Info" color="7" fill="1" visible="yes" active="yes"/>
+<layer number="98" name="Guide" color="6" fill="1" visible="yes" active="yes"/>
+<layer number="99" name="SpiceOrder" color="5" fill="1" visible="yes" active="yes"/>
+</layers>
+<library>
+<packages>
+<package name="S8">
+<description>&lt;b&gt;8-Lead Plastic Small Outline&lt;/b&gt; Narrow .150 Inch&lt;p&gt;
+Source: http://cds.linear.com/docs/Datasheet/623012fb.pdf</description>
+<wire x1="2.4" y1="1.8" x2="2.4" y2="-1.4" width="0.2032" layer="21"/>
+<wire x1="2.4" y1="-1.4" x2="2.4" y2="-1.8" width="0.2032" layer="21"/>
+<wire x1="2.4" y1="-1.8" x2="-2.4" y2="-1.8" width="0.2032" layer="21"/>
+<wire x1="-2.4" y1="-1.8" x2="-2.4" y2="-1.4" width="0.2032" layer="21"/>
+<wire x1="-2.4" y1="-1.4" x2="-2.4" y2="1.8" width="0.2032" layer="21"/>
+<wire x1="-2.4" y1="1.8" x2="2.4" y2="1.8" width="0.2032" layer="21"/>
+<wire x1="2.4" y1="-1.4" x2="-2.4" y2="-1.4" width="0.2032" layer="21"/>
+<smd name="2" x="-0.635" y="-2.6" dx="0.762" dy="1.143" layer="1"/>
+<smd name="7" x="-0.635" y="2.6" dx="0.762" dy="1.143" layer="1"/>
+<smd name="1" x="-1.905" y="-2.6" dx="0.762" dy="1.143" layer="1"/>
+<smd name="3" x="0.635" y="-2.6" dx="0.762" dy="1.143" layer="1"/>
+<smd name="4" x="1.905" y="-2.6" dx="0.762" dy="1.143" layer="1"/>
+<smd name="8" x="-1.905" y="2.6" dx="0.762" dy="1.143" layer="1"/>
+<smd name="6" x="0.635" y="2.6" dx="0.762" dy="1.143" layer="1"/>
+<smd name="5" x="1.905" y="2.6" dx="0.762" dy="1.143" layer="1"/>
+<text x="-2.667" y="-1.905" size="1.27" layer="25" rot="R90">&gt;NAME</text>
+<text x="3.937" y="-1.905" size="1.27" layer="27" rot="R90">&gt;VALUE</text>
+<rectangle x1="-2.15" y1="-3.1" x2="-1.66" y2="-2" layer="51"/>
+<rectangle x1="-0.88" y1="-3.1" x2="-0.39" y2="-2" layer="51"/>
+<rectangle x1="0.39" y1="-3.1" x2="0.88" y2="-2" layer="51"/>
+<rectangle x1="1.66" y1="-3.1" x2="2.15" y2="-2" layer="51"/>
+<rectangle x1="1.66" y1="2" x2="2.15" y2="3.1" layer="51"/>
+<rectangle x1="0.39" y1="2" x2="0.88" y2="3.1" layer="51"/>
+<rectangle x1="-0.88" y1="2" x2="-0.39" y2="3.1" layer="51"/>
+<rectangle x1="-2.15" y1="2" x2="-1.66" y2="3.1" layer="51"/>
+</package>
+</packages>
+<symbols>
+<symbol name="LT1167">
+<wire x1="-10.16" y1="12.7" x2="10.16" y2="12.7" width="0.254" layer="94"/>
+<wire x1="10.16" y1="12.7" x2="10.16" y2="-7.62" width="0.254" layer="94"/>
+<wire x1="10.16" y1="-7.62" x2="-10.16" y2="-7.62" width="0.254" layer="94"/>
+<wire x1="-10.16" y1="-7.62" x2="-10.16" y2="12.7" width="0.254" layer="94"/>
+<pin name="RG1" x="-15.24" y="10.16" length="middle"/>
+<pin name="-IN" x="-15.24" y="5.08" length="middle"/>
+<pin name="+IN" x="-15.24" y="0" length="middle"/>
+<pin name="-VS" x="-15.24" y="-5.08" length="middle"/>
+<pin name="REF" x="15.24" y="-5.08" length="middle" rot="R180"/>
+<pin name="OUTPUT" x="15.24" y="0" length="middle" rot="R180"/>
+<pin name="+VS" x="15.24" y="5.08" length="middle" rot="R180"/>
+<pin name="RG2" x="15.24" y="10.16" length="middle" rot="R180"/>
+<text x="-10.16" y="13.208" size="1.778" layer="95">&gt;NAME</text>
+<text x="-10.16" y="-10.16" size="1.778" layer="96">&gt;VALUE</text>
+</symbol>
+</symbols>
+<devicesets>
+<deviceset name="LT1167" prefix="U">
+<description>&lt;b&gt;Single Resistor Gain
+Programmable, Precision
+Instrumentation Amplifier&lt;/b&gt;&lt;br&gt;
+&lt;p&gt;The LT®1167 is a low power, precision instrumentation
+amplifier that requires only one external resistor to set
+gains of 1 to 10,000. The low voltage noise of 7.5nV/√Hz
+(at 1kHz) is not compromised by low power dissipation
+(0.9mA typical for ±2.3V to ±15V supplies).&lt;/p&gt;&lt;p&gt;
+The part’s high accuracy (10ppm maximum nonlinearity,
+0.08% max gain error (G = 10)) is not degraded even for
+load resistors as low as 2k. The LT1167 is laser trimmed for
+very low input offset voltage (40μV max), drift (0.3μV/°C),
+high CMRR (90dB, G = 1) and PSRR (105dB, G = 1).
+Low input bias currents of 350pA max are achieved with
+the use of superbeta processing. The output can handle
+capacitive loads up to 1000pF in any gain configuration
+while the inputs are ESD protected up to 13kV (human
+body). The LT1167 with two external 5k resistors passes
+the IEC 1000-4-2 level 4 specification.&lt;/p&gt;&lt;p&gt;
+The LT1167, offered in 8-pin PDIP and SO packages, requires
+significantly less PC board area than discrete multi
+op amp and resistor designs.&lt;/p&gt;&lt;p&gt;
+The LT1167-1 offers the same performance as the LT1167,
+but its input current characteristic at high common mode
+voltage better supports applications with high input impedance
+(see the Applications Information section).&lt;/p&gt;</description>
+<gates>
+<gate name="G$1" symbol="LT1167" x="0" y="-2.54"/>
+</gates>
+<devices>
+<device name="" package="S8">
+<connects>
+<connect gate="G$1" pin="+IN" pad="3"/>
+<connect gate="G$1" pin="+VS" pad="7"/>
+<connect gate="G$1" pin="-IN" pad="2"/>
+<connect gate="G$1" pin="-VS" pad="4"/>
+<connect gate="G$1" pin="OUTPUT" pad="6"/>
+<connect gate="G$1" pin="REF" pad="5"/>
+<connect gate="G$1" pin="RG1" pad="1"/>
+<connect gate="G$1" pin="RG2" pad="8"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+</devices>
+</deviceset>
+</devicesets>
+</library>
+</drawing>
+</eagle>

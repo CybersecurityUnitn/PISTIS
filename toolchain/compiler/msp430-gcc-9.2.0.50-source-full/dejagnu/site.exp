@@ -1,0 +1,21 @@
+lappend boards_dir "[file dirname [info script]]"
+
+global target_list
+
+case "$target_triplet" in {
+    { "msp430-unknown-elf" } {
+        set target_list "msp430-sim"
+        set target_alias "msp430-elf"
+    }
+    { "msp430-unknown-elfbare" } {
+        set target_list "msp430-sim"
+        set target_alias "msp430-elfbare"
+    }
+    { "avr-unknown-elf" } {
+        set target_list "avr-sim"
+        set target_alias "avr-elf"
+    }
+    { "arm-unknown-eabi" } {
+        set target_list "arm-sim"
+    }
+}

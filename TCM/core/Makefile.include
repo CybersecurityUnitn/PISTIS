@@ -1,0 +1,46 @@
+# '-c' Compile and assemble, but do not link.
+# '-mdata-region=lower' the compiler assumes data is in the lower region of memory
+ASSEMBLER_ARGS_CORE := -c -mmcu=msp430f5529 -mhwmult=f5series -I"$(INCLUDE_GCC)" -I"$(ROOT_DIR)" -I"$(COMP_INCLUDE)" \
+-O3 -w -mlarge -mcode-region=none -mdata-region=none -Wl,--gc-sections -Wl,--no-relax -Wl,--disable-sec-transformation
+
+
+COREOBJS_DIR = ./core/obj
+CORESRC_DIR = ./core/src
+COREASM_DIR = ./core/asm
+CORE_COMP_SRC_DIR = ./core/src_compile
+EXTMODULES_SRC = ./core/ext_modules
+
+
+#Modules to be loaded into the TCM
+CORE_OBJS += $(COREOBJS_DIR)/core.o
+CORE_OBJS += $(COREOBJS_DIR)/virt_fun.o
+CORE_OBJS += $(COREOBJS_DIR)/secureUpdate.o
+CORE_OBJS += $(COREOBJS_DIR)/protected_isr.o
+CORE_OBJS += $(COREOBJS_DIR)/secureContextSwitch.o
+
+#CORE_OBJS += $(COREOBJS_DIR)/ra.o
+#CORE_OBJS += $(COREOBJS_DIR)/Hacl_HMAC.o
+#CORE_OBJS += $(COREOBJS_DIR)/Hacl_HASH.o
+#CORE_OBJS += $(COREOBJS_DIR)/raHelperAsm.o
+#CORE_OBJS += $(COREOBJS_DIR)/raHelper.o
+
+
+
+# Create objects files without invoking the linker
+# the following flags are not documented and, apparently, not needed... -MMD -MP -MF"$(@:%.o=%.d)" -MT"$(@)"
+
+$(COREOBJS_DIR)/%.o: $(COREASM_DIR)/%.s
+	@echo 'Creating "$@" by building file: "$<"'
+	@echo 'Invoking: GNU Compiler'
+	$(COMPILER) $(ASSEMBLER_ARGS_CORE) -o"$@" "$<"
+	@echo 'Finished building: "$<" --> "$@" created'
+	@echo ' '
+
+
+#Create assembly files
+$(COREASM_DIR)/%.s: $(CORE_COMP_SRC_DIR)/%.c
+	@echo 'Creating ASM file: "$@"'
+	$(COMPILER) $(ASSEMBLER_ARGS_CORE) -S -ffunction-sections -o"$@" "$<"
+	@echo 'Finished creating: "$@"'
+	@echo ' '
+

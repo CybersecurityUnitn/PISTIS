@@ -1,0 +1,7 @@
+if ![istarget "msp430*"] then {
+    verbose "Skipping msp430-timeout.exp"
+    return
+}
+
+gdb_start
+gdb_test "show remotetimeout" "Timeout limit to wait for target to respond is 10." "verify remotetimeout is 10"

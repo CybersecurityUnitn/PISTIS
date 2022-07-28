@@ -1,0 +1,110 @@
+# This is a list of toolchains that are supported on this board.
+set_board_info target_install {msp430-elf}
+
+proc test_remote {} {
+    #load_generic_config "gdbserver"
+    #set_board_info gdb_protocol "remote"
+    set_board_info use_gdb_stub 1
+    #set_board_info gdb,do_reload_on_run 1
+    set_board_info gdb,no_hardware_watchpoints 0
+    #set_board_info gdb_server_prog "/home/jozef/ti/msp430-gcc-831/bin/gdb_agent_console /home/jozef/ti/msp430-gcc-831/msp430.dat"
+    #set_board_info gdb,socketport 55000
+
+    # We only support newlib on this target. We assume that all multilib
+    # options have been specified before we get here.
+    set_board_info cflags    "[libgloss_include_flags] [newlib_include_flags] -mmcu=msp430fr5969 -I/home/jozef/msp430/msp430-gcc-support-files/include -L/home/jozef/msp430/msp430-gcc-support-files/include"
+
+    load_generic_config "sim"
+
+    # basic-sim.exp is a basic description for the standard Cygnus simulator.
+    load_base_board_description "basic-sim"
+
+    # "msp430" is the name of the sim subdir.
+    setup_sim msp430
+}
+
+
+proc test_sim {} {
+    global tool
+    # Load the generic configuration for this board. This will define a basic set
+    # of routines needed by the tool to communicate with the board.
+    load_generic_config "sim"
+
+    # basic-sim.exp is a basic description for the standard Cygnus simulator.
+    load_base_board_description "basic-sim"
+
+    # "msp430" is the name of the sim subdir.
+    setup_sim msp430
+
+    # We only support newlib on this target. We assume that all multilib
+    # options have been specified before we get here.
+    set_board_info cflags    "[libgloss_include_flags] [newlib_include_flags] -msim"
+    set_board_info gdb,no_hardware_watchpoints 1
+}
+
+# No multilib options needed by default. This is required before we set board_info cflags.
+process_multilib_options ""
+
+#test_remote
+test_sim
+
+set_board_info compiler  "[find_gcc]"
+set_board_info ldflags   "[libgloss_link_flags] [newlib_link_flags]"
+
+# Doesn't pass arguments or signals, and doesn't do inferiorio.
+set_board_info noargs 1
+set_board_info gdb,nosignals 1
+set_board_info gdb,noinferiorio 1
+set_board_info gdb,skip_huge_test 1
+
+# Indicate that the simulator simulates a bare metal environment
+set_board_info baremetal 1
+
+# Limit the stack size to something real tiny.
+set_board_info gcc,stack_size 4096
+set_board_info gcc,no_trampolines  1
+
+proc check_430_isa { flags_str } {
+  # The space after msp430 is important to ensure msp430x is not matched
+  if {[string match "*-mcpu=msp430 *" $flags_str]
+    || [string match "*-mcpu=msp430" $flags_str]} {
+      return 1
+  }
+  return 0
+}
+
+proc add_opt { as_opt c_opt } {
+  global ASFLAGS
+  append ASFLAGS " $as_opt"
+  add_board_info cflags $c_opt
+}
+
+# Would be nice to use board_info->asflags, but that doesn't exist so would
+# require many changes in the testsuite
+proc setup_asflags {} {
+  global CFLAGS
+  global board_variant_list
+  if [info exists CFLAGS] {
+    set flags_str $CFLAGS
+  } elseif [info exists board_variant_list] {
+    set flags_str $board_variant_list
+  }
+
+  if [string match "*-mlarge*" $flags_str] {
+    add_opt "-ml" "-mlarge"
+  } elseif [check_430_isa $flags_str] {
+    add_opt "-mcpu=430" "-mcpu=msp430"
+  }
+
+  if [string match "*-mdata-region=either*" $flags_str] {
+    add_opt "-mdata-region=either" "-mdata-region=either"
+  } elseif [string match "*-mdata-region=upper*" $flags_str] {
+    add_opt "-mdata-region=upper" "-mdata-region=upper"
+  } elseif [string match "*-mdata-region=lower*" $flags_str] {
+    add_opt "-mdata-region=lower" "-mdata-region=lower"
+  } elseif [string match "*-mdata-region=none*" $flags_str] {
+    add_opt "-mdata-region=none" "-mdata-region=none"
+  }
+}
+
+setup_asflags

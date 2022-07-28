@@ -1,0 +1,92 @@
+﻿MSP430-GCC 9.2.0.50 Release Notes
+---
+* Added HTML documentation for all toolchain components in
+  "msp430-gcc-9.2.0.50/share/doc/".
+  "index.html" in each of the sub directories is the recommended starting point
+  for browsing.
+
+GCC
+* Updated to version 9.2.0. Some changes of interest are:
+  - A large number of target-independent code generation improvements.
+  - Diagnostic improvements, such as the ability to label regions of source code
+    in diagnostic output.
+  - New warning "-Waddress-of-packed-member" and improvements to existing
+    warnings such as "-Warray-bounds".
+  - For the full list of changes visit the GCC webpage:
+    https://gcc.gnu.org/gcc-9/changes.html
+* Added new "retain" and "location" C/C++ attributes.
+  - These attributes can be applied to declarations of functions or data,
+    and convey extra information to the linker about how to handle the sections
+    containing them.
+  - The "retain" attribute instructs the linker not to garbage collect the
+    section containing that object, even if it appears unused in the final
+    program.
+  - The "location" attribute takes an argument and instructs the linker to place
+    the section containing the object at the address (VMA) specified.
+  - For proper operation, the objects these attributes are applied to should be
+    in their own sections, by either using the GCC flags
+    -f{function,data}-sections, or the "section" attribute.
+  - The new attributes make use of the new "Symbol Meta-information"
+    functionality for the compiler to provide additional information about
+    symbols to the linker.
+    The new objdump option "--symtab-meta" can be used to dump the symbol
+    meta-information table (.symtab_meta) from ELF files.
+* Improved code generation for shift instructions
+  - For -mcpu=msp430, the shift helper functions will be used more often instead
+    of emitting inline shifts when shifting by a constant amount.
+  - For -mcpu=msp430x, RLAM, RRAM, RRCM and RRUM are used more often.
+  - For -mlarge, manipulation of pointers uses fewer instructions as
+    address-word shift instructions are used where possible.
+  - Added a new option, -mmax-inline-shift=, which controls the maximum number of
+    inline shift instructions that will be emitted, instead of using the
+    corresponding helper function.
+* Fixed incorrect byte offsets used by %B/%H, %C and %D asm operand selectors
+  for memory operands.
+* Added %d, %e, %f, %g asm operand selectors to select odd bytes of memory or
+  immediate operands.
+* Documented the asm operand selectors in GCC documentation.
+* Disabled placement of uninitialized data in the "common" section.
+  - -fno-common is now the default and all uninitialized and zero initialized
+    data will be placed in the .bss section.
+* Enabled placement of constant strings in an ELF section, which allows the
+  linker to merge identical strings.
+* GCC will now emit .{mspabi,gnu}_attribute assembler directives indicating the
+  ISA, memory model and memory region the source file was compiled for.
+* The ISA specified with the -mcpu= option will now override the ISA selected
+  for the device specified by the -mmcu option.
+* Added missing debug frame information to function epilogues.
+  - This could cause debuggers to report a corrupted stack when stepping
+    through the epilogue or setting a software watchpoint on a stack variable.
+
+Binutils
+* Updated to Binutils 2.34. Some changes of interest are:
+  - objdump --disassemble option now takes an optional parameter which indicates
+    the symbol from which to start disassembly.
+  - For the full list of changes see the NEWS files linked to from the Binutils
+    webpages: https://www.gnu.org/software/binutils/
+* Added linker optimization of BR to JMP instructions for -mcpu=msp430.
+* Fixed linker inability to relax JMP to BR when branch target is out of range.
+
+GDB
+* Updated to GDB 9.1. Some changes of interest are:
+  - The new "with" command will run the given command with a temporarily
+    changed value.
+  - When GDB is running in batch mode, it will exit with status 1 if the last
+    command it executes fails.
+  - Terminal style coloured highlighting is now available and can be controlled
+    with the "set style" commands
+  - For the full list of changes see
+    https://sourceware.org/git/gitweb.cgi?p=binutils-gdb.git;a=blob_plain;f=gdb/NEWS;hb=gdb-9.1-release
+* Enabled support for Python scripting within GDB, in a separate executable named
+  "msp430-elf-gdb-py".
+  - Python 2.7 libraries must be installed on the host system. On Windows the
+    Python installer includes these, but on Linux they must be installed
+    separately (libpython2.7 on Ubuntu/Debian, python2-libs on Centos/RHEL).
+* Fixed watchpoint support in the GDB Agent (DBGTRC-5335).
+* The GDB Agent now sets software breakpoints by default.
+  - The number of hardware breakpoints is limited but can be set using the GDB
+    "hbreak" command, or by setting "msp430_default_breakpoint=hardware" in the
+    msp430.dat configuration file used by the GDB Agent.
+
+Newlib (C Library)
+* No changes.

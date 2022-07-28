@@ -1,0 +1,53 @@
+# Test that msp430 code model is set correctly when changing architecture
+
+if ![istarget "msp430*"] then {
+    verbose "Skipping msp430-code-model.exp"
+    return
+}
+
+standard_testfile
+gdb_compile "${srcdir}/${subdir}/${srcfile}" ${binfile} executable ""
+
+set hexfile "${binfile}.hex"
+set objcopy_program [gdb_find_objcopy]
+if { $objcopy_program != "" } {
+    set result [catch "exec $objcopy_program -O ihex ${binfile} ${hexfile}" output]
+    if { $result != 0 } {
+        fail "error in objcopy command"
+        verbose -log "$output"
+        return -1
+    }
+    set hexgen 1
+} else {
+    set hexgen 0
+}
+
+proc msp430_test_code_model { ver } {
+    # Large model should be set by default without any prior ELF information
+    gdb_test "x /x 0x10000" "0x10000:.*" "successfully examine large model address with default model ($ver)"
+    gdb_test "set arch MSP430" "The target architecture is assumed to be MSP430\[^X\]" "set small model ($ver)"
+    gdb_test "x /x 0x10000" "0x0\+:.*" "unsuccessfully examine large model address with small model ($ver)"
+    gdb_test "set arch MSP430X" "The target architecture is assumed to be MSP430X" "set large model ($ver)"
+    gdb_test "x /x 0x10000" "0x10000:.*" "successfully examine large model address with large model ($ver)"
+}
+
+gdb_exit
+gdb_start
+msp430_test_code_model 1
+
+if { $hexgen == 0 } {
+    return
+}
+
+gdb_exit
+gdb_start
+gdb_load ${hexfile}
+msp430_test_code_model 2
+
+# gdb_load specifies the hexfile with the 'file' command, and GDB's internal
+# behaviour is different to the following flow.
+gdb_exit
+gdb_start
+send_gdb "target sim\n"
+send_gdb "load ${hexfile}\n"
+msp430_test_code_model 3

@@ -1,0 +1,7090 @@
+
+
+
+	.global _fpadd_parts
+	.type _fpadd_parts, @function
+_fpadd_parts:
+	nop
+	nop
+	pushm.a	#4,	r10	;20-bit words
+
+	suba	#20,	r1	;0x00014
+
+	mova	r12,	r10	;
+	mova	r13,	r7	;
+	mova	r14,	r8	;
+
+	mov	@r12,	r12	;
+
+	mov.b	#1,	r13	;r3 As==01
+
+	cmp	r12,	r13	;
+	jc	.L12     	;abs 0x4de8
+
+	mov	@r7,	r13	;
+
+	mov.b	#1,	r14	;r3 As==01
+
+	cmp	r13,	r14	;
+	jc	.L76    	;abs 0x502c
+
+	cmp	#4,	r12	;r2 As==10
+	jnz	.L15     	;abs 0x4df2
+
+	cmp	#4,	r13	;r2 As==10
+	jnz	.L12     	;abs 0x4de8
+
+	cmp	2(r7),	2(r10)	;
+	jz	.L12      	;abs 0x4de8
+
+	mova	#82944,	r10	;0x14400
+
+.L12:
+	mova	r10,	r12	;
+	adda	#20,	r1	;0x00014
+
+	popm.a	#4,	r10	;20-bit words
+
+	reta			;
+
+.L15:
+	cmp	#4,	r13	;r2 As==10
+	jz	.L76    	;abs 0x502c
+
+	cmp	#2,	r13	;r3 As==10
+	jnz	.L22     	;abs 0x4e1c
+
+	cmp	#2,	r12	;r3 As==10
+	jnz	.L12     	;abs 0x4de8
+
+	mov.b	#10,	r14	;#0x000a
+	mova	r10,	r13	;
+	mova	r8,	r12	;
+	calla	#memcpy		;0x061c8
+
+	mov	2(r10),	r10	;
+
+	and	2(r7),	r10	;
+	mov	r10,	2(r8)	;
+
+.L21:
+	mova	r8,	r10	;
+	jmp .L12	;mova	#19944,	r0	;0x04de8
+
+.L22:
+	cmp	#2,	r12	;r3 As==10
+	jz	.L76    	;abs 0x502c
+
+	mov	4(r10),	r11	;
+
+	mov	4(r7),	r9	;
+
+	mov	6(r10),	4(r1)	;
+	mov	8(r10),	6(r1)	;
+
+	mov	6(r7),	8(r1)	;
+	mov	8(r7),	10(r1)	; 0x000a
+
+	mov	r11,	r12	;
+	sub	r9,	r12	;
+
+	cmp	#0,	r12	;r3 As==00
+	jge	.L37    	;abs 0x4eb2
+
+	mov	r9,	r12	;
+	sub	r11,	r12	;
+
+	mov.b	#31,	r15	;#0x001f
+	cmp	r12,	r15	;
+	jl	.L60    	;abs 0x4f9e
+
+	mov	r12,	r13	;
+	clr	r14		;
+	mov	r13,	12(r1)	; 0x000c
+	mov	r14,	14(r1)	; 0x000e
+	mov	4(r1),	r12	;
+
+	mov	6(r1),	r13	;
+
+	mov	12(r1),	r14	;0x0000c
+	calla	#__mspabi_srll		;0x05a00
+
+	mov	r12,	16(r1)	; 0x0010
+	mov	r13,	18(r1)	; 0x0012
+	mov	#-1,	r12	;r3 As==11
+	mov	#-1,	r13	;r3 As==11
+	mov	12(r1),	r14	;0x0000c
+	calla	#__mspabi_slll		;0x059d4
+	mov	4(r1),	r14	;
+	bic	r12,	r14	;
+	mov	6(r1),	r15	;
+	bic	r13,	r15	;
+	mov	r15,	r13	;
+	bis	r14,	r13	;
+	clr	r12		;
+	sub	r13,	r12	;
+	bis	r13,	r12	;
+	rpt #15 { rrux.w	r12		;
+	bis	16(r1),	r12	;0x00010
+	mov	r12,	4(r1)	;
+
+	mov	18(r1),	6(r1)	;0x00012
+
+	mov	r9,	r11	;
+	jmp .L44	;mova	#20244,	r0	;0x04f14
+
+.L37:
+	mov.b	#31,	r13	;#0x001f
+	cmp	r12,	r13	;
+	jl	.L60    	;abs 0x4f9e
+
+	cmp	#0,	r12	;r3 As==00
+	jz	.L44     	;abs 0x4f14
+
+	mov	r12,	r14	;
+	clr	r15		;
+	mov	r14,	12(r1)	; 0x000c
+	mov	r15,	14(r1)	; 0x000e
+	mov	8(r1),	r12	;
+
+	mov	10(r1),	r13	;0x0000a
+	mova	r11,	0(r1)	;
+	calla	#__mspabi_srll		;0x05a00
+
+	mov	r12,	16(r1)	; 0x0010
+	mov	r13,	r9	;
+	mov	#-1,	r12	;r3 As==11
+	mov	#-1,	r13	;r3 As==11
+	mov	12(r1),	r14	;0x0000c
+	calla	#__mspabi_slll		;0x059d4
+	mov	8(r1),	r15	;
+	bic	r12,	r15	;
+	mov	10(r1),	r14	;0x0000a
+	bic	r13,	r14	;
+	mov	r14,	r13	;
+	bis	r15,	r13	;
+	clr	r12		;
+	sub	r13,	r12	;
+	bis	r13,	r12	;
+	rpt #15 { rrux.w	r12		;
+	bis	16(r1),	r12	;0x00010
+	mov	r12,	8(r1)	;
+
+	mov	r9,	10(r1)	; 0x000a
+
+	mova	@r1,	r11	;
+
+.L44:
+	mov	2(r10),	r12	;
+
+	cmp	2(r7),	r12	;
+	jz	.L72    	;abs 0x5004
+
+	cmp	#0,	r12	;r3 As==00
+	jz	.L65    	;abs 0x4fbc
+
+	mov	8(r1),	r12	;
+	mov	10(r1),	r13	;0x0000a
+	subx.w	4(r1),	r12	;
+	subcx.w	6(r1),	r13	;
+
+.L48:
+	cmp	#0,	r13	;r3 As==00
+	jl	.L67    	;abs 0x4fd4
+
+	mov	#0,	2(r8)	;r3 As==00
+
+	mov	r11,	4(r8)	;
+
+	mov	r12,	6(r8)	;
+	mov	r13,	8(r8)	;
+
+.L52:
+	mov	6(r8),	r12	;
+	mov	8(r8),	r13	;
+
+	mov	r12,	r15	;
+	add	#-1,	r15	;r3 As==11
+	mov	r13,	r14	;
+	addc	#-1,	r14	;r3 As==11
+
+	mov	#16383,	r10	;#0x3fff
+	cmp	r14,	r10	;
+	jnc	.L55     	;abs 0x4f6e
+	cmp	r10,	r14	;
+	jnz	.L70    	;abs 0x4ff0
+	mov	#-2,	r14	;#0xfffe
+	cmp	r15,	r14	;
+	jc	.L70    	;abs 0x4ff0
+
+.L55:
+	mov	#3,	0(r8)	;
+
+	mov	6(r8),	r12	;
+	mov	8(r8),	r13	;
+
+	cmp	#0,	r13	;r3 As==00
+	jge	.L21    	;abs 0x4e16
+
+	mov	r12,	r14	;
+	mov	r13,	r15	;
+	clrc			
+	rrc	r15		;
+	rrc	r14		;
+	and.b	#1,	r12	;r3 As==01
+	bis	r14,	r12	;
+	mov	r12,	6(r8)	;
+	mov	r15,	8(r8)	;
+
+	inc	4(r8)		;
+	jmp .L21	;mova	#19990,	r0	;0x04e16
+
+.L60:
+	cmp	r11,	r9	;
+	jl	.L63     	;abs 0x4fb0
+	mov	r9,	r11	;
+
+	mov	#0,	4(r1)	;r3 As==00
+
+	mov	#0,	6(r1)	;r3 As==00
+	jmp .L44	;mova	#20244,	r0	;0x04f14
+
+.L63:
+	mov	#0,	8(r1)	;r3 As==00
+
+	mov	#0,	10(r1)	;r3 As==00, 0x000a
+	jmp .L44	;mova	#20244,	r0	;0x04f14
+
+.L65:
+	mov	4(r1),	r12	;
+	mov	6(r1),	r13	;
+	subx.w	8(r1),	r12	;
+	subcx.w	10(r1),	r13	;0x0000a
+
+	jmp .L48	;mova	#20278,	r0	;0x04f36
+
+.L67:
+	mov	#1,	2(r8)	;r3 As==01
+
+	mov	r11,	4(r8)	;
+
+	clr.b	r14		;
+	clr.b	r15		;
+	sub	r12,	r14	;
+	subc	r13,	r15	;
+	mov	r14,	6(r8)	;
+	mov	r15,	8(r8)	;
+	jmp .L52	;mova	#20298,	r0	;0x04f4a
+
+.L70:
+	rla	r12		;
+	rlc	r13		;
+	mov	r12,	6(r8)	;
+	mov	r13,	8(r8)	;
+
+	add	#-1,	4(r8)	;r3 As==11
+	jmp .L52	;mova	#20298,	r0	;0x04f4a
+
+.L72:
+	mov	r12,	2(r8)	;
+
+	mov	r11,	4(r8)	;
+
+	mov	4(r1),	r15	;
+	addx.w	8(r1),	r15	;
+	mov	r15,	6(r8)	;
+	mov	6(r1),	r10	;
+
+	addcx.w	10(r1),	r10	;0x0000a
+	mov	r10,	8(r8)	;
+	jmp .L55	;mova	#20334,	r0	;0x04f6e
+
+.L76:
+	mova	r7,	r10	;
+
+	jmp .L12	;mova	#19944,	r0	;0x04de8
+
+
+
+	.global __mspabi_addf
+	.type __mspabi_addf, @function
+__mspabi_addf:
+	nop
+	nop
+	pushm.a	#1,	r10	;20-bit words
+
+	suba	#38,	r1	;0x00026
+
+	mov	r12,	0(r1)	;
+	mov	r13,	2(r1)	;
+
+	mov	r14,	4(r1)	;
+	mov	r15,	6(r1)	;
+
+	mova	#__unpack_f,	r10	;0x05b8e
+	mova	r1,	r13	;
+	adda	#8,	r13	;
+	mova	r1,	r12	;
+
+	calla	r10		;
+
+	mova	r1,	r13	;
+	adda	#18,	r13	;0x00012
+	mova	r1,	r12	;
+	adda	#4,	r12	;
+	calla	r10		;
+
+	mova	r1,	r14	;
+	adda	#28,	r14	;0x0001c
+	mova	r1,	r13	;
+	adda	#18,	r13	;0x00012
+	mova	r1,	r12	;
+	adda	#8,	r12	;
+	calla	#_fpadd_parts		;0x04db8
+
+	calla	#__pack_f		;0x05a26
+
+	adda	#38,	r1	;0x00026
+
+	popm.a	#1,	r10	;20-bit words
+
+	reta			;
+
+
+
+	.global __mspabi_subf
+	.type __mspabi_subf, @function
+__mspabi_subf:
+	nop
+	nop
+	pushm.a	#1,	r10	;20-bit words
+
+	suba	#38,	r1	;0x00026
+
+	mov	r12,	0(r1)	;
+	mov	r13,	2(r1)	;
+
+	mov	r14,	4(r1)	;
+	mov	r15,	6(r1)	;
+
+	mova	#__unpack_f,	r10	;0x05b8e
+	mova	r1,	r13	;
+	adda	#8,	r13	;
+	mova	r1,	r12	;
+
+	calla	r10		;
+
+	mova	r1,	r13	;
+	adda	#18,	r13	;0x00012
+	mova	r1,	r12	;
+	adda	#4,	r12	;
+	calla	r10		;
+
+	xor	#1,	20(r1)	;r3 As==01, 0x0014
+
+	mova	r1,	r14	;
+	adda	#28,	r14	;0x0001c
+	mova	r1,	r13	;
+	adda	#18,	r13	;0x00012
+	mova	r1,	r12	;
+	adda	#8,	r12	;
+	calla	#_fpadd_parts		;0x04db8
+
+	calla	#__pack_f		;0x05a26
+
+	adda	#38,	r1	;0x00026
+
+	popm.a	#1,	r10	;20-bit words
+
+	reta			;
+
+
+
+	.global __mspabi_mpyf
+	.type __mspabi_mpyf, @function
+__mspabi_mpyf:
+	nop
+	nop
+	pushm.a	#4,	r10	;20-bit words
+
+	suba	#54,	r1	;0x00036
+
+	mov	r12,	16(r1)	; 0x0010
+	mov	r13,	18(r1)	; 0x0012
+
+	mov	r14,	20(r1)	; 0x0014
+	mov	r15,	22(r1)	; 0x0016
+
+	mova	#__unpack_f,	r10	;0x05b8e
+	mova	r1,	r13	;
+	adda	#24,	r13	;0x00018
+	mova	r1,	r12	;
+
+	adda	#16,	r12	;0x00010
+	calla	r10		;
+
+	mova	r1,	r13	;
+	adda	#34,	r13	;0x00022
+	mova	r1,	r12	;
+	adda	#20,	r12	;0x00014
+	calla	r10		;
+
+	mov	24(r1),	r13	;0x00018
+
+	mov.b	#1,	r10	;r3 As==01
+	cmp	r13,	r10	;
+	jnc	.L116     	;abs 0x5146
+
+.L109:
+	mov	26(r1),	r13	;0x0001a
+	xor	36(r1),	r13	;0x00024
+	clr	r12		;
+	sub	r13,	r12	;
+	bis	r13,	r12	;
+
+	rpt #15 { rrux.w	r12		;
+	mov	r12,	26(r1)	; 0x001a
+
+.L111:
+	mova	r1,	r12	;
+	adda	#24,	r12	;0x00018
+
+.L112:
+	calla	#__pack_f		;0x05a26
+
+	adda	#54,	r1	;0x00036
+
+	popm.a	#4,	r10	;20-bit words
+
+	reta			;
+
+.L116:
+	mov	34(r1),	r12	;0x00022
+
+	mov.b	#1,	r11	;r3 As==01
+	cmp	r12,	r11	;
+	jnc	.L121     	;abs 0x5170
+
+.L118:
+	mov	26(r1),	r13	;0x0001a
+	xor	36(r1),	r13	;0x00024
+	clr	r12		;
+	sub	r13,	r12	;
+	bis	r13,	r12	;
+
+	rpt #15 { rrux.w	r12		;
+	mov	r12,	36(r1)	; 0x0024
+
+.L120:
+	mova	r1,	r12	;
+	adda	#34,	r12	;0x00022
+	jmp .L112	;mova	#20794,	r0	;0x0513a
+
+.L121:
+	cmp	#4,	r13	;r2 As==10
+	jnz	.L124     	;abs 0x5180
+
+	cmp	#2,	r12	;r3 As==10
+	jnz	.L109     	;abs 0x511e
+
+.L123:
+	mova	#82944,	r12	;0x14400
+	jmp .L112	;mova	#20794,	r0	;0x0513a
+
+.L124:
+	cmp	#4,	r12	;r2 As==10
+	jnz	.L126     	;abs 0x518c
+
+	cmp	#2,	r13	;r3 As==10
+	jz	.L123     	;abs 0x5178
+	jmp .L118	;mova	#20816,	r0	;0x05150
+
+.L126:
+	mov	36(r1),	r14	;0x00024
+	xor	26(r1),	r14	;0x0001a
+	clr	r15		;
+	sub	r14,	r15	;
+	bis	r14,	r15	;
+	rpt #15 { rrux.w	r15		;
+	mov	r15,	10(r1)	; 0x000a
+
+	cmp	#2,	r13	;r3 As==10
+	jnz	.L129     	;abs 0x51ae
+
+	mov	r15,	26(r1)	; 0x001a
+	jmp .L111	;mova	#20788,	r0	;0x05134
+
+.L129:
+	cmp	#2,	r12	;r3 As==10
+	jnz	.L131     	;abs 0x51bc
+
+	mov	10(r1),	36(r1)	;0x0000a, 0x0024
+	jmp .L120	;mova	#20838,	r0	;0x05166
+
+.L131:
+	mov	30(r1),	6(r1)	;0x0001e
+	mov	32(r1),	8(r1)	;0x00020
+
+	mov	40(r1),	0(r1)	;0x00028
+	mov	42(r1),	2(r1)	;0x0002a
+
+	mov	#32,	4(r1)	;#0x0020
+
+	clr.b	r12		;
+	clr.b	r13		;
+
+	mov	r12,	r14	;
+	mov	r13,	r15	;
+
+	mov	r12,	r8	;
+	mov	r13,	r9	;
+
+.L137:
+	mov	6(r1),	r10	;
+	and.b	#1,	r10	;r3 As==01
+
+	cmp	#0,	r10	;r3 As==00
+	jz	.L146     	;abs 0x5230
+
+	addx.w	@r1,	r8	;
+
+	addcx.w	2(r1),	r9	;
+
+	mov	r14,	r10	;
+	add	r12,	r10	;
+	mov	r10,	12(r1)	; 0x000c
+	mov	r15,	r11	;
+	addc	r13,	r11	;
+	mov	r11,	14(r1)	; 0x000e
+
+	mov.b	#1,	r11	;r3 As==01
+	clr.b	r10		;
+	cmp	2(r1),	r9	;
+	jnc	.L144     	;abs 0x5224
+	mov	2(r1),	r7	;
+	cmp	r9,	r7	;
+	jnz	.L143      	;abs 0x5220
+	cmp	@r1,	r8	;
+	jnc	.L144      	;abs 0x5224
+
+.L143:
+	clr.b	r11		;
+	mov	r11,	r10	;
+
+.L144:
+	mov	12(r1),	r12	;0x0000c
+
+	add	r11,	r12	;
+	mov	14(r1),	r13	;0x0000e
+	addc	r10,	r13	;
+
+.L146:
+	mov	r14,	r10	;
+	mov	r15,	r11	;
+	add	r14,	r10	;
+	addc	r15,	r11	;
+	mov	r10,	r14	;
+
+	mov	r11,	r15	;
+
+	mov	2(r1),	r10	;
+	cmp	#0,	r10	;r3 As==00
+	jge	.L150      	;abs 0x524a
+
+	mov	r14,	r7	;
+	bis	#1,	r7	;r3 As==01
+	mov	r7,	r14	;
+
+.L150:
+	addx.w	@r1,	0(r1)	;
+	rlcx.w	2(r1)		;
+
+	clrc			
+	rrcx.w	8(r1)		;
+	rrcx.w	6(r1)		;
+
+	add	#-1,	4(r1)	;r3 As==11
+
+	cmp	#0,	4(r1)	;r3 As==00
+	jnz	.L137    	;abs 0x51e6
+
+	mov	28(r1),	r10	;0x0001c
+	add	38(r1),	r10	;0x00026
+
+	incd	r10		;
+
+	mov	r10,	48(r1)	; 0x0030
+
+	mov	10(r1),	46(r1)	;0x0000a, 0x002e
+
+	mov	4(r1),	r14	;
+
+	mov.b	#1,	r7	;r3 As==01
+
+.L160:
+	cmp	#0,	r13	;r3 As==00
+	jl	.L171     	;abs 0x52ce
+	cmp	#0,	r14	;r3 As==00
+	jz	.L161      	;abs 0x5296
+	mov	r10,	48(r1)	; 0x0030
+
+.L161:
+	mov	48(r1),	r14	;0x00030
+
+	clr.b	r15		;
+
+.L163:
+	mov	#16383,	r11	;#0x3fff
+	cmp	r13,	r11	;
+	jnc	.L176     	;abs 0x52f6
+
+	mov	r12,	r10	;
+	mov	r13,	r11	;
+	add	r12,	r10	;
+	addc	r13,	r11	;
+	mov	r10,	r12	;
+
+	mov	r11,	r13	;
+
+	cmp	#0,	r9	;r3 As==00
+	jge	.L168      	;abs 0x52ba
+
+	mov	r12,	r7	;
+	bis	#1,	r7	;r3 As==01
+	mov	r7,	r12	;
+
+.L168:
+	mov	r8,	r10	;
+	mov	r9,	r11	;
+	add	r8,	r10	;
+	addc	r9,	r11	;
+	mov	r10,	r8	;
+
+	mov	r11,	r9	;
+
+	add	#-1,	r14	;r3 As==11
+	mov.b	#1,	r15	;r3 As==01
+	jmp .L163	;mova	#21148,	r0	;0x0529c
+
+.L171:
+	mov	r12,	r14	;
+	and.b	#1,	r14	;r3 As==01
+
+	cmp	#0,	r14	;r3 As==00
+	jz	.L175     	;abs 0x52e8
+
+	mov	r8,	r14	;
+	mov	r9,	r15	;
+	clrc			
+	rrc	r15		;
+	rrc	r14		;
+
+	mov	r14,	r8	;
+	mov	r15,	r9	;
+	bis	#-32768,r9	;#0x8000
+
+.L175:
+	clrc			
+	rrc	r13		;
+	rrc	r12		;
+	inc	r10		;
+	mov	r7,	r14	;
+	jmp .L160	;mova	#21130,	r0	;0x0528a
+
+.L176:
+	cmp	#0,	r15	;r3 As==00
+	jz	.L177      	;abs 0x52fe
+	mov	r14,	48(r1)	; 0x0030
+
+.L177:
+	mov	r12,	r14	;
+	and.b	#127,	r14	;#0x007f
+
+	cmp	#64,	r14	;#0x0040
+	jnz	.L184     	;abs 0x532e
+
+	mov	r12,	r14	;
+	and.b	#128,	r14	;#0x0080
+
+	cmp	#0,	r14	;r3 As==00
+	jnz	.L184     	;abs 0x532e
+
+	mov	r8,	r14	;
+	bis	r9,	r14	;
+	cmp	#0,	r14	;r3 As==00
+	jz	.L184     	;abs 0x532e
+
+	mov	r12,	r15	;
+	add	#64,	r15	;#0x0040
+	mov	r13,	r14	;
+	adc	r14		;
+
+	mov	r15,	r12	;
+	and	#-128,	r12	;#0xff80
+	mov	r14,	r13	;
+
+.L184:
+	mov	r12,	50(r1)	; 0x0032
+	mov	r13,	52(r1)	; 0x0034
+
+	mov	#3,	44(r1)	; 0x002c
+
+	mova	r1,	r12	;
+
+	adda	#44,	r12	;0x0002c
+	jmp .L112	;mova	#20794,	r0	;0x0513a
+
+
+
+	.global __mspabi_divf
+	.type __mspabi_divf, @function
+__mspabi_divf:
+	nop
+	nop
+	pushm.a	#4,	r10	;20-bit words
+
+	suba	#34,	r1	;0x00022
+
+	mov	r12,	6(r1)	;
+	mov	r13,	8(r1)	;
+
+	mov	r14,	10(r1)	; 0x000a
+	mov	r15,	12(r1)	; 0x000c
+
+	mova	#__unpack_f,	r10	;0x05b8e
+	mova	r1,	r13	;
+	adda	#14,	r13	;0x0000e
+	mova	r1,	r12	;
+
+	adda	#6,	r12	;
+	calla	r10		;
+
+	mova	r1,	r13	;
+	adda	#24,	r13	;0x00018
+	mova	r1,	r12	;
+	adda	#10,	r12	;0x0000a
+	calla	r10		;
+
+	mov	14(r1),	r13	;0x0000e
+
+	mov.b	#1,	r7	;r3 As==01
+	cmp	r13,	r7	;
+	jnc	.L201     	;abs 0x5398
+
+.L196:
+	mova	r1,	r12	;
+	adda	#14,	r12	;0x0000e
+
+.L197:
+	calla	#__pack_f		;0x05a26
+
+	adda	#34,	r1	;0x00022
+
+	popm.a	#4,	r10	;20-bit words
+
+	reta			;
+
+.L201:
+	mov	24(r1),	r12	;0x00018
+
+	mov.b	#1,	r8	;r3 As==01
+	cmp	r12,	r8	;
+	jc	.L246    	;abs 0x549c
+
+	xor	26(r1),	16(r1)	;0x0001a, 0x0010
+
+	cmp	#4,	r13	;r2 As==10
+	jz	.L206      	;abs 0x53b0
+
+	cmp	#2,	r13	;r3 As==10
+	jnz	.L208     	;abs 0x53bc
+
+.L206:
+	cmp	r12,	r13	;
+	jnz	.L196     	;abs 0x5386
+
+	mova	#82944,	r12	;0x14400
+	jmp .L197	;mova	#21388,	r0	;0x0538c
+
+.L208:
+	cmp	#4,	r12	;r2 As==10
+	jnz	.L212     	;abs 0x53d0
+
+	mov	#0,	20(r1)	;r3 As==00, 0x0014
+	mov	#0,	22(r1)	;r3 As==00, 0x0016
+
+	mov	#0,	18(r1)	;r3 As==00, 0x0012
+
+	jmp .L196	;mova	#21382,	r0	;0x05386
+
+.L212:
+	cmp	#2,	r12	;r3 As==10
+	jnz	.L215     	;abs 0x53dc
+
+	mov	#4,	14(r1)	;r2 As==10, 0x000e
+
+	jmp .L196	;mova	#21382,	r0	;0x05386
+
+.L215:
+	mov	18(r1),	r14	;0x00012
+	sub	28(r1),	r14	;0x0001c
+
+	mov	r14,	18(r1)	; 0x0012
+
+	mov	20(r1),	r12	;0x00014
+	mov	22(r1),	r13	;0x00016
+
+	mov	30(r1),	r10	;0x0001e
+	mov	32(r1),	r11	;0x00020
+
+	cmp	r11,	r13	;
+	jnc	.L220     	;abs 0x5404
+	cmp	r13,	r11	;
+	jnz	.L223     	;abs 0x5416
+	cmp	r10,	r12	;
+	jc	.L223     	;abs 0x5416
+
+.L220:
+	mov	r12,	r7	;
+	mov	r13,	r8	;
+	add	r12,	r7	;
+	addc	r13,	r8	;
+	mov	r7,	r12	;
+
+	mov	r8,	r13	;
+
+	add	#-1,	r14	;r3 As==11
+	mov	r14,	18(r1)	; 0x0012
+
+.L223:
+	mov.b	#31,	r9	;#0x001f
+
+	clr.b	r14		;
+	mov	r14,	r15	;
+
+	mov	#0,	0(r1)	;r3 As==00
+	mov	#16384,	2(r1)	;#0x4000
+
+	mov	r11,	4(r1)	;
+
+.L227:
+	cmp	r11,	r13	;
+	jnc	.L231     	;abs 0x544c
+	cmp	r13,	4(r1)	;
+	jnz	.L228      	;abs 0x543a
+	cmp	r10,	r12	;
+	jnc	.L231     	;abs 0x544c
+
+.L228:
+	mov	r14,	r7	;
+	bis	@r1,	r7	;
+	mov	r15,	r8	;
+	bis	2(r1),	r8	;
+	mov	r7,	r14	;
+
+	mov	r8,	r15	;
+
+	sub	r10,	r12	;
+	subc	r11,	r13	;
+
+.L231:
+	clrc			
+	rrcx.w	2(r1)		;
+	rrcx.w	@r1		;
+
+	mov	r12,	r7	;
+	mov	r13,	r8	;
+	add	r12,	r7	;
+	addc	r13,	r8	;
+	mov	r7,	r12	;
+
+	mov	r8,	r13	;
+
+	add	#-1,	r9	;r3 As==11
+	cmp	#0,	r9	;r3 As==00
+	jnz	.L227     	;abs 0x542c
+
+	mov	r14,	r10	;
+
+	and.b	#127,	r10	;#0x007f
+
+	cmp	#64,	r10	;#0x0040
+	jnz	.L245     	;abs 0x5490
+
+	mov	r14,	r10	;
+	and.b	#128,	r10	;#0x0080
+
+	cmp	#0,	r10	;r3 As==00
+	jnz	.L245     	;abs 0x5490
+
+	bis	r8,	r12	;
+
+	cmp	#0,	r12	;r3 As==00
+	jz	.L245     	;abs 0x5490
+
+	add	#64,	r14	;#0x0040
+
+	adc	r15		;
+
+	and	#-128,	r14	;#0xff80
+
+.L245:
+	mov	r14,	20(r1)	; 0x0014
+	mov	r15,	22(r1)	; 0x0016
+	jmp .L196	;mova	#21382,	r0	;0x05386
+
+.L246:
+	mova	r1,	r12	;
+	adda	#24,	r12	;0x00018
+	jmp .L197	;mova	#21388,	r0	;0x0538c
+
+
+
+	.global __mspabi_cvtfd
+	.type __mspabi_cvtfd, @function
+__mspabi_cvtfd:
+	nop
+	nop
+	pushm.a	#3,	r10	;20-bit words
+
+	suba	#22,	r1	;0x00016
+
+	mov	r12,	8(r1)	;
+	mov	r13,	10(r1)	; 0x000a
+
+	mova	r1,	r13	;
+	adda	#12,	r13	;0x0000c
+	mova	r1,	r12	;
+
+	adda	#8,	r12	;
+	calla	#__unpack_f		;0x05b8e
+
+	mov	20(r1),	r9	;0x00014
+
+	mov	18(r1),	r8	;0x00012
+	clr.b	r10		;
+	mov	r10,	r11	;
+	mov.b	#30,	r12	;#0x001e
+	calla	#__mspabi_sllll		;0x059da
+	mov	r12,	0(r1)	;
+	mov	r13,	2(r1)	;
+	mov	r14,	4(r1)	;
+	mov	r15,	6(r1)	;
+	mov	16(r1),	r14	;0x00010
+	mov	14(r1),	r13	;0x0000e
+	mov	12(r1),	r12	;0x0000c
+	calla	#__make_dp		;0x05932
+
+	adda	#22,	r1	;0x00016
+
+	popm.a	#3,	r10	;20-bit words
+
+	reta			;
+
+
+
+	.global __mspabi_divd
+	.type __mspabi_divd, @function
+__mspabi_divd:
+	nop
+	nop
+	pushm.a	#4,	r10	;20-bit words
+
+	suba	#72,	r1	;0x00048
+
+	mov	r8,	28(r1)	; 0x001c
+	mov	r9,	30(r1)	; 0x001e
+	mov	r10,	32(r1)	; 0x0020
+	mov	r11,	34(r1)	; 0x0022
+
+	mov	r12,	36(r1)	; 0x0024
+	mov	r13,	38(r1)	; 0x0026
+	mov	r14,	40(r1)	; 0x0028
+	mov	r15,	42(r1)	; 0x002a
+
+	mova	#__unpack_d,	r10	;0x05f9e
+	mova	r1,	r13	;
+	adda	#44,	r13	;0x0002c
+	mova	r1,	r12	;
+
+	adda	#28,	r12	;0x0001c
+	calla	r10		;
+
+	mova	r1,	r13	;
+	adda	#58,	r13	;0x0003a
+	mova	r1,	r12	;
+	adda	#36,	r12	;0x00024
+	calla	r10		;
+
+	mov	44(r1),	r13	;0x0002c
+
+	mov.b	#1,	r12	;r3 As==01
+	cmp	r13,	r12	;
+	jnc	.L269     	;abs 0x5562
+
+.L264:
+	mova	r1,	r12	;
+	adda	#44,	r12	;0x0002c
+
+.L265:
+	calla	#__pack_d		;0x05cae
+
+	adda	#72,	r1	;0x00048
+
+	popm.a	#4,	r10	;20-bit words
+
+	reta			;
+
+.L269:
+	mov	58(r1),	r12	;0x0003a
+
+	mov.b	#1,	r14	;r3 As==01
+	cmp	r12,	r14	;
+	jc	.L333    	;abs 0x584a
+
+	xor	60(r1),	46(r1)	;0x0003c, 0x002e
+
+	cmp	#4,	r13	;r2 As==10
+	jz	.L274      	;abs 0x557a
+
+	cmp	#2,	r13	;r3 As==10
+	jnz	.L276     	;abs 0x5586
+
+.L274:
+	cmp	r12,	r13	;
+	jnz	.L264     	;abs 0x5550
+
+	mova	#82954,	r12	;0x1440a
+	jmp .L265	;mova	#21846,	r0	;0x05556
+
+.L276:
+	cmp	#4,	r12	;r2 As==10
+	jnz	.L280     	;abs 0x55a2
+
+	mov	#0,	50(r1)	;r3 As==00, 0x0032
+	mov	#0,	52(r1)	;r3 As==00, 0x0034
+	mov	#0,	54(r1)	;r3 As==00, 0x0036
+	mov	#0,	56(r1)	;r3 As==00, 0x0038
+
+	mov	#0,	48(r1)	;r3 As==00, 0x0030
+
+	jmp .L264	;mova	#21840,	r0	;0x05550
+
+.L280:
+	cmp	#2,	r12	;r3 As==10
+	jnz	.L283     	;abs 0x55ae
+
+	mov	#4,	44(r1)	;r2 As==10, 0x002c
+
+	jmp .L264	;mova	#21840,	r0	;0x05550
+
+.L283:
+	mov	48(r1),	r10	;0x00030
+	sub	62(r1),	r10	;0x0003e
+
+	mov	r10,	48(r1)	; 0x0030
+
+	mov	50(r1),	4(r1)	;0x00032
+	mov	52(r1),	2(r1)	;0x00034
+	mov	54(r1),	r7	;0x00036
+	mov	56(r1),	6(r1)	;0x00038
+
+	mov	64(r1),	22(r1)	;0x00040, 0x0016
+	mov	66(r1),	12(r1)	;0x00042, 0x000c
+	mov	68(r1),	14(r1)	;0x00044, 0x000e
+	mov	70(r1),	16(r1)	;0x00046, 0x0010
+
+	cmp	16(r1),	6(r1)	;0x00010
+	jnc	.L288     	;abs 0x561c
+	cmp	6(r1),	16(r1)	; 0x0010
+	jnz	.L297    	;abs 0x567c
+	cmp	14(r1),	r7	;0x0000e
+	jnc	.L288     	;abs 0x561c
+	cmp	r7,	14(r1)	; 0x000e
+	jnz	.L297    	;abs 0x567c
+	cmp	12(r1),	2(r1)	;0x0000c
+	jnc	.L288     	;abs 0x561c
+	cmp	2(r1),	12(r1)	; 0x000c
+	jnz	.L297    	;abs 0x567c
+	cmp	22(r1),	4(r1)	;0x00016
+	jc	.L297     	;abs 0x567c
+
+.L288:
+	mov	4(r1),	r9	;
+	rla	r9		;
+	mov.b	#1,	r13	;r3 As==01
+	cmp	4(r1),	r9	;
+	jnc	.L289      	;abs 0x562c
+	clr.b	r13		;
+
+.L289:
+	mov	2(r1),	r14	;
+	rla	r14		;
+	mov.b	#1,	r12	;r3 As==01
+	cmp	2(r1),	r14	;
+	jnc	.L290      	;abs 0x563c
+	clr.b	r12		;
+
+.L290:
+	add	r14,	r13	;
+	mov.b	#1,	r15	;r3 As==01
+	cmp	r14,	r13	;
+	jnc	.L291      	;abs 0x5646
+	clr.b	r15		;
+
+.L291:
+	bis	r15,	r12	;
+	mov	r7,	r15	;
+	add	r7,	r15	;
+	mov.b	#1,	r14	;r3 As==01
+	cmp	r7,	r15	;
+	jnc	.L292      	;abs 0x5654
+	clr.b	r14		;
+
+.L292:
+	add	r15,	r12	;
+	mov.b	#1,	r8	;r3 As==01
+
+	cmp	r15,	r12	;
+	jnc	.L294      	;abs 0x565e
+	clr.b	r8		;
+
+.L294:
+	bis	r8,	r14	;
+	mov	6(r1),	r15	;
+	rla	r15		;
+	mov	r9,	4(r1)	;
+	mov	r13,	2(r1)	;
+	mov	r12,	r7	;
+
+	add	r15,	r14	;
+	mov	r14,	6(r1)	;
+
+	add	#-1,	r10	;r3 As==11
+	mov	r10,	48(r1)	; 0x0030
+
+.L297:
+	mov	#61,	20(r1)	;#0x003d, 0x0014
+
+	mov	#0,	0(r1)	;r3 As==00
+	mov	@r1,	8(r1)	;
+	mov	@r1,	10(r1)	; 0x000a
+	mov	@r1,	18(r1)	; 0x0012
+
+	mov	@r1,	r8	;
+	mov	r8,	24(r1)	; 0x0018
+	mov	r8,	r10	;
+	mov	#4096,	r11	;#0x1000
+
+.L300:
+	cmp	16(r1),	6(r1)	;0x00010
+	jnc	.L310    	;abs 0x5754
+	cmp	6(r1),	16(r1)	; 0x0010
+	jnz	.L301     	;abs 0x56d2
+	cmp	14(r1),	r7	;0x0000e
+	jnc	.L310    	;abs 0x5754
+	cmp	r7,	14(r1)	; 0x000e
+	jnz	.L301     	;abs 0x56d2
+	cmp	12(r1),	2(r1)	;0x0000c
+	jnc	.L310    	;abs 0x5754
+	cmp	2(r1),	12(r1)	; 0x000c
+	jnz	.L301     	;abs 0x56d2
+	cmp	22(r1),	4(r1)	;0x00016
+	jnc	.L310    	;abs 0x5754
+
+.L301:
+	bis	r8,	0(r1)	;
+
+	bis	24(r1),	8(r1)	;0x00018
+	bis	r10,	10(r1)	; 0x000a
+	bis	r11,	18(r1)	; 0x0012
+
+	mov	4(r1),	r12	;
+	sub	22(r1),	r12	;0x00016
+	mov	r12,	26(r1)	; 0x001a
+	mov.b	#1,	r14	;r3 As==01
+	cmp	r12,	4(r1)	;
+	jnc	.L304      	;abs 0x56fa
+	clr.b	r14		;
+
+.L304:
+	mov	2(r1),	r12	;
+	sub	12(r1),	r12	;0x0000c
+	mov.b	#1,	r13	;r3 As==01
+	cmp	r12,	2(r1)	;
+	jnc	.L305      	;abs 0x570c
+	clr.b	r13		;
+
+.L305:
+	mov	r12,	r9	;
+	sub	r14,	r9	;
+	mov.b	#1,	r14	;r3 As==01
+	cmp	r9,	r12	;
+	jnc	.L306      	;abs 0x5718
+	clr.b	r14		;
+
+.L306:
+	bis	r14,	r13	;
+	movx.w	r7,	r14	;
+	subx.w	14(r1),	r14	;0x0000e
+	mov.b	#1,	r12	;r3 As==01
+	cmp	r14,	r7	;
+	jnc	.L307      	;abs 0x572c
+	clr.b	r12		;
+
+.L307:
+	mov	r14,	r15	;
+	sub	r13,	r15	;
+	mov.b	#1,	r13	;r3 As==01
+	cmp	r15,	r14	;
+	jnc	.L308      	;abs 0x5738
+	clr.b	r13		;
+
+.L308:
+	bis	r13,	r12	;
+	mov	6(r1),	r13	;
+	sub	16(r1),	r13	;0x00010
+	mov	26(r1),	4(r1)	;0x0001a
+
+	mov	r9,	2(r1)	;
+	mov	r15,	r7	;
+	sub	r12,	r13	;
+	mov	r13,	6(r1)	;
+
+.L310:
+	mov	24(r1),	r9	;0x00018
+	mov.b	#1,	r12	;r3 As==01
+	calla	#__mspabi_srlll		;0x05a06
+	mov	r12,	r8	;
+	mov	r13,	24(r1)	; 0x0018
+	mov	r14,	r10	;
+	mov	r15,	r11	;
+
+	mov	4(r1),	r12	;
+	rla	r12		;
+	mov.b	#1,	r9	;r3 As==01
+	cmp	4(r1),	r12	;
+	jnc	.L312      	;abs 0x5778
+	clr.b	r9		;
+
+.L312:
+	mov	2(r1),	r14	;
+	rla	r14		;
+	mov.b	#1,	r13	;r3 As==01
+
+	cmp	2(r1),	r14	;
+	jnc	.L314      	;abs 0x5788
+	clr.b	r13		;
+
+.L314:
+	add	r14,	r9	;
+	mov.b	#1,	r15	;r3 As==01
+	cmp	r14,	r9	;
+	jnc	.L315      	;abs 0x5792
+	clr.b	r15		;
+
+.L315:
+	bis	r15,	r13	;
+	mov	r7,	r15	;
+	add	r7,	r15	;
+	mov.b	#1,	r14	;r3 As==01
+	cmp	r7,	r15	;
+	jnc	.L316      	;abs 0x57a0
+	clr.b	r14		;
+
+.L316:
+	add	r15,	r13	;
+	mov.b	#1,	r7	;r3 As==01
+
+	cmp	r15,	r13	;
+	jnc	.L318      	;abs 0x57aa
+	clr.b	r7		;
+
+.L318:
+	bis	r7,	r14	;
+	mov	6(r1),	r15	;
+	rla	r15		;
+	mov	r12,	4(r1)	;
+	mov	r9,	2(r1)	;
+	mov	r13,	r7	;
+	add	r15,	r14	;
+	mov	r14,	6(r1)	;
+
+	add	#-1,	20(r1)	;r3 As==11, 0x0014
+	cmp	#0,	20(r1)	;r3 As==00, 0x0014
+	jnz	.L300    	;abs 0x569e
+
+	mov	@r1,	r15	;
+	and.b	#255,	r15	;#0x00ff
+
+	mov	@r1,	r14	;
+
+	cmp.b	#-128,	r14	;#0xff80
+	jnz	.L332     	;abs 0x5830
+
+	bit	#256,	r14	;#0x0100
+	jnz	.L332     	;abs 0x5830
+
+	bis	r9,	r12	;
+
+	bis	r13,	r12	;
+	bis	6(r1),	r12	;
+	cmp	#0,	r12	;r3 As==00
+	jz	.L332     	;abs 0x5830
+
+	add	r14,	r15	;
+	mov.b	#1,	r13	;r3 As==01
+	cmp	r14,	r15	;
+	jnc	.L327      	;abs 0x57f8
+	mov	20(r1),	r13	;0x00014
+
+.L327:
+	clr.b	r12		;
+	add	8(r1),	r13	;
+	mov.b	#1,	r14	;r3 As==01
+	cmp	8(r1),	r13	;
+	jnc	.L328      	;abs 0x5808
+	mov	r12,	r14	;
+
+.L328:
+	bis	r14,	r12	;
+	clr.b	r14		;
+	add	10(r1),	r12	;0x0000a
+	mov.b	#1,	r10	;r3 As==01
+
+	cmp	10(r1),	r12	;0x0000a
+	jnc	.L330      	;abs 0x581a
+	mov	r14,	r10	;
+
+.L330:
+	bis	r10,	r14	;
+
+	and	#-256,	r15	;#0xff00
+	mov	r15,	0(r1)	;
+	mov	r13,	8(r1)	;
+	mov	r12,	10(r1)	; 0x000a
+	add	r14,	18(r1)	; 0x0012
+
+.L332:
+	mov	@r1,	50(r1)	; 0x0032
+	mov	8(r1),	52(r1)	; 0x0034
+	mov	10(r1),	54(r1)	;0x0000a, 0x0036
+	mov	18(r1),	56(r1)	;0x00012, 0x0038
+	jmp .L264	;mova	#21840,	r0	;0x05550
+
+.L333:
+	mova	r1,	r12	;
+	adda	#58,	r12	;0x0003a
+	jmp .L265	;mova	#21846,	r0	;0x05556
+
+
+
+	.global __gedf2
+	.type __gedf2, @function
+__gedf2:
+	nop
+	nop
+	pushm.a	#1,	r10	;20-bit words
+
+	suba	#44,	r1	;0x0002c
+
+	mov	r12,	0(r1)	;
+	mov	r13,	2(r1)	;
+	mov	r14,	4(r1)	;
+	mov	r15,	6(r1)	;
+
+	mov	52(r1),	8(r1)	;0x00034
+	mov	54(r1),	10(r1)	;0x00036, 0x000a
+	mov	56(r1),	12(r1)	;0x00038, 0x000c
+	mov	58(r1),	14(r1)	;0x0003a, 0x000e
+
+	mova	#__unpack_d,	r10	;0x05f9e
+	mova	r1,	r13	;
+	adda	#16,	r13	;0x00010
+	mova	r1,	r12	;
+
+	calla	r10		;
+
+	mova	r1,	r13	;
+	adda	#30,	r13	;0x0001e
+	mova	r1,	r12	;
+	adda	#8,	r12	;
+	calla	r10		;
+
+	mov.b	#1,	r12	;r3 As==01
+	cmp	16(r1),	r12	;0x00010
+	jc	.L346     	;abs 0x58c4
+
+	cmp	30(r1),	r12	;0x0001e
+	jc	.L346     	;abs 0x58c4
+
+	mova	r1,	r13	;
+	adda	#30,	r13	;0x0001e
+	mova	r1,	r12	;
+	adda	#16,	r12	;0x00010
+	calla	#__fpcmp_parts_d		;0x060f6
+
+.L343:
+	adda	#44,	r1	;0x0002c
+
+	popm.a	#1,	r10	;20-bit words
+
+	reta			;
+
+.L346:
+	mov	#-1,	r12	;r3 As==11
+	jmp .L343	;mova	#22716,	r0	;0x058bc
+
+
+
+	.global __unorddf2
+	.type __unorddf2, @function
+__unorddf2:
+	nop
+	nop
+	pushm.a	#1,	r10	;20-bit words
+
+	suba	#44,	r1	;0x0002c
+
+	mov	r12,	0(r1)	;
+	mov	r13,	2(r1)	;
+	mov	r14,	4(r1)	;
+	mov	r15,	6(r1)	;
+
+	mov	52(r1),	8(r1)	;0x00034
+	mov	54(r1),	10(r1)	;0x00036, 0x000a
+	mov	56(r1),	12(r1)	;0x00038, 0x000c
+	mov	58(r1),	14(r1)	;0x0003a, 0x000e
+
+	mova	#__unpack_d,	r10	;0x05f9e
+	mova	r1,	r13	;
+	adda	#16,	r13	;0x00010
+	mova	r1,	r12	;
+
+	calla	r10		;
+
+	mova	r1,	r13	;
+	adda	#30,	r13	;0x0001e
+	mova	r1,	r12	;
+	adda	#8,	r12	;
+	calla	r10		;
+
+	mov.b	#1,	r12	;r3 As==01
+	cmp	16(r1),	r12	;0x00010
+	jc	.L358     	;abs 0x592c
+
+	cmp	30(r1),	r12	;0x0001e
+	jc	.L355      	;abs 0x5924
+	clr.b	r12		;
+
+.L355:
+	adda	#44,	r1	;0x0002c
+
+	popm.a	#1,	r10	;20-bit words
+
+	reta			;
+
+.L358:
+	mov.b	#1,	r12	;r3 As==01
+	jmp .L355	;mova	#22820,	r0	;0x05924
+
+
+
+	.global __make_dp
+	.type __make_dp, @function
+__make_dp:
+	nop
+	nop
+	suba	#14,	r1	;0x0000e
+
+	mov	r12,	0(r1)	;
+
+	mov	r13,	2(r1)	;
+
+	mov	r14,	4(r1)	;
+
+	mov	18(r1),	6(r1)	;0x00012
+	mov	20(r1),	8(r1)	;0x00014
+	mov	22(r1),	10(r1)	;0x00016, 0x000a
+	mov	24(r1),	12(r1)	;0x00018, 0x000c
+
+	mova	r1,	r12	;
+
+	calla	#__pack_d		;0x05cae
+
+	adda	#14,	r1	;0x0000e
+
+	reta			;
+
+
+
+	.global __mspabi_cvtdf
+	.type __mspabi_cvtdf, @function
+__mspabi_cvtdf:
+	nop
+	nop
+	pushm.a	#3,	r10	;20-bit words
+
+	suba	#24,	r1	;0x00018
+
+	mov	r12,	2(r1)	;
+	mov	r13,	4(r1)	;
+	mov	r14,	6(r1)	;
+	mov	r15,	8(r1)	;
+
+	mova	r1,	r13	;
+	adda	#10,	r13	;0x0000a
+	mova	r1,	r12	;
+
+	adda	#2,	r12	;
+	calla	#__unpack_d		;0x05f9e
+
+	mov	16(r1),	r8	;0x00010
+	mov	18(r1),	r9	;0x00012
+	mov	20(r1),	r10	;0x00014
+	mov	22(r1),	r11	;0x00016
+	mov.b	#30,	r12	;#0x001e
+	calla	#__mspabi_srlll		;0x05a06
+
+	mov	r12,	r15	;
+
+	and	#16383,	r9	;#0x3fff
+
+	bis	r8,	r9	;
+	cmp	#0,	r9	;r3 As==00
+	jz	.L376      	;abs 0x59b2
+
+	bis	#1,	r15	;r3 As==01
+
+.L376:
+	mov	r13,	0(r1)	;
+	mov	14(r1),	r14	;0x0000e
+	mov	12(r1),	r13	;0x0000c
+
+	mov	10(r1),	r12	;0x0000a
+	calla	#__make_fp		;0x05c6c
+
+	adda	#24,	r1	;0x00018
+
+	popm.a	#3,	r10	;20-bit words
+
+	reta			;
+
+.L381:
+	add	#-1,	r14	;r3 As==11
+	rla	r12		;
+	rlc	r13		;
+
+
+
+	.global __mspabi_slll
+	.type __mspabi_slll, @function
+__mspabi_slll:
+	nop
+	nop
+	cmp	#0,	r14	;r3 As==00
+	jnz	.L381      	;abs 0x59ce
+	reta			;
+
+
+
+	.global __mspabi_sllll
+	.type __mspabi_sllll, @function
+__mspabi_sllll:
+	nop
+	nop
+	mov	r11,	r15	;
+	mov	r12,	r11	;
+	mov	r10,	r14	;
+	mov	r9,	r13	;
+	mov	r8,	r12	;
+	cmp	#0,	r11	;r3 As==00
+	jnz	.L382      	;abs 0x59ea
+	reta			;
+
+.L382:
+	rla	r12		;
+	rlc	r13		;
+	rlc	r14		;
+	rlc	r15		;
+	add	#-1,	r11	;r3 As==11
+	jnz	.L382     	;abs 0x59ea
+	reta			;
+
+.L383:
+	add	#-1,	r14	;r3 As==11
+	clrc			
+	rrc	r13		;
+	rrc	r12		;
+
+
+
+	.global __mspabi_srll
+	.type __mspabi_srll, @function
+__mspabi_srll:
+	nop
+	nop
+	cmp	#0,	r14	;r3 As==00
+	jnz	.L383     	;abs 0x59f8
+	reta			;
+
+
+
+	.global __mspabi_srlll
+	.type __mspabi_srlll, @function
+__mspabi_srlll:
+	nop
+	nop
+	mov	r11,	r15	;
+	mov	r12,	r11	;
+	mov	r10,	r14	;
+	mov	r9,	r13	;
+	mov	r8,	r12	;
+	cmp	#0,	r11	;r3 As==00
+	jnz	.L384      	;abs 0x5a16
+	reta			;
+
+.L384:
+	clrc			
+	rrc	r15		;
+	rrc	r14		;
+	rrc	r13		;
+	rrc	r12		;
+	add	#-1,	r11	;r3 As==11
+	jnz	.L384     	;abs 0x5a16
+	reta			;
+
+
+
+	.global __pack_f
+	.type __pack_f, @function
+__pack_f:
+	nop
+	nop
+	pushm.a	#4,	r10	;20-bit words
+
+	suba	#8,	r1	;
+
+	mov	6(r12),	r8	;
+	mov	8(r12),	r9	;
+
+	mov	2(r12),	r7	;
+
+	mov	@r12,	r13	;
+
+	mov.b	#1,	r14	;r3 As==01
+	cmp	r13,	r14	;
+	jnc	.L400     	;abs 0x5a84
+
+	mov	r8,	r12	;
+
+	mov	r9,	r13	;
+	mov.b	#7,	r14	;
+	calla	#__mspabi_srll		;0x05a00
+
+	and.b	#63,	r13	;#0x003f
+
+	mov	r12,	r8	;
+	mov	r13,	r9	;
+	bis	#64,	r9	;#0x0040
+
+	mov.b	#255,	r10	;#0x00ff
+
+.L395:
+	mov	r8,	r12	;
+	mov	r9,	r13	;
+	mov.b	#16,	r14	;#0x0010
+	calla	#__mspabi_srll		;0x05a00
+	and.b	#127,	r12	;#0x007f
+	rpt #7 { rlax.w	r10		;
+
+	bis	r12,	r10	;
+	mov	r7,	r13	;
+	rpt #15 { rlax.w	r13		;
+
+	mov	r8,	r12	;
+	bis	r10,	r13	;
+	adda	#8,	r1	;
+
+	popm.a	#4,	r10	;20-bit words
+
+	reta			;
+
+.L400:
+	cmp	#4,	r13	;r2 As==10
+	jz	.L444    	;abs 0x5b86
+
+	cmp	#2,	r13	;r3 As==10
+	jz	.L441    	;abs 0x5b7c
+
+	mov	r8,	r10	;
+	bis	r9,	r10	;
+	cmp	#0,	r10	;r3 As==00
+	jz	.L395     	;abs 0x5a5c
+
+	mov	4(r12),	r10	;
+
+	cmp	#-126,	r10	;#0xff82
+	jge	.L425    	;abs 0x5b32
+
+	mov	#-126,	r12	;#0xff82
+	sub	r10,	r12	;
+
+	mov.b	#25,	r13	;#0x0019
+	cmp	r12,	r13	;
+	jl	.L421    	;abs 0x5b26
+
+	mov	r12,	r10	;
+	clr	r11		;
+	mov	r8,	r12	;
+
+	mov	r9,	r13	;
+	mov	r10,	r14	;
+	mova	r11,	0(r1)	;
+	calla	#__mspabi_srll		;0x05a00
+	mov	r12,	4(r1)	;
+	mov	r13,	6(r1)	;
+
+	mov	#-1,	r12	;r3 As==11
+	mov	#-1,	r13	;r3 As==11
+	mov	r10,	r14	;
+	calla	#__mspabi_slll		;0x059d4
+	mov	r8,	r14	;
+	bic	r12,	r14	;
+	mov	r9,	r12	;
+	bic	r13,	r12	;
+
+	bis	r14,	r12	;
+	clr	r14		;
+	sub	r12,	r14	;
+	bis	r12,	r14	;
+	rpt #15 { rrux.w	r14		;
+
+	mov	4(r1),	r12	;
+	bis	r14,	r12	;
+	mov	6(r1),	r13	;
+
+	mov	r12,	r14	;
+	and.b	#127,	r14	;#0x007f
+
+	cmp	#64,	r14	;#0x0040
+	jnz	.L423     	;abs 0x5b2a
+
+	mov	r12,	r14	;
+	and.b	#128,	r14	;#0x0080
+
+	cmp	#0,	r14	;r3 As==00
+	jz	.L418      	;abs 0x5b0a
+
+	add	#64,	r12	;#0x0040
+
+.L417:
+	adc	r13		;
+
+.L418:
+	mov.b	#1,	r10	;r3 As==01
+	mov	#16383,	r14	;#0x3fff
+	cmp	r13,	r14	;
+	jnc	.L419      	;abs 0x5b16
+	clr.b	r10		;
+
+.L419:
+	mov.b	#7,	r14	;
+	calla	#__mspabi_srll		;0x05a00
+	mov	r12,	r8	;
+	mov	r13,	r9	;
+
+	jmp .L395	;mova	#23132,	r0	;0x05a5c
+
+.L421:
+	clr.b	r12		;
+
+	clr.b	r13		;
+
+.L423:
+	add	#63,	r12	;#0x003f
+
+	jmp .L417	;mova	#23304,	r0	;0x05b08
+
+.L425:
+	mov.b	#127,	r12	;#0x007f
+
+	cmp	r10,	r12	;
+	jl	.L444     	;abs 0x5b86
+
+	mov	r8,	r12	;
+	and.b	#127,	r12	;#0x007f
+
+	cmp	#64,	r12	;#0x0040
+	jnz	.L436     	;abs 0x5b66
+
+	mov	r8,	r12	;
+	and.b	#128,	r12	;#0x0080
+
+	cmp	#0,	r12	;r3 As==00
+	jz	.L433      	;abs 0x5b56
+
+	add	#64,	r8	;#0x0040
+
+.L432:
+	adc	r9		;
+
+.L433:
+	cmp	#0,	r9	;r3 As==00
+	jl	.L438     	;abs 0x5b6e
+
+	add	#127,	r10	;#0x007f
+
+.L435:
+	mov	r8,	r12	;
+	mov	r9,	r13	;
+	jmp .L419	;mova	#23318,	r0	;0x05b16
+
+.L436:
+	add	#63,	r8	;#0x003f
+
+	jmp .L432	;mova	#23380,	r0	;0x05b54
+
+.L438:
+	clrc			
+	rrc	r9		;
+	rrc	r8		;
+
+	add	#128,	r10	;#0x0080
+
+	jmp .L435	;mova	#23390,	r0	;0x05b5e
+
+.L441:
+	clr.b	r10		;
+
+.L442:
+	clr.b	r8		;
+
+	clr.b	r9		;
+	jmp .L395	;mova	#23132,	r0	;0x05a5c
+
+.L444:
+	mov.b	#255,	r10	;#0x00ff
+	jmp .L442	;mova	#23422,	r0	;0x05b7e
+
+
+
+	.global __unpack_f
+	.type __unpack_f, @function
+__unpack_f:
+	nop
+	nop
+	pushm.a	#3,	r10	;20-bit words
+
+	mova	r12,	r14	;
+	mova	r13,	r10	;
+
+	mov	@r12,	r12	;
+
+	mov.b	2(r14),	r15	;
+	mov	r15,	r13	;
+
+	and.b	#127,	r13	;#0x007f
+
+	mov	2(r14),	r9	;
+	rpt #7 { rrux.w	r9		;
+
+	mov.b	r9,	r11	;
+
+	mov.b	3(r14),	r14	;
+
+	rpt #7 { rrux.w	r14		;
+
+	mov	r14,	2(r10)	;
+
+	cmp.b	#0,	r9	;r3 As==00
+	jnz	.L469     	;abs 0x5c04
+
+	mov	r12,	r14	;
+	bis	r13,	r14	;
+	cmp	#0,	r14	;r3 As==00
+	jnz	.L459     	;abs 0x5bca
+
+	mov	#2,	0(r10)	;r3 As==10
+
+.L457:
+	popm.a	#3,	r10	;20-bit words
+
+	reta			;
+
+.L459:
+	mov.b	#7,	r14	;
+	calla	#__mspabi_slll		;0x059d4
+
+	mov	#3,	0(r10)	;
+
+	mov	#-127,	r14	;#0xff81
+
+.L462:
+	mov	r12,	r8	;
+	mov	r13,	r9	;
+	add	r12,	r8	;
+	addc	r13,	r9	;
+	mov	r8,	r12	;
+
+	mov	r9,	r13	;
+
+	mov	r14,	r15	;
+
+	add	#-1,	r14	;r3 As==11
+	mov	#16383,	r9	;#0x3fff
+	cmp	r13,	r9	;
+	jc	.L462     	;abs 0x5bdc
+	mov	r15,	4(r10)	;
+
+	mov	r8,	6(r10)	;
+
+.L467:
+	mov	r13,	8(r10)	;
+
+	jmp .L457	;mova	#23494,	r0	;0x05bc6
+
+.L469:
+	cmp	#255,	r11	;#0x00ff
+	jnz	.L477     	;abs 0x5c4a
+
+	mov	r12,	r14	;
+	bis	r13,	r14	;
+	cmp	#0,	r14	;r3 As==00
+	jnz	.L472     	;abs 0x5c1a
+
+	mov	#4,	0(r10)	;r2 As==10
+	jmp .L457	;mova	#23494,	r0	;0x05bc6
+
+.L472:
+	mov	r15,	r14	;
+	and.b	#64,	r14	;#0x0040
+	bit	#64,	r15	;#0x0040
+	jz	.L476     	;abs 0x5c42
+
+	mov	#1,	0(r10)	;r3 As==01
+
+.L474:
+	mov.b	#7,	r14	;
+	calla	#__mspabi_slll		;0x059d4
+
+	and	#-128,	r12	;#0xff80
+	mov	r12,	6(r10)	;
+	and	#-8193,	r13	;#0xdfff
+	jmp .L467	;mova	#23548,	r0	;0x05bfc
+
+.L476:
+	mov	r14,	0(r10)	;
+	jmp .L474	;mova	#23594,	r0	;0x05c2a
+
+.L477:
+	add	#-127,	r11	;#0xff81
+
+	mov	r11,	4(r10)	;
+
+	mov	#3,	0(r10)	;
+
+	mov.b	#7,	r14	;
+	calla	#__mspabi_slll		;0x059d4
+
+	mov	r12,	6(r10)	;
+	bis	#16384,	r13	;#0x4000
+	jmp .L467	;mova	#23548,	r0	;0x05bfc
+
+
+
+	.global __make_fp
+	.type __make_fp, @function
+__make_fp:
+	nop
+	nop
+	suba	#2,	r1	;
+	movx.a	2(r1),	0(r1)	;
+
+	suba	#10,	r1	;0x0000a
+
+	mov	r15,	14(r1)	; 0x000e
+
+	mov	r12,	0(r1)	;
+
+	mov	r13,	2(r1)	;
+
+	mov	r14,	4(r1)	;
+
+	mov	14(r1),	6(r1)	;0x0000e
+	mov	16(r1),	8(r1)	;0x00010
+
+	mova	r1,	r12	;
+
+	calla	#__pack_f		;0x05a26
+
+	adda	#10,	r1	;0x0000a
+
+	movx.a	@r1,	2(r1)	;
+	adda	#2,	r1	;
+	reta			;
+
+
+
+	.global __pack_d
+	.type __pack_d, @function
+__pack_d:
+	nop
+	nop
+	pushm.a	#4,	r10	;20-bit words
+
+	suba	#20,	r1	;0x00014
+
+	mov	6(r12),	0(r1)	;
+	mov	8(r12),	4(r1)	;
+	mov	10(r12),6(r1)	;0x0000a
+	mov	12(r12),2(r1)	;0x0000c
+
+	mov	2(r12),	10(r1)	; 0x000a
+
+	mov	@r12,	r13	;
+
+	mov.b	#1,	r10	;r3 As==01
+	cmp	r13,	r10	;
+	jnc	.L509     	;abs 0x5d36
+
+	mov	@r1,	r8	;
+	mov	4(r1),	r9	;
+	mov	6(r1),	r10	;
+	mov	2(r1),	r11	;
+	mov.b	#8,	r12	;r2 As==11
+
+	calla	#__mspabi_srlll		;0x05a06
+
+	and.b	#7,	r15	;
+
+	mov	r12,	0(r1)	;
+	mov	r13,	4(r1)	;
+	mov	r14,	6(r1)	;
+	bis	#8,	r15	;r2 As==11
+
+	mov	r15,	2(r1)	;
+
+	mov	#2047,	r7	;#0x07ff
+
+.L503:
+	and	#2047,	r7	;#0x07ff
+
+	mov	r7,	r11	;
+	rlam	#4,	r11	;
+	mov	2(r1),	r7	;
+	and.b	#15,	r7	;#0x000f
+
+	mov	10(r1),	r15	;0x0000a
+	rpt #15 { rlax.w	r15		;
+	bis	r11,	r7	;
+
+	mov	@r1,	r12	;
+	mov	4(r1),	r13	;
+	mov	6(r1),	r14	;
+	bis	r7,	r15	;
+	adda	#20,	r1	;0x00014
+
+	popm.a	#4,	r10	;20-bit words
+
+	reta			;
+
+.L509:
+	cmp	#4,	r13	;r2 As==10
+	jz	.L561    	;abs 0x5f86
+
+	cmp	#2,	r13	;r3 As==10
+	jz	.L558    	;abs 0x5f70
+
+	mov	@r1,	r7	;
+	bis	4(r1),	r7	;
+	bis	6(r1),	r7	;
+	bis	2(r1),	r7	;
+	cmp	#0,	r7	;r3 As==00
+	jz	.L503     	;abs 0x5d08
+
+	mov	4(r12),	r7	;
+
+	cmp	#-1022,	r7	;#0xfc02
+	jge	.L540    	;abs 0x5eb6
+
+	mov	#-1022,	r12	;#0xfc02
+
+	sub	r7,	r12	;
+	mov	r12,	8(r1)	;
+
+	mov.b	#56,	r14	;#0x0038
+	cmp	r12,	r14	;
+	jl	.L532    	;abs 0x5e56
+
+	mov	@r1,	r8	;
+	mov	4(r1),	r9	;
+	mov	6(r1),	r10	;
+	mov	2(r1),	r11	;
+	calla	#__mspabi_srlll		;0x05a06
+
+	mov	r12,	12(r1)	; 0x000c
+	mov	r13,	14(r1)	; 0x000e
+	mov	r14,	16(r1)	; 0x0010
+	mov	r15,	18(r1)	; 0x0012
+
+	mov	#-1,	r8	;r3 As==11
+	mov	r8,	r9	;
+	mov	r8,	r10	;
+	mov	r8,	r11	;
+	mov	8(r1),	r12	;
+	calla	#__mspabi_sllll		;0x059da
+	mov	@r1,	r10	;
+	bic	r12,	r10	;
+	mov	r10,	r12	;
+	mov	4(r1),	r10	;
+	bic	r13,	r10	;
+	mov	r10,	r13	;
+	mov	6(r1),	r10	;
+	bic	r14,	r10	;
+	mov	r10,	r14	;
+	mov	2(r1),	r10	;
+	bic	r15,	r10	;
+	mov	r10,	2(r1)	;
+
+	clr.b	r11		;
+	mov	r11,	r15	;
+	sub	r12,	r15	;
+	mov	r15,	0(r1)	;
+	mov.b	#1,	r10	;r3 As==01
+	cmp	r12,	r11	;
+	jnz	.L521      	;abs 0x5dd0
+	mov	r15,	r10	;
+
+.L521:
+	mov	r11,	r15	;
+	sub	r13,	r15	;
+	mov.b	#1,	r7	;r3 As==01
+	cmp	r13,	r11	;
+	jnz	.L522      	;abs 0x5ddc
+	mov	r15,	r7	;
+
+.L522:
+	mov	r15,	r9	;
+	sub	r10,	r9	;
+	mov.b	#1,	r10	;r3 As==01
+	cmp	r9,	r15	;
+	jnc	.L523      	;abs 0x5de8
+	clr.b	r10		;
+
+.L523:
+	bis	r10,	r7	;
+	mov	r11,	r8	;
+	sub	r14,	r8	;
+	mov.b	#1,	r15	;r3 As==01
+	cmp	r14,	r11	;
+	jnz	.L524      	;abs 0x5df6
+	mov	r8,	r15	;
+
+.L524:
+	mov	r8,	r10	;
+	sub	r7,	r10	;
+	mov.b	#1,	r7	;r3 As==01
+	cmp	r10,	r8	;
+	jnc	.L525      	;abs 0x5e02
+	clr.b	r7		;
+
+.L525:
+	bis	r7,	r15	;
+	sub	2(r1),	r11	;
+	sub	r15,	r11	;
+	mov	@r1,	r8	;
+	bis	r12,	r8	;
+	bis	r13,	r9	;
+	bis	r14,	r10	;
+	bis	2(r1),	r11	;
+	mov.b	#63,	r12	;#0x003f
+	calla	#__mspabi_srlll		;0x05a06
+
+	mov	12(r1),	r8	;0x0000c
+	bis	r12,	r8	;
+	mov	14(r1),	r9	;0x0000e
+	bis	r13,	r9	;
+	mov	16(r1),	r10	;0x00010
+	bis	r14,	r10	;
+	mov	18(r1),	r11	;0x00012
+	bis	r15,	r11	;
+
+	mov	r8,	r15	;
+	and.b	#255,	r15	;#0x00ff
+
+	cmp.b	#-128,	r8	;#0xff80
+	jnz	.L533     	;abs 0x5e5e
+
+	bit	#256,	r8	;#0x0100
+	jz	.L537     	;abs 0x5e90
+
+	add	r8,	r15	;
+	mov.b	#1,	r13	;r3 As==01
+	cmp	r8,	r15	;
+	jnc	.L534     	;abs 0x5e6c
+
+.L531:
+	clr.b	r13		;
+	jmp .L534	;mova	#24172,	r0	;0x05e6c
+
+.L532:
+	clr.b	r8		;
+	mov	r8,	r9	;
+	mov	r8,	r10	;
+	mov	r8,	r11	;
+
+.L533:
+	mov	r8,	r15	;
+	add	#127,	r15	;#0x007f
+	mov.b	#1,	r13	;r3 As==01
+	cmp	#-127,	r8	;#0xff81
+	jnc	.L531     	;abs 0x5e50
+
+.L534:
+	clr.b	r12		;
+	add	r9,	r13	;
+	mov.b	#1,	r14	;r3 As==01
+	cmp	r9,	r13	;
+	jnc	.L535      	;abs 0x5e78
+	mov	r12,	r14	;
+
+.L535:
+	bis	r14,	r12	;
+	clr.b	r14		;
+	add	r10,	r12	;
+	mov.b	#1,	r9	;r3 As==01
+	cmp	r10,	r12	;
+	jnc	.L536      	;abs 0x5e86
+	mov	r14,	r9	;
+
+.L536:
+	bis	r9,	r14	;
+	mov	r15,	r8	;
+	mov	r13,	r9	;
+	mov	r12,	r10	;
+	add	r14,	r11	;
+
+.L537:
+	mov.b	#1,	r7	;r3 As==01
+	mov	#4095,	r12	;#0x0fff
+	cmp	r11,	r12	;
+	jnc	.L538      	;abs 0x5e9c
+	clr.b	r7		;
+
+.L538:
+	mov.b	#8,	r12	;r2 As==11
+	calla	#__mspabi_srlll		;0x05a06
+	mov	r12,	0(r1)	;
+	mov	r13,	4(r1)	;
+	mov	r14,	6(r1)	;
+	mov	r15,	2(r1)	;
+
+	jmp .L503	;mova	#23816,	r0	;0x05d08
+
+.L540:
+	mov	#1023,	r14	;#0x03ff
+	cmp	r7,	r14	;
+	jl	.L561    	;abs 0x5f86
+
+	mov	@r1,	r12	;
+
+	cmp.b	#-128,	r12	;#0xff80
+	jnz	.L546     	;abs 0x5ee0
+
+	bit	#256,	r12	;#0x0100
+	jz	.L551     	;abs 0x5f24
+
+	mov	r12,	r10	;
+	add	#128,	r10	;#0x0080
+	mov.b	#1,	r13	;r3 As==01
+	cmp	#-128,	r12	;#0xff80
+	jc	.L547     	;abs 0x5ef0
+
+.L545:
+	clr.b	r13		;
+	jmp .L547	;mova	#24304,	r0	;0x05ef0
+
+.L546:
+	mov	@r1,	r10	;
+	add	#127,	r10	;#0x007f
+	mov.b	#1,	r13	;r3 As==01
+	cmp	#-127,	0(r1)	;#0xff81
+	jnc	.L545     	;abs 0x5eda
+
+.L547:
+	clr.b	r12		;
+	add	4(r1),	r13	;
+	mov.b	#1,	r14	;r3 As==01
+	cmp	4(r1),	r13	;
+	jnc	.L548      	;abs 0x5f00
+	mov	r12,	r14	;
+
+.L548:
+	bis	r14,	r12	;
+	clr.b	r14		;
+	add	6(r1),	r12	;
+	mov.b	#1,	r15	;r3 As==01
+	cmp	6(r1),	r12	;
+	jnc	.L549      	;abs 0x5f12
+	mov	r14,	r15	;
+
+.L549:
+	bis	r15,	r14	;
+	mov	r10,	0(r1)	;
+
+	mov	r13,	4(r1)	;
+	mov	r12,	6(r1)	;
+	add	r14,	2(r1)	;
+
+.L551:
+	mov	#8191,	r14	;#0x1fff
+	cmp	2(r1),	r14	;
+	jnc	.L554     	;abs 0x5f44
+
+	add	#1023,	r7	;#0x03ff
+
+.L553:
+	mov	@r1,	r8	;
+	mov	4(r1),	r9	;
+	mov	6(r1),	r10	;
+	mov	2(r1),	r11	;
+	jmp .L538	;mova	#24220,	r0	;0x05e9c
+
+.L554:
+	mov	@r1,	r8	;
+	mov	4(r1),	r9	;
+	mov	6(r1),	r10	;
+	mov	2(r1),	r11	;
+	mov.b	#1,	r12	;r3 As==01
+	calla	#__mspabi_srlll		;0x05a06
+	mov	r12,	0(r1)	;
+
+	mov	r13,	4(r1)	;
+	mov	r14,	6(r1)	;
+	mov	r15,	2(r1)	;
+
+	add	#1024,	r7	;#0x0400
+
+	jmp .L553	;mova	#24370,	r0	;0x05f32
+
+.L558:
+	clr.b	r7		;
+
+	mov	r7,	0(r1)	;
+
+	mov	r7,	4(r1)	;
+	mov	r7,	6(r1)	;
+	mov	r7,	2(r1)	;
+	jmp .L503	;mova	#23816,	r0	;0x05d08
+
+.L561:
+	mov	#2047,	r7	;#0x07ff
+
+	mov	#0,	0(r1)	;r3 As==00
+
+	mov	@r1,	4(r1)	;
+	mov	@r1,	6(r1)	;
+	mov	@r1,	2(r1)	;
+	jmp .L503	;mova	#23816,	r0	;0x05d08
+
+
+
+	.global __unpack_d
+	.type __unpack_d, @function
+__unpack_d:
+	nop
+	nop
+	pushm.a	#4,	r10	;20-bit words
+
+	suba	#6,	r1	;
+
+	mova	r13,	r7	;
+
+	mov	@r12,	r8	;
+	mov	2(r12),	r9	;
+	mov	4(r12),	r10	;
+	mov.b	6(r12),	r13	;
+
+	mov	r13,	r11	;
+	and.b	#15,	r11	;#0x000f
+
+	mov	6(r12),	r14	;
+	rrum	#4,	r14	;
+	and	#2047,	r14	;#0x07ff
+	mov	r14,	2(r1)	;
+
+	mov.b	7(r12),	r12	;
+
+	rpt #7 { rrux.w	r12		;
+
+	mov	r12,	2(r7)	;
+
+	cmp	#0,	r14	;r3 As==00
+	jnz	.L596    	;abs 0x607c
+
+	mov	r8,	r12	;
+	bis	r9,	r12	;
+	bis	r10,	r12	;
+	bis	r11,	r12	;
+	cmp	#0,	r12	;r3 As==00
+	jnz	.L578     	;abs 0x5ff0
+
+	mov	#2,	0(r7)	;r3 As==10
+
+.L575:
+	adda	#6,	r1	;
+
+	popm.a	#4,	r10	;20-bit words
+
+	reta			;
+
+.L578:
+	mov.b	#8,	r12	;r2 As==11
+	calla	#__mspabi_sllll		;0x059da
+
+	mov	r12,	r10	;
+
+	mov	#3,	0(r7)	;
+
+	mov	#-1023,	4(r1)	;#0xfc01
+
+	mov.b	#1,	r8	;r3 As==01
+
+.L583:
+	mov	r10,	r9	;
+	add	r10,	r9	;
+	mov	r9,	2(r1)	;
+	mov	r8,	r11	;
+	cmp	r10,	r9	;
+	jnc	.L584      	;abs 0x6016
+	clr.b	r11		;
+
+.L584:
+	mov	r13,	r10	;
+
+	add	r13,	r10	;
+	mov.b	#1,	r12	;r3 As==01
+	cmp	r13,	r10	;
+	jnc	.L586      	;abs 0x6022
+	clr.b	r12		;
+
+.L586:
+	add	r10,	r11	;
+	mov	r8,	r13	;
+	cmp	r10,	r11	;
+	jnc	.L587      	;abs 0x602c
+	clr.b	r13		;
+
+.L587:
+	bis	r13,	r12	;
+	mov	r14,	r13	;
+	add	r14,	r13	;
+	mov.b	#1,	r9	;r3 As==01
+	cmp	r14,	r13	;
+	jnc	.L588      	;abs 0x603a
+	clr.b	r9		;
+
+.L588:
+	add	r13,	r12	;
+	mov	r8,	r14	;
+	cmp	r13,	r12	;
+	jnc	.L589      	;abs 0x6044
+	clr.b	r14		;
+
+.L589:
+	bis	r14,	r9	;
+	rla	r15		;
+	mov	2(r1),	r10	;
+	mov	r11,	r13	;
+	mov	r12,	r14	;
+	add	r9,	r15	;
+
+	mov	4(r1),	0(r1)	;
+
+	add	#-1,	4(r1)	;r3 As==11
+	mov	#4095,	r9	;#0x0fff
+	cmp	r15,	r9	;
+	jc	.L583     	;abs 0x6006
+
+	mov	@r1,	4(r7)	;
+
+	mov	r10,	6(r7)	;
+	mov	r11,	8(r7)	;
+	mov	r12,	10(r7)	; 0x000a
+
+.L594:
+	mov	r15,	12(r7)	; 0x000c
+
+	jmp .L575	;mova	#24552,	r0	;0x05fe8
+
+.L596:
+	cmp	#2047,	2(r1)	;#0x07ff
+	jnz	.L604     	;abs 0x60ca
+
+	mov	r8,	r12	;
+	bis	r9,	r12	;
+	bis	r10,	r12	;
+	bis	r11,	r12	;
+	cmp	#0,	r12	;r3 As==00
+	jnz	.L599     	;abs 0x6098
+
+	mov	#4,	0(r7)	;r2 As==10
+	jmp .L575	;mova	#24552,	r0	;0x05fe8
+
+.L599:
+	mov	r13,	r12	;
+	and.b	#8,	r12	;r2 As==11
+	bit	#8,	r13	;r2 As==11
+	jz	.L603     	;abs 0x60c2
+
+	mov	#1,	0(r7)	;r3 As==01
+
+.L601:
+	mov.b	#8,	r12	;r2 As==11
+	calla	#__mspabi_sllll		;0x059da
+
+	and	#-256,	r12	;#0xff00
+	mov	r12,	6(r7)	;
+	mov	r13,	8(r7)	;
+	mov	r14,	10(r7)	; 0x000a
+	and	#-2049,	r15	;#0xf7ff
+	jmp .L594	;mova	#24692,	r0	;0x06074
+
+.L603:
+	mov	r12,	0(r7)	;
+	jmp .L601	;mova	#24740,	r0	;0x060a4
+
+.L604:
+	mov	2(r1),	r12	;
+	add	#-1023,	r12	;#0xfc01
+	mov	r12,	4(r7)	;
+
+	mov	#3,	0(r7)	;
+
+	mov.b	#8,	r12	;r2 As==11
+	calla	#__mspabi_sllll		;0x059da
+
+	mov	r12,	6(r7)	;
+	mov	r13,	8(r7)	;
+	mov	r14,	10(r7)	; 0x000a
+	bis	#4096,	r15	;#0x1000
+	jmp .L594	;mova	#24692,	r0	;0x06074
+
+
+
+	.global __fpcmp_parts_d
+	.type __fpcmp_parts_d, @function
+__fpcmp_parts_d:
+	nop
+	nop
+	pushm.a	#4,	r10	;20-bit words
+
+	mova	r13,	r14	;
+
+	mov	@r12,	r13	;
+
+	mov.b	#1,	r10	;r3 As==01
+	cmp	r13,	r10	;
+	jc	.L622     	;abs 0x6128
+
+	mov	@r14,	r15	;
+
+	cmp	r15,	r10	;
+	jc	.L622     	;abs 0x6128
+
+	cmp	#4,	r13	;r2 As==10
+	jnz	.L620     	;abs 0x611e
+
+	mov	2(r12),	r13	;
+
+	cmp	#4,	r15	;r2 As==10
+	jnz	.L628     	;abs 0x6144
+
+	mov	2(r14),	r12	;
+
+	sub	r13,	r12	;
+
+.L618:
+	popm.a	#4,	r10	;20-bit words
+
+	reta			;
+
+.L620:
+	cmp	#4,	r15	;r2 As==10
+	jnz	.L623     	;abs 0x612e
+
+.L621:
+	cmp	#0,	2(r14)	;r3 As==00
+	jz	.L629     	;abs 0x6148
+
+.L622:
+	mov.b	#1,	r12	;r3 As==01
+	jmp .L618	;mova	#24858,	r0	;0x0611a
+
+.L623:
+	cmp	#2,	r13	;r3 As==10
+	jnz	.L626     	;abs 0x613c
+
+	cmp	#2,	r15	;r3 As==10
+	jnz	.L621     	;abs 0x6122
+
+.L625:
+	clr.b	r12		;
+	jmp .L618	;mova	#24858,	r0	;0x0611a
+
+.L626:
+	mov	2(r12),	r13	;
+
+	cmp	#2,	r15	;r3 As==10
+	jnz	.L630     	;abs 0x614e
+
+.L628:
+	cmp	#0,	r13	;r3 As==00
+	jz	.L622     	;abs 0x6128
+
+.L629:
+	mov	#-1,	r12	;r3 As==11
+	jmp .L618	;mova	#24858,	r0	;0x0611a
+
+.L630:
+	cmp	r13,	2(r14)	;
+	jnz	.L628     	;abs 0x6144
+
+	mov	4(r12),	r10	;
+
+	mov	4(r14),	r15	;
+
+	cmp	r10,	r15	;
+	jl	.L628     	;abs 0x6144
+
+	cmp	r15,	r10	;
+	jge	.L636     	;abs 0x616c
+
+.L635:
+	cmp	#0,	r13	;r3 As==00
+	jz	.L629     	;abs 0x6148
+	jmp .L622	;mova	#24872,	r0	;0x06128
+
+.L636:
+	mov	6(r12),	r7	;
+	mov	8(r12),	r15	;
+	mov	10(r12),r11	;0x0000a
+	mov	12(r12),r9	;0x0000c
+
+	mov	6(r14),	r8	;
+	mov	8(r14),	r12	;
+
+	mov	10(r14),r10	;0x0000a
+	mov	12(r14),r14	;0x0000c
+
+	cmp	r9,	r14	;
+	jnc	.L628     	;abs 0x6144
+	cmp	r14,	r9	;
+	jnz	.L640     	;abs 0x61a8
+	cmp	r11,	r10	;
+	jnc	.L628     	;abs 0x6144
+	cmp	r10,	r11	;
+	jnz	.L640     	;abs 0x61a8
+	cmp	r15,	r12	;
+	jnc	.L628     	;abs 0x6144
+	cmp	r12,	r15	;
+	jnz	.L640      	;abs 0x61a8
+	cmp	r7,	r8	;
+	jnc	.L628     	;abs 0x6144
+
+.L640:
+	cmp	r14,	r9	;
+	jnc	.L635     	;abs 0x6164
+	cmp	r9,	r14	;
+	jnz	.L625    	;abs 0x6136
+	cmp	r10,	r11	;
+	jnc	.L635     	;abs 0x6164
+	cmp	r11,	r10	;
+	jnz	.L625    	;abs 0x6136
+	cmp	r12,	r15	;
+	jnc	.L635     	;abs 0x6164
+	cmp	r15,	r12	;
+	jnz	.L625    	;abs 0x6136
+	cmp	r8,	r7	;
+	jc	.L625    	;abs 0x6136
+	jmp .L635	;mova	#24932,	r0	;0x06164
+
+
+
+	.global memcpy
+	.type memcpy, @function
+memcpy:
+	nop
+	nop
+	pushm.a	#1,	r10	;20-bit words
+
+	pushm.a	#1,	r8	;20-bit words
+
+	mova	r12,	r8	;
+	mova	r14,	r15	;
+
+	clr.b	r12		;
+
+.L644:
+	cmpa	r12,	r15	;
+	jnz	.L649     	;abs 0x61de
+
+	mova	r8,	r12	;
+
+	popm.a	#1,	r8	;20-bit words
+
+	popm.a	#1,	r10	;20-bit words
+
+	reta			;
+
+.L649:
+	mova	r8,	r14	;
+	adda	r12,	r14	;
+
+	mova	r13,	r10	;
+	adda	r12,	r10	;
+
+	mov.b	@r10,	0(r14)	;
+	adda	#1,	r12	;
+
+	jmp .L644	;mova	#25042,	r0	;0x061d2
+
+
+
+	.global exp
+	.type exp, @function
+exp:
+	nop
+	nop
+	pushm.a	#4,	r10	;20-bit words
+
+	suba	#16,	r1	;0x00010
+
+	mov	r12,	r7	;
+	mov	r13,	r8	;
+	mov	r14,	r9	;
+	mov	r15,	14(r1)	; 0x000e
+
+	calla	#__ieee754_exp		;0x06484
+
+	mov	r12,	r10	;
+	mov	r13,	8(r1)	;
+	mov	r14,	10(r1)	; 0x000a
+	mov	r15,	12(r1)	; 0x000c
+
+	cmpx.w	#-1,	&0x02c00;r3 As==11
+	jz	.L668     	;abs 0x6274
+
+	mov	r7,	r12	;
+	mov	r8,	r13	;
+
+	mov	r9,	r14	;
+
+	mov	14(r1),	r15	;0x0000e
+
+	calla	#finite		;0x077cc
+
+	cmp	#0,	r12	;r3 As==00
+	jz	.L668     	;abs 0x6274
+
+	mov	#14831,	0(r1)	;#0x39ef
+	mov	#-262,	2(r1)	;#0xfefa
+	mov	#11842,	4(r1)	;#0x2e42
+	mov	#16518,	6(r1)	;#0x4086
+	mov	r7,	r12	;
+	mov	r8,	r13	;
+	mov	r9,	r14	;
+	mov	14(r1),	r15	;0x0000e
+	calla	#__gtdf2		;0x084ba
+	clr.b	r13		;
+	cmp	r12,	r13	;
+	jge	.L671     	;abs 0x628a
+
+	calla	#__errno		;0x08734
+
+	mov	#34,	0(r12)	;#0x0022
+
+	clr.b	r10		;
+
+	mov	r10,	8(r1)	;
+	mov	r10,	10(r1)	; 0x000a
+	mov	#32752,	12(r1)	;#0x7ff0, 0x000c
+
+.L668:
+	mov	r10,	r12	;
+	mov	8(r1),	r13	;
+	mov	10(r1),	r14	;0x0000a
+	mov	12(r1),	r15	;0x0000c
+	adda	#16,	r1	;0x00010
+
+	popm.a	#4,	r10	;20-bit words
+
+	reta			;
+
+.L671:
+	mov	#12369,	0(r1)	;#0x3051
+	mov	#-10963,2(r1)	;#0xd52d
+	mov	#18704,	4(r1)	;#0x4910
+	mov	#-16249,6(r1)	;#0xc087
+	mov	r7,	r12	;
+	mov	r8,	r13	;
+	mov	r9,	r14	;
+	mov	14(r1),	r15	;0x0000e
+	calla	#__ltdf2		;0x08530
+	cmp	#0,	r12	;r3 As==00
+	jge	.L668     	;abs 0x6274
+
+	calla	#__errno		;0x08734
+
+	mov	#34,	0(r12)	;#0x0022
+
+	clr.b	r10		;
+
+	mov	r10,	8(r1)	;
+	mov	r10,	10(r1)	; 0x000a
+	mov	r10,	12(r1)	; 0x000c
+	jmp .L668	;mova	#25204,	r0	;0x06274
+
+
+
+	.global log
+	.type log, @function
+log:
+	nop
+	nop
+	pushm.a	#4,	r10	;20-bit words
+
+	suba	#20,	r1	;0x00014
+
+	mov	r12,	12(r1)	; 0x000c
+	mov	r13,	r7	;
+	mov	r14,	r8	;
+	mov	r15,	r9	;
+
+	calla	#__ieee754_log		;0x06ae2
+
+	mov	r12,	r11	;
+	mov	r13,	14(r1)	; 0x000e
+	mov	r14,	16(r1)	; 0x0010
+	mov	r15,	18(r1)	; 0x0012
+
+	cmpx.w	#-1,	&0x02c00;r3 As==11
+	jz	.L691    	;abs 0x6390
+
+	mov	12(r1),	0(r1)	;0x0000c
+	mov	r7,	2(r1)	;
+	mov	r8,	4(r1)	;
+	mov	r9,	6(r1)	;
+	mov	12(r1),	r12	;0x0000c
+	mov	r7,	r13	;
+
+	mov	r8,	r14	;
+
+	mov	r9,	r15	;
+
+	mova	r11,	8(r1)	;
+	calla	#__unorddf2		;0x058ca
+
+	mov	r12,	r10	;
+	mova	8(r1),	r11	;
+	cmp	#0,	r12	;r3 As==00
+	jnz	.L691    	;abs 0x6390
+
+	mov	r12,	0(r1)	;
+	mov	r12,	2(r1)	;
+	mov	r12,	4(r1)	;
+	mov	r12,	6(r1)	;
+	mov	12(r1),	r12	;0x0000c
+	mov	r7,	r13	;
+	mov	r8,	r14	;
+	mov	r9,	r15	;
+	calla	#__gtdf2		;0x084ba
+	mova	8(r1),	r11	;
+	clr.b	r13		;
+	cmp	r12,	r13	;
+	jl	.L691     	;abs 0x6390
+
+	mov	r10,	0(r1)	;
+	mov	r10,	2(r1)	;
+	mov	r10,	4(r1)	;
+	mov	r10,	6(r1)	;
+	mov	12(r1),	r12	;0x0000c
+	mov	r7,	r13	;
+	mov	r8,	r14	;
+	mov	r9,	r15	;
+	calla	#__eqdf2		;0x08444
+	mov	r12,	r10	;
+	mova	#__errno,	r12	;0x08734
+	cmp	#0,	r10	;r3 As==00
+	jnz	.L694     	;abs 0x63a6
+
+	calla	r12		;
+
+	mov	#34,	0(r12)	;#0x0022
+
+	mov	r10,	r11	;
+	mov	r10,	14(r1)	; 0x000e
+	mov	r10,	16(r1)	; 0x0010
+	mov	#-16,	18(r1)	;#0xfff0, 0x0012
+
+.L691:
+	mov	r11,	r12	;
+	mov	14(r1),	r13	;0x0000e
+	mov	16(r1),	r14	;0x00010
+	mov	18(r1),	r15	;0x00012
+	adda	#20,	r1	;0x00014
+
+	popm.a	#4,	r10	;20-bit words
+
+	reta			;
+
+.L694:
+	calla	r12		;
+
+	mov	#33,	0(r12)	;#0x0021
+
+	mova	#83273,	r12	;0x14549
+	calla	#nan		;0x077e4
+
+	mov	r12,	r11	;
+	mov	r13,	14(r1)	; 0x000e
+	mov	r14,	16(r1)	; 0x0010
+	mov	r15,	18(r1)	; 0x0012
+	jmp .L691	;mova	#25488,	r0	;0x06390
+
+
+
+	.global sqrt
+	.type sqrt, @function
+sqrt:
+	nop
+	nop
+	pushm.a	#4,	r10	;20-bit words
+
+	suba	#20,	r1	;0x00014
+
+	mov	r12,	r11	;
+	mov	r13,	r7	;
+	mov	r14,	r8	;
+	mov	r15,	r9	;
+
+	mova	r11,	8(r1)	;
+	calla	#__ieee754_sqrt		;0x072ea
+
+	mov	r12,	12(r1)	; 0x000c
+	mov	r13,	14(r1)	; 0x000e
+	mov	r14,	16(r1)	; 0x0010
+	mov	r15,	18(r1)	; 0x0012
+
+	mova	8(r1),	r11	;
+	cmpx.w	#-1,	&0x02c00;r3 As==11
+	jz	.L713    	;abs 0x646c
+
+	mov	r11,	0(r1)	;
+	mov	r7,	2(r1)	;
+	mov	r8,	4(r1)	;
+	mov	r9,	6(r1)	;
+	mov	r11,	r12	;
+
+	mov	r7,	r13	;
+
+	mov	r8,	r14	;
+
+	mov	r9,	r15	;
+
+	calla	#__unorddf2		;0x058ca
+	mov	r12,	r10	;
+	mova	8(r1),	r11	;
+	cmp	#0,	r12	;r3 As==00
+	jnz	.L713     	;abs 0x646c
+
+	mov	r12,	0(r1)	;
+	mov	r12,	2(r1)	;
+	mov	r12,	4(r1)	;
+	mov	r12,	6(r1)	;
+	mov	r11,	r12	;
+	mov	r7,	r13	;
+	mov	r8,	r14	;
+	mov	r9,	r15	;
+	calla	#__ltdf2		;0x08530
+	cmp	#0,	r12	;r3 As==00
+	jge	.L713     	;abs 0x646c
+
+	calla	#__errno		;0x08734
+
+	mov	#33,	0(r12)	;#0x0021
+
+	mov	r10,	r12	;
+	mov	r10,	r13	;
+	mov	r10,	r14	;
+	mov	r10,	r15	;
+	mov	r10,	r8	;
+	mov	r10,	r9	;
+	mov	r10,	r11	;
+	calla	#__mspabi_divd		;0x05500
+	mov	r12,	12(r1)	; 0x000c
+
+	mov	r13,	14(r1)	; 0x000e
+	mov	r14,	16(r1)	; 0x0010
+	mov	r15,	18(r1)	; 0x0012
+
+.L713:
+	mov	12(r1),	r12	;0x0000c
+	mov	14(r1),	r13	;0x0000e
+	mov	16(r1),	r14	;0x00010
+	mov	18(r1),	r15	;0x00012
+	adda	#20,	r1	;0x00014
+
+	popm.a	#4,	r10	;20-bit words
+
+	reta			;
+
+
+
+	.global __ieee754_exp
+	.type __ieee754_exp, @function
+__ieee754_exp:
+	nop
+	nop
+	pushm.a	#4,	r10	;20-bit words
+
+	suba	#58,	r1	;0x0003a
+
+	mov	r12,	12(r1)	; 0x000c
+	mov	r13,	16(r1)	; 0x0010
+	mov	r14,	18(r1)	; 0x0012
+	mov	r15,	14(r1)	; 0x000e
+
+	mov	r14,	r12	;
+
+	mov	r14,	r10	;
+
+	mov	r15,	r13	;
+	mov.b	#31,	r14	;#0x001f
+	calla	#__mspabi_srll		;0x05a00
+
+	mov	r12,	20(r1)	; 0x0014
+	mov	r13,	22(r1)	; 0x0016
+
+	mov	14(r1),	r14	;0x0000e
+	and	#32767,	r14	;#0x7fff
+
+	mov	#16518,	r15	;#0x4086
+	cmp	r14,	r15	;
+	jnc	.L741    	;abs 0x65b8
+	cmp	r15,	r14	;
+	jnz	.L759    	;abs 0x66c0
+	mov	#11841,	r12	;#0x2e41
+	cmp	r10,	r12	;
+	jnc	.L742    	;abs 0x65c0
+
+.L724:
+	mov	#-32002,r12	;#0x82fe
+	mov	#25899,	r13	;#0x652b
+	mov	#5447,	r14	;#0x1547
+	mov	#16375,	r15	;#0x3ff7
+	mov	12(r1),	r8	;0x0000c
+	mov	16(r1),	r9	;0x00010
+	mov	18(r1),	r10	;0x00012
+	mov	14(r1),	r11	;0x0000e
+	calla	#__mspabi_mpyd		;0x07ece
+	mov	r12,	r8	;
+	mov	r13,	r9	;
+	mov	r14,	r7	;
+	mov	r15,	r11	;
+
+	mov	20(r1),	r12	;0x00014
+	mov	22(r1),	r13	;0x00016
+	push	r13		;
+	push	r12		;
+	popm.a	#1,	r10	;20-bit words
+	rlam.a	#3,	r10	;
+	adda	#83000,	r10	;0x14438
+
+	mov	@r10,	r12	;
+	mov	2(r10),	r13	;
+	mov	4(r10),	r14	;
+	mov	6(r10),	r15	;
+	mov	r7,	r10	;
+	calla	#__mspabi_addd		;0x07e02
+
+	calla	#__mspabi_fixdli		;0x0863a
+	mov	r12,	24(r1)	; 0x0018
+	mov	r13,	26(r1)	; 0x001a
+
+	calla	#__mspabi_fltlid		;0x085a6
+	mov	r12,	20(r1)	; 0x0014
+
+	mov	r13,	28(r1)	; 0x001c
+	mov	r14,	30(r1)	; 0x001e
+	mov	r15,	r7	;
+
+	clr.b	r12		;
+
+	mov	#-288,	r13	;#0xfee0
+
+	mov	#11842,	r14	;#0x2e42
+
+	mov	#16358,	r15	;#0x3fe6
+	mov	20(r1),	r8	;0x00014
+	mov	28(r1),	r9	;0x0001c
+	mov	30(r1),	r10	;0x0001e
+	mov	r7,	r11	;
+	calla	#__mspabi_mpyd		;0x07ece
+
+	mov	12(r1),	r8	;0x0000c
+	mov	16(r1),	r9	;0x00010
+	mov	18(r1),	r10	;0x00012
+	mov	14(r1),	r11	;0x0000e
+	calla	#__mspabi_subd		;0x07e66
+	mov	r12,	32(r1)	; 0x0020
+	mov	r13,	34(r1)	; 0x0022
+	mov	r14,	36(r1)	; 0x0024
+	mov	r15,	38(r1)	; 0x0026
+
+	mov	#15478,	r12	;#0x3c76
+
+	mov	#13689,	r13	;#0x3579
+
+	mov	#14831,	r14	;#0x39ef
+
+	mov	#15850,	r15	;#0x3dea
+
+	mov	20(r1),	r8	;0x00014
+	mov	28(r1),	r9	;0x0001c
+	mov	30(r1),	r10	;0x0001e
+	mov	r7,	r11	;
+	calla	#__mspabi_mpyd		;0x07ece
+	mov	r12,	40(r1)	; 0x0028
+	mov	r13,	42(r1)	; 0x002a
+	mov	r14,	44(r1)	; 0x002c
+	mov	r15,	46(r1)	; 0x002e
+
+	jmp .L769	;mova	#26466,	r0	;0x06762
+
+.L741:
+	mov	#32751,	r15	;#0x7fef
+	cmp	r14,	r15	;
+	jnc	.L746     	;abs 0x6612
+
+.L742:
+	mov	#14831,	0(r1)	;#0x39ef
+	mov	#-262,	2(r1)	;#0xfefa
+	mov	#11842,	4(r1)	;#0x2e42
+	mov	#16518,	6(r1)	;#0x4086
+	mov	12(r1),	r12	;0x0000c
+	mov	16(r1),	r13	;0x00010
+	mov	18(r1),	r14	;0x00012
+
+	mov	14(r1),	r15	;0x0000e
+	calla	#__gtdf2		;0x084ba
+	clr.b	r13		;
+	cmp	r12,	r13	;
+	jge	.L757    	;abs 0x6676
+
+	mov	#30108,	r12	;#0x759c
+	mov	#-30720,r13	;#0x8800
+	mov	#-7108,	r14	;#0xe43c
+	mov	#32311,	r15	;#0x7e37
+	mov	r12,	r8	;
+	mov	r13,	r9	;
+	mov	r14,	r10	;
+	mov	r15,	r11	;
+
+.L745:
+	calla	#__mspabi_mpyd		;0x07ece
+	jmp .L752	;mova	#26180,	r0	;0x06644
+
+.L746:
+	bis	12(r1),	r10	;0x0000c
+
+	mov	14(r1),	r14	;0x0000e
+
+	and.b	#15,	r14	;#0x000f
+	bis	16(r1),	r14	;0x00010
+
+	bis	r10,	r14	;
+	cmp	#0,	r14	;r3 As==00
+	jz	.L753     	;abs 0x6654
+
+	mov	12(r1),	r12	;0x0000c
+	mov	16(r1),	r13	;0x00010
+	mov	18(r1),	r14	;0x00012
+	mov	14(r1),	r15	;0x0000e
+	mov	r12,	r8	;
+	mov	r13,	r9	;
+	mov	r14,	r10	;
+	mov	r15,	r11	;
+
+.L751:
+	calla	#__mspabi_addd		;0x07e02
+
+.L752:
+	mov	r12,	12(r1)	; 0x000c
+	mov	r13,	16(r1)	; 0x0010
+	mov	r14,	18(r1)	; 0x0012
+	jmp .L817	;mova	#27292,	r0	;0x06a9c
+
+.L753:
+	bis	r13,	r12	;
+	cmp	#0,	r12	;r3 As==00
+	jz	.L754      	;abs 0x665e
+	jmp .L821	;mova	#27342,	r0	;0x06ace
+
+.L754:
+	mov	12(r1),	r12	;0x0000c
+	mov	16(r1),	r13	;0x00010
+	mov	18(r1),	r14	;0x00012
+	mov	14(r1),	r15	;0x0000e
+	adda	#58,	r1	;0x0003a
+
+	popm.a	#4,	r10	;20-bit words
+
+	reta			;
+
+.L757:
+	mov	#12369,	0(r1)	;#0x3051
+	mov	#-10963,2(r1)	;#0xd52d
+	mov	#18704,	4(r1)	;#0x4910
+	mov	#-16249,6(r1)	;#0xc087
+	mov	12(r1),	r12	;0x0000c
+	mov	16(r1),	r13	;0x00010
+	mov	18(r1),	r14	;0x00012
+	mov	14(r1),	r15	;0x0000e
+	calla	#__ltdf2		;0x08530
+	cmp	#0,	r12	;r3 As==00
+	jge	.L724    	;abs 0x64cc
+
+	mov	#0,	12(r1)	;r3 As==00, 0x000c
+	mov	12(r1),	16(r1)	;0x0000c, 0x0010
+	mov	12(r1),	18(r1)	;0x0000c, 0x0012
+	mov	12(r1),	14(r1)	;0x0000c, 0x000e
+	jmp .L754	;mova	#26206,	r0	;0x0665e
+
+.L759:
+	mov	#16342,	r15	;#0x3fd6
+	cmp	r14,	r15	;
+	jnc	.L792    	;abs 0x6960
+	cmp	r15,	r14	;
+	jnz	.L795    	;abs 0x697c
+	mov	#11842,	r12	;#0x2e42
+	cmp	r10,	r12	;
+	jc	.L800    	;abs 0x69e0
+
+.L760:
+	mov	20(r1),	r13	;0x00014
+	mov	22(r1),	r14	;0x00016
+	push	r14		;
+	push	r13		;
+	popm.a	#1,	r12	;20-bit words
+	mova	r12,	r7	;
+	rlam.a	#3,	r7	;
+	mova	r7,	r10	;
+	adda	#82984,	r10	;0x14428
+
+	mov	@r10,	r12	;
+	mov	2(r10),	r13	;
+	mov	4(r10),	r14	;
+	mov	6(r10),	r15	;
+	mov	12(r1),	r8	;0x0000c
+	mov	16(r1),	r9	;0x00010
+	mov	18(r1),	r10	;0x00012
+	mov	14(r1),	r11	;0x0000e
+	calla	#__mspabi_subd		;0x07e66
+	mov	r12,	32(r1)	; 0x0020
+	mov	r13,	34(r1)	; 0x0022
+	mov	r14,	36(r1)	; 0x0024
+	mov	r15,	38(r1)	; 0x0026
+
+	mova	r7,	r12	;
+
+	adda	#82968,	r12	;0x14418
+	mov	@r12,	40(r1)	; 0x0028
+	mov	2(r12),	42(r1)	; 0x002a
+	mov	4(r12),	44(r1)	; 0x002c
+	mov	6(r12),	46(r1)	; 0x002e
+
+	mov.b	#1,	r12	;r3 As==01
+	clr.b	r13		;
+
+	subx.w	20(r1),	r12	;0x00014
+	subcx.w	22(r1),	r13	;0x00016
+
+	mov	r12,	r14	;
+
+	mov	r13,	r15	;
+
+	subx.w	20(r1),	r14	;0x00014
+	subcx.w	22(r1),	r15	;0x00016
+	mov	r14,	24(r1)	; 0x0018
+	mov	r15,	26(r1)	; 0x001a
+
+.L769:
+	mov	40(r1),	r12	;0x00028
+	mov	42(r1),	r13	;0x0002a
+	mov	44(r1),	r14	;0x0002c
+	mov	46(r1),	r15	;0x0002e
+	mov	32(r1),	r8	;0x00020
+	mov	34(r1),	r9	;0x00022
+	mov	36(r1),	r10	;0x00024
+	mov	38(r1),	r11	;0x00026
+	calla	#__mspabi_subd		;0x07e66
+	mov	r12,	12(r1)	; 0x000c
+	mov	r13,	16(r1)	; 0x0010
+	mov	r14,	18(r1)	; 0x0012
+	mov	r15,	14(r1)	; 0x000e
+
+.L770:
+	mov	12(r1),	r12	;0x0000c
+	mov	16(r1),	r13	;0x00010
+	mov	18(r1),	r14	;0x00012
+	mov	14(r1),	r15	;0x0000e
+	mov	r12,	r8	;
+	mov	r13,	r9	;
+	mov	r14,	r10	;
+	mov	r15,	r11	;
+	calla	#__mspabi_mpyd		;0x07ece
+	mov	r12,	20(r1)	; 0x0014
+	mov	r13,	r7	;
+	mov	r14,	28(r1)	; 0x001c
+	mov	r15,	30(r1)	; 0x001e
+
+	mov	#-23344,r12	;#0xa4d0
+
+	mov	#29374,	r13	;#0x72be
+	mov	#14185,	r14	;#0x3769
+
+	mov	#15974,	r15	;#0x3e66
+
+	mov	20(r1),	r8	;0x00014
+	mov	r7,	r9	;
+	mov	28(r1),	r10	;0x0001c
+	mov	30(r1),	r11	;0x0001e
+	calla	#__mspabi_mpyd		;0x07ece
+	mov	r12,	r8	;
+	mov	r13,	r9	;
+	mov	r14,	r10	;
+	mov	r15,	r11	;
+
+	mov	#27633,	r12	;#0x6bf1
+	mov	#-14894,r13	;#0xc5d2
+	mov	#-17087,r14	;#0xbd41
+	mov	#16059,	r15	;#0x3ebb
+	calla	#__mspabi_subd		;0x07e66
+	mov	r12,	r8	;
+	mov	r13,	r9	;
+	mov	r14,	r10	;
+	mov	r15,	r11	;
+
+	mov	20(r1),	r12	;0x00014
+	mov	r7,	r13	;
+	mov	28(r1),	r14	;0x0001c
+	mov	30(r1),	r15	;0x0001e
+	calla	#__mspabi_mpyd		;0x07ece
+	mov	r12,	r8	;
+	mov	r13,	r9	;
+	mov	r14,	r10	;
+	mov	r15,	r11	;
+
+	mov	#-8660,	r12	;#0xde2c
+	mov	#-20699,r13	;#0xaf25
+	mov	#22122,	r14	;#0x566a
+	mov	#16145,	r15	;#0x3f11
+	calla	#__mspabi_addd		;0x07e02
+	mov	r12,	r8	;
+	mov	r13,	r9	;
+	mov	r14,	r10	;
+	mov	r15,	r11	;
+
+	mov	20(r1),	r12	;0x00014
+	mov	r7,	r13	;
+	mov	28(r1),	r14	;0x0001c
+	mov	30(r1),	r15	;0x0001e
+	calla	#__mspabi_mpyd		;0x07ece
+	mov	r12,	r8	;
+	mov	r13,	r9	;
+	mov	r14,	r10	;
+	mov	r15,	r11	;
+
+	mov	#-17005,r12	;#0xbd93
+	mov	#5822,	r13	;#0x16be
+	mov	#-16020,r14	;#0xc16c
+	mov	#16230,	r15	;#0x3f66
+	calla	#__mspabi_subd		;0x07e66
+	mov	r12,	r8	;
+	mov	r13,	r9	;
+	mov	r14,	r10	;
+	mov	r15,	r11	;
+
+	mov	20(r1),	r12	;0x00014
+	mov	r7,	r13	;
+	mov	28(r1),	r14	;0x0001c
+	mov	30(r1),	r15	;0x0001e
+	calla	#__mspabi_mpyd		;0x07ece
+	mov	r12,	r8	;
+	mov	r13,	r9	;
+	mov	r14,	r10	;
+	mov	r15,	r11	;
+
+	mov	#21822,	r12	;#0x553e
+	mov	#21845,	r13	;#0x5555
+	mov	r13,	r14	;
+	mov	#16325,	r15	;#0x3fc5
+	calla	#__mspabi_addd		;0x07e02
+	mov	r12,	r8	;
+	mov	r13,	r9	;
+	mov	r14,	r10	;
+	mov	r15,	r11	;
+
+	mov	20(r1),	r12	;0x00014
+	mov	r7,	r13	;
+	mov	28(r1),	r14	;0x0001c
+	mov	30(r1),	r15	;0x0001e
+	calla	#__mspabi_mpyd		;0x07ece
+
+	mov	12(r1),	r8	;0x0000c
+	mov	16(r1),	r9	;0x00010
+	mov	18(r1),	r10	;0x00012
+	mov	14(r1),	r11	;0x0000e
+	calla	#__mspabi_subd		;0x07e66
+	mov	r12,	20(r1)	; 0x0014
+
+	mov	r13,	28(r1)	; 0x001c
+	mov	r14,	30(r1)	; 0x001e
+	mov	r15,	48(r1)	; 0x0030
+
+	mov	14(r1),	r11	;0x0000e
+	calla	#__mspabi_mpyd		;0x07ece
+
+	mov	r12,	50(r1)	; 0x0032
+	mov	r13,	52(r1)	; 0x0034
+	mov	r14,	54(r1)	; 0x0036
+	mov	r15,	56(r1)	; 0x0038
+
+	mov	24(r1),	r7	;0x00018
+	bis	26(r1),	r7	;0x0001a
+	cmp	#0,	r7	;r3 As==00
+	jnz	.L801    	;abs 0x69ec
+
+	mov	r7,	r12	;
+	mov	r7,	r13	;
+	mov	r7,	r14	;
+	mov	#16384,	r15	;#0x4000
+	mov	20(r1),	r8	;0x00014
+	mov	28(r1),	r9	;0x0001c
+	mov	30(r1),	r10	;0x0001e
+	mov	48(r1),	r11	;0x00030
+	calla	#__mspabi_subd		;0x07e66
+
+	mov	50(r1),	r8	;0x00032
+	mov	52(r1),	r9	;0x00034
+	mov	54(r1),	r10	;0x00036
+	mov	56(r1),	r11	;0x00038
+	calla	#__mspabi_divd		;0x05500
+	mov	r12,	r8	;
+	mov	r13,	r9	;
+	mov	r14,	r10	;
+	mov	r15,	r11	;
+
+	mov	12(r1),	r12	;0x0000c
+	mov	16(r1),	r13	;0x00010
+	mov	18(r1),	r14	;0x00012
+	mov	14(r1),	r15	;0x0000e
+	calla	#__mspabi_subd		;0x07e66
+
+	mov	r7,	r8	;
+	mov	r7,	r9	;
+	mov	r7,	r10	;
+	mov	#16368,	r11	;#0x3ff0
+	calla	#__mspabi_subd		;0x07e66
+	jmp .L752	;mova	#26180,	r0	;0x06644
+
+.L792:
+	mov	#16368,	r13	;#0x3ff0
+	cmp	r14,	r13	;
+	jc	.L793      	;abs 0x696c
+	jmp .L724	;mova	#25804,	r0	;0x064cc
+.L793:
+	cmp	r13,	r14	;
+	jnz	.L760    	;abs 0x66d4
+	mov	#-23887,r14	;#0xa2b1
+
+	cmp	r10,	r14	;
+	jc	.L760    	;abs 0x66d4
+	jmp .L724	;mova	#25804,	r0	;0x064cc
+
+.L795:
+	mov	#15919,	r13	;#0x3e2f
+	cmp	r14,	r13	;
+	jnc	.L800     	;abs 0x69e0
+
+	mov	#30108,	r12	;#0x759c
+	mov	#-30720,r13	;#0x8800
+	mov	#-7108,	r14	;#0xe43c
+
+	mov	#32311,	r15	;#0x7e37
+	mov	12(r1),	r8	;0x0000c
+	mov	16(r1),	r9	;0x00010
+	mov	18(r1),	r10	;0x00012
+	mov	14(r1),	r11	;0x0000e
+	calla	#__mspabi_addd		;0x07e02
+
+	clr.b	r11		;
+	mov	#16368,	r7	;#0x3ff0
+	mov	r11,	0(r1)	;
+	mov	r11,	2(r1)	;
+	mov	r11,	4(r1)	;
+	mov	r7,	6(r1)	;
+	mova	r11,	8(r1)	;
+	calla	#__gtdf2		;0x084ba
+	mova	8(r1),	r11	;
+	clr.b	r14		;
+	cmp	r12,	r14	;
+	jge	.L800     	;abs 0x69e0
+
+	mov	r11,	r12	;
+	mov	r11,	r13	;
+	mov	r11,	r14	;
+	mov	r7,	r15	;
+	mov	14(r1),	r11	;0x0000e
+	jmp .L751	;mova	#26176,	r0	;0x06640
+
+.L800:
+	mov	#0,	24(r1)	;r3 As==00, 0x0018
+	mov	#0,	26(r1)	;r3 As==00, 0x001a
+	jmp .L770	;mova	#26518,	r0	;0x06796
+
+.L801:
+	mov	20(r1),	r12	;0x00014
+	mov	28(r1),	r13	;0x0001c
+	mov	30(r1),	r14	;0x0001e
+	mov	48(r1),	r15	;0x00030
+	clr.b	r8		;
+
+	mov	r8,	r9	;
+
+	mov	r8,	r10	;
+
+	mov	#16384,	r11	;#0x4000
+	calla	#__mspabi_subd		;0x07e66
+
+	mov	50(r1),	r8	;0x00032
+	mov	52(r1),	r9	;0x00034
+	mov	54(r1),	r10	;0x00036
+	mov	56(r1),	r11	;0x00038
+	calla	#__mspabi_divd		;0x05500
+
+	mov	40(r1),	r8	;0x00028
+	mov	42(r1),	r9	;0x0002a
+	mov	44(r1),	r10	;0x0002c
+	mov	46(r1),	r11	;0x0002e
+	calla	#__mspabi_subd		;0x07e66
+	mov	r12,	r8	;
+	mov	r13,	r9	;
+	mov	r14,	r10	;
+	mov	r15,	r11	;
+
+	mov	32(r1),	r12	;0x00020
+	mov	34(r1),	r13	;0x00022
+	mov	36(r1),	r14	;0x00024
+	mov	38(r1),	r15	;0x00026
+	calla	#__mspabi_subd		;0x07e66
+
+	clr.b	r8		;
+	mov	r8,	r9	;
+	mov	r8,	r10	;
+	mov	#16368,	r11	;#0x3ff0
+	calla	#__mspabi_subd		;0x07e66
+	mov	r12,	r8	;
+	mov	r13,	r9	;
+
+	mov	r14,	r10	;
+	mov	r15,	r7	;
+
+	mov	26(r1),	r12	;0x0001a
+	cmp	#-1,	r12	;r3 As==11
+	jl	.L818     	;abs 0x6aa4
+	cmp	#-1,	r12	;r3 As==11
+	jnz	.L811     	;abs 0x6a7a
+	mov	24(r1),	r12	;0x00018
+	cmp	#-1021,	r12	;#0xfc03
+	jnc	.L818     	;abs 0x6aa4
+
+.L811:
+	mov	24(r1),	r12	;0x00018
+	mov	26(r1),	r13	;0x0001a
+	mov.b	#20,	r14	;#0x0014
+
+	calla	#__mspabi_slll		;0x059d4
+
+	add	r12,	r10	;
+
+	addc	r7,	r13	;
+	mov	r13,	r15	;
+
+	mov	r8,	12(r1)	; 0x000c
+
+	mov	r9,	16(r1)	; 0x0010
+	mov	r10,	18(r1)	; 0x0012
+
+.L817:
+	mov	r15,	14(r1)	; 0x000e
+	jmp .L754	;mova	#26206,	r0	;0x0665e
+
+.L818:
+	mov	24(r1),	r12	;0x00018
+	add	#1000,	r12	;#0x03e8
+	mov	26(r1),	r13	;0x0001a
+	adc	r13		;
+	mov.b	#20,	r14	;#0x0014
+	calla	#__mspabi_slll		;0x059d4
+	add	r12,	r10	;
+
+	mov	r13,	r11	;
+	addc	r7,	r11	;
+
+	clr.b	r12		;
+	mov	r12,	r13	;
+	mov	r12,	r14	;
+	mov	#368,	r15	;#0x0170
+	jmp .L745	;mova	#26122,	r0	;0x0660a
+
+.L821:
+	mov	r14,	12(r1)	; 0x000c
+	mov	r14,	16(r1)	; 0x0010
+	mov	r14,	18(r1)	; 0x0012
+	mov	r14,	14(r1)	; 0x000e
+
+	jmp .L754	;mova	#26206,	r0	;0x0665e
+
+
+
+	.global __ieee754_log
+	.type __ieee754_log, @function
+__ieee754_log:
+	nop
+	nop
+	pushm.a	#4,	r10	;20-bit words
+
+	suba	#62,	r1	;0x0003e
+
+	mov	r12,	r8	;
+	mov	r13,	16(r1)	; 0x0010
+	mov	r14,	r10	;
+	mov	r15,	r11	;
+
+	mov	r14,	12(r1)	; 0x000c
+	mov	r14,	18(r1)	; 0x0012
+	mov	r15,	r7	;
+
+	mov.b	#15,	r9	;#0x000f
+	cmp	r15,	r9	;
+	jl	.L880    	;abs 0x6cd6
+
+	mov	r14,	r7	;
+
+	bis	r12,	r7	;
+	mov	r15,	r9	;
+	and	#32767,	r9	;#0x7fff
+	bis	r13,	r9	;
+
+	bis	r7,	r9	;
+	cmp	#0,	r9	;r3 As==00
+	jnz	.L837     	;abs 0x6b32
+
+	mov	r9,	r12	;
+
+	mov	r9,	r13	;
+	mov	r9,	r14	;
+	mov	r9,	r15	;
+	mov	r9,	r8	;
+	mov	r9,	r10	;
+
+	mov	#-15536,r11	;#0xc350
+
+.L833:
+	calla	#__mspabi_divd		;0x05500
+
+.L834:
+	adda	#62,	r1	;0x0003e
+
+	popm.a	#4,	r10	;20-bit words
+
+	reta			;
+
+.L837:
+	cmp	#0,	r15	;r3 As==00
+	jge	.L841     	;abs 0x6b52
+
+	mov	16(r1),	r9	;0x00010
+	calla	#__mspabi_subd		;0x07e66
+
+	mov	r12,	r8	;
+	mov	r13,	r9	;
+	mov	r14,	r10	;
+	mov	r15,	r11	;
+
+	clr.b	r12		;
+	mov	r12,	r13	;
+	mov	r12,	r14	;
+	mov	r12,	r15	;
+	jmp .L833	;mova	#27430,	r0	;0x06b26
+
+.L841:
+	clr.b	r12		;
+
+	mov	r12,	r13	;
+	mov	r12,	r14	;
+	mov	#17232,	r15	;#0x4350
+	mov	16(r1),	r9	;0x00010
+	calla	#__mspabi_mpyd		;0x07ece
+
+	mov	r12,	r8	;
+	mov	r13,	16(r1)	; 0x0010
+	mov	r14,	r10	;
+	mov	r15,	r11	;
+
+	mov	r14,	18(r1)	; 0x0012
+	mov	r15,	r7	;
+
+	mov	#-54,	r9	;#0xffca
+	mov	#-1,	20(r1)	;r3 As==11, 0x0014
+
+.L846:
+	mov	#32751,	r12	;#0x7fef
+	cmp	r7,	r12	;
+	jl	.L881    	;abs 0x6ce0
+
+	mov	18(r1),	r12	;0x00012
+	mov	r7,	r13	;
+	mov.b	#20,	r14	;#0x0014
+	calla	#__mspabi_sral		;0x086de
+
+	add	#-1023,	r12	;#0xfc01
+	addc	#-1,	r13	;r3 As==11
+
+	add	r12,	r9	;
+
+	addcx.w	20(r1),	r13	;0x00014
+	mov	r13,	20(r1)	; 0x0014
+
+	mov	18(r1),	12(r1)	;0x00012, 0x000c
+	and.b	#15,	r7	;#0x000f
+
+	mov	r7,	14(r1)	; 0x000e
+
+	mov	12(r1),	r12	;0x0000c
+	add	#24420,	r12	;#0x5f64
+	mov	r7,	r13	;
+
+	addc	#9,	r13	;
+
+	and.b	#16,	r13	;#0x0010
+
+	mov	r13,	r7	;
+	xor	#16368,	r7	;#0x3ff0
+	bis	14(r1),	r7	;0x0000e
+	mov	12(r1),	r10	;0x0000c
+
+	clr.b	r12		;
+	mov.b	#20,	r14	;#0x0014
+	calla	#__mspabi_sral		;0x086de
+
+	add	r9,	r12	;
+	mov	r12,	32(r1)	; 0x0020
+	addcx.w	20(r1),	r13	;0x00014
+	mov	r13,	20(r1)	; 0x0014
+
+	clr.b	r12		;
+
+	mov	r12,	r13	;
+
+	mov	r12,	r14	;
+	mov	#16368,	r15	;#0x3ff0
+	mov	16(r1),	r9	;0x00010
+	mov	r7,	r11	;
+	calla	#__mspabi_subd		;0x07e66
+	mov	r12,	18(r1)	; 0x0012
+
+	mov	r13,	28(r1)	; 0x001c
+	mov	r14,	30(r1)	; 0x001e
+	mov	r15,	16(r1)	; 0x0010
+
+	mov	r10,	r12	;
+
+	incd	r12		;
+	mov	14(r1),	r13	;0x0000e
+
+	adc	r13		;
+
+	mov	r13,	r14	;
+
+	and.b	#15,	r14	;#0x000f
+
+	bit	#15,	r13	;#0x000f
+	jnz	.L903    	;abs 0x6e2e
+	cmp	#0,	r14	;r3 As==00
+	jnz	.L869      	;abs 0x6c30
+	mov.b	#2,	r13	;r3 As==10
+	cmp	r12,	r13	;
+	jnc	.L903    	;abs 0x6e2e
+
+.L869:
+	clr.b	r7		;
+
+	mov	r7,	0(r1)	;
+	mov	r7,	2(r1)	;
+	mov	r7,	4(r1)	;
+	mov	r7,	6(r1)	;
+	mov	18(r1),	r12	;0x00012
+	mov	28(r1),	r13	;0x0001c
+	mov	30(r1),	r14	;0x0001e
+	mov	16(r1),	r15	;0x00010
+
+	calla	#__eqdf2		;0x08444
+	mov	r12,	r11	;
+	cmp	r7,	r12	;
+	jnz	.L883    	;abs 0x6cf4
+
+	mov	32(r1),	r12	;0x00020
+	bis	20(r1),	r12	;0x00014
+	cmp	r7,	r12	;
+	jnz	.L873      	;abs 0x6c6c
+	jmp .L980	;mova	#29408,	r0	;0x072e0
+
+.L873:
+	mov	32(r1),	r12	;0x00020
+	mov	20(r1),	r13	;0x00014
+	mova	r11,	8(r1)	;
+	calla	#__mspabi_fltlid		;0x085a6
+	mov	r12,	r8	;
+	mov	r13,	r9	;
+	mov	r14,	r10	;
+	mov	r15,	r7	;
+
+	mova	8(r1),	r11	;
+	mov	r11,	r12	;
+	mov	#-288,	r13	;#0xfee0
+	mov	#11842,	r14	;#0x2e42
+	mov	#16358,	r15	;#0x3fe6
+	mov	r7,	r11	;
+	calla	#__mspabi_mpyd		;0x07ece
+	mov	r12,	16(r1)	; 0x0010
+
+	mov	r13,	12(r1)	; 0x000c
+
+	mov	r14,	18(r1)	; 0x0012
+	mov	r15,	28(r1)	; 0x001c
+
+	mov	#15478,	r12	;#0x3c76
+	mov	#13689,	r13	;#0x3579
+	mov	#14831,	r14	;#0x39ef
+	mov	#15850,	r15	;#0x3dea
+	mov	r7,	r11	;
+	calla	#__mspabi_mpyd		;0x07ece
+
+	mov	16(r1),	r8	;0x00010
+
+	mov	12(r1),	r9	;0x0000c
+	mov	18(r1),	r10	;0x00012
+	mov	28(r1),	r11	;0x0001c
+	jmp .L882	;mova	#27884,	r0	;0x06cec
+
+.L880:
+	clr.b	r9		;
+	mov	r9,	20(r1)	; 0x0014
+	jmp .L846	;mova	#27516,	r0	;0x06b7c
+
+.L881:
+	mov	r8,	r12	;
+	mov	16(r1),	r13	;0x00010
+	mov	r10,	r14	;
+	mov	r11,	r15	;
+	mov	r13,	r9	;
+
+.L882:
+	calla	#__mspabi_addd		;0x07e02
+	jmp .L834	;mova	#27434,	r0	;0x06b2a
+
+.L883:
+	mov	#21845,	r12	;#0x5555
+	mov	r12,	r13	;
+	mov	r12,	r14	;
+	mov	#16341,	r15	;#0x3fd5
+	mov	18(r1),	r8	;0x00012
+	mov	28(r1),	r9	;0x0001c
+	mov	30(r1),	r10	;0x0001e
+	mov	16(r1),	r11	;0x00010
+	calla	#__mspabi_mpyd		;0x07ece
+
+	mov	r7,	r8	;
+	mov	r7,	r9	;
+	mov	r7,	r10	;
+	mov	#16352,	r11	;#0x3fe0
+	calla	#__mspabi_subd		;0x07e66
+	mov	r12,	12(r1)	; 0x000c
+
+	mov	r13,	22(r1)	; 0x0016
+	mov	r14,	24(r1)	; 0x0018
+	mov	r15,	26(r1)	; 0x001a
+
+	mov	18(r1),	r12	;0x00012
+	mov	28(r1),	r13	;0x0001c
+	mov	30(r1),	r14	;0x0001e
+	mov	16(r1),	r15	;0x00010
+	mov	r12,	r8	;
+	mov	r13,	r9	;
+	mov	r14,	r10	;
+	mov	r15,	r11	;
+	calla	#__mspabi_mpyd		;0x07ece
+
+	mov	12(r1),	r8	;0x0000c
+	mov	22(r1),	r9	;0x00016
+	mov	24(r1),	r10	;0x00018
+	mov	26(r1),	r11	;0x0001a
+	calla	#__mspabi_mpyd		;0x07ece
+	mov	r12,	22(r1)	; 0x0016
+	mov	r13,	24(r1)	; 0x0018
+	mov	r14,	26(r1)	; 0x001a
+	mov	r15,	34(r1)	; 0x0022
+
+	mov	32(r1),	r10	;0x00020
+	bis	20(r1),	r10	;0x00014
+	cmp	#0,	r10	;r3 As==00
+	jnz	.L890     	;abs 0x6d92
+
+.L889:
+	mov	18(r1),	r8	;0x00012
+	mov	28(r1),	r9	;0x0001c
+	mov	30(r1),	r10	;0x0001e
+	mov	16(r1),	r11	;0x00010
+	jmp .L902	;mova	#28198,	r0	;0x06e26
+
+.L890:
+	mov	32(r1),	r12	;0x00020
+
+	mov	20(r1),	r13	;0x00014
+
+	calla	#__mspabi_fltlid		;0x085a6
+
+	mov	r12,	r8	;
+	mov	r13,	r9	;
+	mov	r14,	r10	;
+	mov	r15,	12(r1)	; 0x000c
+
+	mov	r7,	r12	;
+	mov	#-288,	r13	;#0xfee0
+	mov	#11842,	r14	;#0x2e42
+	mov	#16358,	r15	;#0x3fe6
+
+	mov	12(r1),	r11	;0x0000c
+	calla	#__mspabi_mpyd		;0x07ece
+	mov	r12,	20(r1)	; 0x0014
+
+	mov	r13,	32(r1)	; 0x0020
+	mov	r14,	36(r1)	; 0x0024
+	mov	r15,	44(r1)	; 0x002c
+
+	mov	#15478,	r12	;#0x3c76
+	mov	#13689,	r13	;#0x3579
+	mov	#14831,	r14	;#0x39ef
+	mov	#15850,	r15	;#0x3dea
+	mov	12(r1),	r11	;0x0000c
+	calla	#__mspabi_mpyd		;0x07ece
+
+	mov	22(r1),	r8	;0x00016
+
+	mov	24(r1),	r9	;0x00018
+	mov	26(r1),	r10	;0x0001a
+	mov	34(r1),	r11	;0x00022
+	calla	#__mspabi_subd		;0x07e66
+	mov	r12,	r8	;
+	mov	r13,	r9	;
+	mov	r14,	r10	;
+	mov	r15,	r11	;
+
+	mov	18(r1),	r12	;0x00012
+	mov	28(r1),	r13	;0x0001c
+	mov	30(r1),	r14	;0x0001e
+	mov	16(r1),	r15	;0x00010
+	calla	#__mspabi_subd		;0x07e66
+
+	mov	20(r1),	r8	;0x00014
+	mov	32(r1),	r9	;0x00020
+	mov	36(r1),	r10	;0x00024
+	mov	44(r1),	r11	;0x0002c
+
+.L902:
+	calla	#__mspabi_subd		;0x07e66
+	jmp .L834	;mova	#27434,	r0	;0x06b2a
+
+.L903:
+	clr.b	r12		;
+	mov	r12,	r13	;
+	mov	r12,	r14	;
+	mov	#16384,	r15	;#0x4000
+
+	mov	18(r1),	r8	;0x00012
+
+	mov	28(r1),	r9	;0x0001c
+	mov	30(r1),	r10	;0x0001e
+	mov	16(r1),	r11	;0x00010
+	calla	#__mspabi_addd		;0x07e02
+
+	mov	16(r1),	r11	;0x00010
+	calla	#__mspabi_divd		;0x05500
+	mov	r12,	34(r1)	; 0x0022
+	mov	r13,	36(r1)	; 0x0024
+	mov	r14,	44(r1)	; 0x002c
+	mov	r15,	46(r1)	; 0x002e
+
+	mov	32(r1),	r12	;0x00020
+
+	mov	20(r1),	r13	;0x00014
+
+	calla	#__mspabi_fltlid		;0x085a6
+
+	mov	r12,	52(r1)	; 0x0034
+	mov	r13,	54(r1)	; 0x0036
+	mov	r14,	56(r1)	; 0x0038
+	mov	r15,	48(r1)	; 0x0030
+
+	mov	34(r1),	r12	;0x00022
+
+	mov	36(r1),	r13	;0x00024
+
+	mov	44(r1),	r14	;0x0002c
+
+	mov	46(r1),	r15	;0x0002e
+
+	mov	r12,	r8	;
+	mov	r13,	r9	;
+	mov	r14,	r10	;
+	mov	r15,	r11	;
+	calla	#__mspabi_mpyd		;0x07ece
+	mov	r12,	38(r1)	; 0x0026
+	mov	r13,	40(r1)	; 0x0028
+	mov	r14,	42(r1)	; 0x002a
+	mov	r15,	50(r1)	; 0x0032
+
+	mov	12(r1),	r9	;0x0000c
+	add	#-5242,	r9	;#0xeb86
+	mov	r9,	58(r1)	; 0x003a
+	mov	14(r1),	r10	;0x0000e
+	addc	#-7,	r10	;#0xfff9
+	mov	r10,	60(r1)	; 0x003c
+
+	mov	r12,	r8	;
+	mov	r13,	r9	;
+
+	mov	r14,	r10	;
+
+	mov	r15,	r11	;
+	calla	#__mspabi_mpyd		;0x07ece
+
+	mov	r12,	22(r1)	; 0x0016
+	mov	r13,	r7	;
+	mov	r14,	24(r1)	; 0x0018
+	mov	r15,	26(r1)	; 0x001a
+
+	mov	#21060,	r12	;#0x5244
+
+	mov	#-8386,	r13	;#0xdf3e
+	mov	#-3822,	r14	;#0xf112
+
+	mov	#16322,	r15	;#0x3fc2
+
+	mov	22(r1),	r8	;0x00016
+
+	mov	r7,	r9	;
+
+	mov	24(r1),	r10	;0x00018
+
+	mov	26(r1),	r11	;0x0001a
+	calla	#__mspabi_mpyd		;0x07ece
+	mov	r12,	r8	;
+	mov	r13,	r9	;
+	mov	r14,	r10	;
+	mov	r15,	r11	;
+
+	mov	#990,	r12	;#0x03de
+	mov	#-26933,r13	;#0x96cb
+	mov	#18020,	r14	;#0x4664
+	mov	#16327,	r15	;#0x3fc7
+	calla	#__mspabi_addd		;0x07e02
+	mov	r12,	r8	;
+	mov	r13,	r9	;
+	mov	r14,	r10	;
+	mov	r15,	r11	;
+
+	mov	22(r1),	r12	;0x00016
+	mov	r7,	r13	;
+	mov	24(r1),	r14	;0x00018
+	mov	26(r1),	r15	;0x0001a
+	calla	#__mspabi_mpyd		;0x07ece
+	mov	r12,	r8	;
+	mov	r13,	r9	;
+	mov	r14,	r10	;
+	mov	r15,	r11	;
+
+	mov	#-27815,r12	;#0x9359
+	mov	#-27614,r13	;#0x9422
+	mov	#18724,	r14	;#0x4924
+	mov	#16338,	r15	;#0x3fd2
+	calla	#__mspabi_addd		;0x07e02
+	mov	r12,	r8	;
+	mov	r13,	r9	;
+	mov	r14,	r10	;
+	mov	r15,	r11	;
+
+	mov	22(r1),	r12	;0x00016
+	mov	r7,	r13	;
+	mov	24(r1),	r14	;0x00018
+	mov	26(r1),	r15	;0x0001a
+	calla	#__mspabi_mpyd		;0x07ece
+	mov	r12,	r8	;
+	mov	r13,	r9	;
+	mov	r14,	r10	;
+	mov	r15,	r11	;
+
+	mov	#21907,	r12	;#0x5593
+	mov	#21845,	r13	;#0x5555
+	mov	r13,	r14	;
+	mov	#16357,	r15	;#0x3fe5
+	calla	#__mspabi_addd		;0x07e02
+	mov	r12,	r8	;
+	mov	r13,	r9	;
+	mov	r14,	r10	;
+	mov	r15,	r11	;
+
+	mov	38(r1),	r12	;0x00026
+	mov	40(r1),	r13	;0x00028
+	mov	42(r1),	r14	;0x0002a
+	mov	50(r1),	r15	;0x00032
+	calla	#__mspabi_mpyd		;0x07ece
+	mov	r12,	38(r1)	; 0x0026
+
+	mov	r13,	40(r1)	; 0x0028
+	mov	r14,	42(r1)	; 0x002a
+	mov	r15,	50(r1)	; 0x0032
+
+	mov	#-14689,r12	;#0xc69f
+	mov	#-12168,r13	;#0xd078
+	mov	#-26103,r14	;#0x9a09
+	mov	#16323,	r15	;#0x3fc3
+	mov	22(r1),	r8	;0x00016
+	mov	r7,	r9	;
+	mov	24(r1),	r10	;0x00018
+	mov	26(r1),	r11	;0x0001a
+	calla	#__mspabi_mpyd		;0x07ece
+	mov	r12,	r8	;
+	mov	r13,	r9	;
+	mov	r14,	r10	;
+	mov	r15,	r11	;
+
+	mov	#30895,	r12	;#0x78af
+	mov	#7566,	r13	;#0x1d8e
+	mov	#29125,	r14	;#0x71c5
+	mov	#16332,	r15	;#0x3fcc
+	calla	#__mspabi_addd		;0x07e02
+	mov	r12,	r8	;
+	mov	r13,	r9	;
+	mov	r14,	r10	;
+	mov	r15,	r11	;
+
+	mov	22(r1),	r12	;0x00016
+	mov	r7,	r13	;
+	mov	24(r1),	r14	;0x00018
+	mov	26(r1),	r15	;0x0001a
+	calla	#__mspabi_mpyd		;0x07ece
+	mov	r12,	r8	;
+	mov	r13,	r9	;
+	mov	r14,	r10	;
+	mov	r15,	r11	;
+
+	mov	#-1532,	r12	;#0xfa04
+	mov	#-26217,r13	;#0x9997
+	mov	#-26215,r14	;#0x9999
+	mov	#16345,	r15	;#0x3fd9
+	calla	#__mspabi_addd		;0x07e02
+	mov	r12,	r8	;
+	mov	r13,	r9	;
+	mov	r14,	r10	;
+	mov	r15,	r11	;
+
+	mov	22(r1),	r12	;0x00016
+	mov	r7,	r13	;
+	mov	24(r1),	r14	;0x00018
+	mov	26(r1),	r15	;0x0001a
+	calla	#__mspabi_mpyd		;0x07ece
+
+	mov	38(r1),	r8	;0x00026
+	mov	40(r1),	r9	;0x00028
+	mov	42(r1),	r10	;0x0002a
+	mov	50(r1),	r11	;0x00032
+	calla	#__mspabi_addd		;0x07e02
+	mov	r12,	r7	;
+
+	mov	r13,	22(r1)	; 0x0016
+	mov	r14,	24(r1)	; 0x0018
+	mov	r15,	26(r1)	; 0x001a
+
+	mov	#-18351,r14	;#0xb851
+
+	mov.b	#6,	r15	;
+
+	subx.w	12(r1),	r14	;0x0000c
+	subcx.w	14(r1),	r15	;0x0000e
+
+	mov	58(r1),	r13	;0x0003a
+
+	bis	r14,	r13	;
+	mov	60(r1),	r12	;0x0003c
+	bis	r15,	r12	;
+
+	clr.b	r14		;
+	cmp	r12,	r14	;
+	jl	.L948     	;abs 0x7090
+	cmp	r14,	r12	;
+	jnz	.L967    	;abs 0x71f6
+	cmp	r14,	r13	;
+	jz	.L967    	;abs 0x71f6
+
+.L948:
+	clr.b	r12		;
+	mov	r12,	r13	;
+	mov	r12,	r14	;
+	mov	#16352,	r15	;#0x3fe0
+	mov	18(r1),	r8	;0x00012
+	mov	28(r1),	r9	;0x0001c
+	mov	30(r1),	r10	;0x0001e
+	mov	16(r1),	r11	;0x00010
+	calla	#__mspabi_mpyd		;0x07ece
+	mov	r12,	r8	;
+	mov	r13,	r9	;
+	mov	r14,	r10	;
+	mov	r15,	r11	;
+
+	mov	18(r1),	r12	;0x00012
+	mov	28(r1),	r13	;0x0001c
+	mov	30(r1),	r14	;0x0001e
+	mov	16(r1),	r15	;0x00010
+	calla	#__mspabi_mpyd		;0x07ece
+	mov	r12,	12(r1)	; 0x000c
+
+	mov	r13,	38(r1)	; 0x0026
+	mov	r14,	40(r1)	; 0x0028
+	mov	r15,	42(r1)	; 0x002a
+
+	mov	r7,	r8	;
+	mov	22(r1),	r9	;0x00016
+	mov	24(r1),	r10	;0x00018
+	mov	26(r1),	r11	;0x0001a
+	calla	#__mspabi_addd		;0x07e02
+
+	mov	r12,	r8	;
+	mov	r13,	r9	;
+	mov	r14,	r10	;
+	mov	r15,	r11	;
+	mov	34(r1),	r12	;0x00022
+	mov	36(r1),	r13	;0x00024
+	mov	44(r1),	r14	;0x0002c
+	mov	46(r1),	r15	;0x0002e
+	calla	#__mspabi_mpyd		;0x07ece
+	mov	r12,	22(r1)	; 0x0016
+
+	mov	r13,	r7	;
+	mov	r14,	24(r1)	; 0x0018
+	mov	r15,	26(r1)	; 0x001a
+
+	mov	32(r1),	r9	;0x00020
+	bis	20(r1),	r9	;0x00014
+	cmp	#0,	r9	;r3 As==00
+	jnz	.L958     	;abs 0x714e
+
+	mova	#__mspabi_subd,	r7	;0x07e66
+	mov	12(r1),	r8	;0x0000c
+	mov	38(r1),	r9	;0x00026
+	mov	40(r1),	r10	;0x00028
+	mov	42(r1),	r11	;0x0002a
+	calla	r7		;
+
+	mov	18(r1),	r8	;0x00012
+	mov	28(r1),	r9	;0x0001c
+	mov	30(r1),	r10	;0x0001e
+	mov	16(r1),	r11	;0x00010
+
+.L957:
+	calla	r7		;
+	jmp .L834	;mova	#27434,	r0	;0x06b2a
+
+.L958:
+	clr.b	r12		;
+	mov	#-288,	r13	;#0xfee0
+	mov	#11842,	r14	;#0x2e42
+	mov	#16358,	r15	;#0x3fe6
+	mov	52(r1),	r8	;0x00034
+	mov	54(r1),	r9	;0x00036
+	mov	56(r1),	r10	;0x00038
+	mov	48(r1),	r11	;0x00030
+	calla	#__mspabi_mpyd		;0x07ece
+	mov	r12,	20(r1)	; 0x0014
+
+	mov	r13,	32(r1)	; 0x0020
+	mov	r14,	34(r1)	; 0x0022
+
+	mov	r15,	36(r1)	; 0x0024
+
+	mov	#15478,	r12	;#0x3c76
+	mov	#13689,	r13	;#0x3579
+	mov	#14831,	r14	;#0x39ef
+	mov	#15850,	r15	;#0x3dea
+	mov	48(r1),	r11	;0x00030
+	calla	#__mspabi_mpyd		;0x07ece
+	mov	r12,	r8	;
+	mov	r13,	r9	;
+	mov	r14,	r10	;
+	mov	r15,	r11	;
+
+	mov	22(r1),	r12	;0x00016
+	mov	r7,	r13	;
+	mov	24(r1),	r14	;0x00018
+	mov	26(r1),	r15	;0x0001a
+	calla	#__mspabi_addd		;0x07e02
+
+	mova	#__mspabi_subd,	r7	;0x07e66
+	mov	12(r1),	r8	;0x0000c
+	mov	38(r1),	r9	;0x00026
+	mov	40(r1),	r10	;0x00028
+	mov	42(r1),	r11	;0x0002a
+	calla	r7		;
+
+	mov	r12,	r8	;
+	mov	r13,	r9	;
+	mov	r14,	r10	;
+	mov	r15,	r11	;
+
+	mov	18(r1),	r12	;0x00012
+	mov	28(r1),	r13	;0x0001c
+	mov	30(r1),	r14	;0x0001e
+	mov	16(r1),	r15	;0x00010
+	calla	r7		;
+
+	mov	20(r1),	r8	;0x00014
+	mov	32(r1),	r9	;0x00020
+	mov	34(r1),	r10	;0x00022
+	mov	36(r1),	r11	;0x00024
+	jmp .L957	;mova	#29000,	r0	;0x07148
+
+.L967:
+	mov	r7,	r12	;
+	mov	22(r1),	r13	;0x00016
+	mov	24(r1),	r14	;0x00018
+	mov	26(r1),	r15	;0x0001a
+	mov	18(r1),	r8	;0x00012
+	mov	28(r1),	r9	;0x0001c
+	mov	30(r1),	r10	;0x0001e
+	mov	16(r1),	r11	;0x00010
+	calla	#__mspabi_subd		;0x07e66
+	mov	r12,	r8	;
+	mov	r13,	r9	;
+	mov	r14,	r10	;
+	mov	r15,	r11	;
+	mova	#__mspabi_mpyd,	r7	;0x07ece
+
+	mov	34(r1),	r12	;0x00022
+	mov	36(r1),	r13	;0x00024
+	mov	44(r1),	r14	;0x0002c
+	mov	46(r1),	r15	;0x0002e
+	calla	r7		;
+
+	mov	r12,	12(r1)	; 0x000c
+
+	mov	r13,	22(r1)	; 0x0016
+	mov	r14,	24(r1)	; 0x0018
+	mov	r15,	26(r1)	; 0x001a
+
+	mov	32(r1),	r9	;0x00020
+	bis	20(r1),	r9	;0x00014
+	cmp	#0,	r9	;r3 As==00
+	jnz	.L972      	;abs 0x7256
+	jmp .L889	;mova	#28030,	r0	;0x06d7e
+
+.L972:
+	clr.b	r12		;
+	mov	#-288,	r13	;#0xfee0
+	mov	#11842,	r14	;#0x2e42
+	mov	#16358,	r15	;#0x3fe6
+	mov	52(r1),	r8	;0x00034
+	mov	54(r1),	r9	;0x00036
+	mov	56(r1),	r10	;0x00038
+	mov	48(r1),	r11	;0x00030
+	calla	r7		;
+
+	mov	r12,	20(r1)	; 0x0014
+
+	mov	r13,	32(r1)	; 0x0020
+	mov	r14,	34(r1)	; 0x0022
+
+	mov	r15,	36(r1)	; 0x0024
+
+	mov	#15478,	r12	;#0x3c76
+	mov	#13689,	r13	;#0x3579
+	mov	#14831,	r14	;#0x39ef
+	mov	#15850,	r15	;#0x3dea
+	mov	48(r1),	r11	;0x00030
+	calla	r7		;
+
+	mov	12(r1),	r8	;0x0000c
+	mov	22(r1),	r9	;0x00016
+	mov	24(r1),	r10	;0x00018
+	mov	26(r1),	r11	;0x0001a
+	calla	#__mspabi_subd		;0x07e66
+	mov	r12,	r8	;
+	mov	r13,	r9	;
+	mov	r14,	r10	;
+	mov	r15,	r11	;
+
+	mov	18(r1),	r12	;0x00012
+	mov	28(r1),	r13	;0x0001c
+	mov	30(r1),	r14	;0x0001e
+	mov	16(r1),	r15	;0x00010
+	calla	#__mspabi_subd		;0x07e66
+
+	mov	20(r1),	r8	;0x00014
+	mov	32(r1),	r9	;0x00020
+	mov	34(r1),	r10	;0x00022
+	mov	36(r1),	r11	;0x00024
+	jmp .L902	;mova	#28198,	r0	;0x06e26
+
+.L980:
+	mov	r12,	r13	;
+	mov	r12,	r14	;
+	mov	r12,	r15	;
+
+	jmp .L834	;mova	#27434,	r0	;0x06b2a
+
+
+
+	.global __ieee754_sqrt
+	.type __ieee754_sqrt, @function
+__ieee754_sqrt:
+	nop
+	nop
+	pushm.a	#4,	r10	;20-bit words
+
+	suba	#46,	r1	;0x0002e
+
+	mov	r12,	r8	;
+	mov	r13,	r9	;
+	mov	r14,	r10	;
+	mov	r15,	r7	;
+
+	mov	r14,	30(r1)	; 0x001e
+	mov	r15,	0(r1)	;
+	mov	r14,	14(r1)	; 0x000e
+	mov	r15,	16(r1)	; 0x0010
+
+	mov	r12,	36(r1)	; 0x0024
+	mov	r13,	38(r1)	; 0x0026
+	mov	r12,	10(r1)	; 0x000a
+	mov	r13,	12(r1)	; 0x000c
+
+	mov	r15,	r11	;
+	and	#32752,	r11	;#0x7ff0
+
+	cmp	#32752,	r11	;#0x7ff0
+	jnz	.L994     	;abs 0x7348
+
+	mov	r15,	r11	;
+	calla	#__mspabi_mpyd		;0x07ece
+
+	mov	r7,	r11	;
+	calla	#__mspabi_addd		;0x07e02
+
+.L990:
+	mov	r12,	r8	;
+	mov	r13,	r9	;
+	mov	r14,	r10	;
+	mov	r15,	r7	;
+
+.L991:
+	mov	r8,	r12	;
+	mov	r9,	r13	;
+	mov	r10,	r14	;
+	mov	r7,	r15	;
+	adda	#46,	r1	;0x0002e
+
+	popm.a	#4,	r10	;20-bit words
+
+	reta			;
+
+.L994:
+	clr.b	r12		;
+
+	cmp	@r1,	r12	;
+	jl	.L1005     	;abs 0x7398
+	cmp	r12,	r15	;
+	jnz	.L996     	;abs 0x735a
+	mov	30(r1),	r12	;0x0001e
+	cmp	#0,	r12	;r3 As==00
+	jnz	.L1005     	;abs 0x7398
+
+.L996:
+	mov	30(r1),	r14	;0x0001e
+
+	mov	36(r1),	r12	;0x00024
+	bis	r14,	r12	;
+	mov	@r1,	r13	;
+	and	#32767,	r13	;#0x7fff
+	bis	38(r1),	r13	;0x00026
+
+	bis	r13,	r12	;
+	cmp	#0,	r12	;r3 As==00
+	jz	.L991     	;abs 0x7338
+
+	bis	@r1,	r14	;
+	cmp	#0,	r14	;r3 As==00
+	jz	.L1005     	;abs 0x7398
+
+	mov	r8,	r12	;
+	mov	r9,	r13	;
+	mov	r10,	r14	;
+	mov	r7,	r15	;
+	mov	r7,	r11	;
+	calla	#__mspabi_subd		;0x07e66
+	mov	r12,	r8	;
+
+	mov	r13,	r9	;
+
+	mov	r14,	r10	;
+
+	mov	r15,	r11	;
+
+	calla	#__mspabi_divd		;0x05500
+	jmp .L990	;mova	#29488,	r0	;0x07330
+
+.L1005:
+	mov	30(r1),	r12	;0x0001e
+	mov	@r1,	r13	;
+	mov.b	#20,	r14	;#0x0014
+	calla	#__mspabi_sral		;0x086de
+	mov	r12,	r8	;
+
+	mov	r13,	r9	;
+
+	bis	r13,	r12	;
+	cmp	#0,	r12	;r3 As==00
+	jz	.L1099    	;abs 0x7792
+
+.L1008:
+	mov	r8,	r11	;
+	add	#-1023,	r11	;#0xfc01
+	mov	r11,	32(r1)	; 0x0020
+	mov	r9,	r12	;
+	addc	#-1,	r12	;r3 As==11
+	mov	r12,	34(r1)	; 0x0022
+
+	mov	16(r1),	r12	;0x00010
+	and.b	#15,	r12	;#0x000f
+
+	mov	14(r1),	r10	;0x0000e
+	mov	r12,	r9	;
+	bis	#16,	r9	;#0x0010
+
+	mov	r11,	r12	;
+	and.b	#1,	r12	;r3 As==01
+
+	cmp	#0,	r12	;r3 As==00
+	jz	.L1015     	;abs 0x7404
+	rla	r10		;
+
+	rlc	r9		;
+
+	mov	10(r1),	r12	;0x0000a
+	mov	12(r1),	r13	;0x0000c
+	mov.b	#31,	r14	;#0x001f
+	calla	#__mspabi_srll		;0x05a00
+	add	r12,	r10	;
+	addc	r13,	r9	;
+	rlax.w	10(r1)		;#0x0000a
+	rlcx.w	12(r1)		;#0x0000c
+
+.L1015:
+	mov	32(r1),	r11	;0x00020
+	mov	34(r1),	r12	;0x00022
+	rra	r12		;
+	rrc	r11		;
+	mov	r11,	32(r1)	; 0x0020
+
+	mov	r12,	34(r1)	; 0x0022
+
+	rla	r10		;
+
+	rlc	r9		;
+	mov	10(r1),	r12	;0x0000a
+	mov	12(r1),	r13	;0x0000c
+	mov.b	#31,	r14	;#0x001f
+	calla	#__mspabi_srll		;0x05a00
+	add	r12,	r10	;
+	mov	r10,	6(r1)	;
+	addc	r13,	r9	;
+	mov	r9,	8(r1)	;
+
+	mov	10(r1),	r12	;0x0000a
+	rla	r12		;
+	mov	r12,	18(r1)	; 0x0012
+	mov	12(r1),	r13	;0x0000c
+	rlc	r13		;
+	mov	r13,	20(r1)	; 0x0014
+
+	mov.b	#22,	r7	;#0x0016
+
+	mov	#0,	14(r1)	;r3 As==00, 0x000e
+	mov	#0,	16(r1)	;r3 As==00, 0x0010
+
+	mov	14(r1),	r8	;0x0000e
+	mov	16(r1),	r9	;0x00010
+
+	clr.b	r10		;
+	mov.b	#32,	r11	;#0x0020
+
+.L1024:
+	mov	r8,	r14	;
+	add	r10,	r14	;
+	mov	r14,	26(r1)	; 0x001a
+	mov	r9,	r12	;
+	addc	r11,	r12	;
+	mov	r12,	28(r1)	; 0x001c
+
+	mov	8(r1),	r12	;
+	cmp	28(r1),	r12	;0x0001c
+	jl	.L1030     	;abs 0x74c2
+	mov	28(r1),	r12	;0x0001c
+	cmp	8(r1),	r12	;
+	jnz	.L1026     	;abs 0x7492
+	mov	6(r1),	r12	;
+	cmp	r14,	r12	;
+	jnc	.L1030     	;abs 0x74c2
+
+.L1026:
+	mov	26(r1),	r8	;0x0001a
+	add	r10,	r8	;
+	mov	28(r1),	r9	;0x0001c
+	addc	r11,	r9	;
+
+	subx.w	26(r1),	6(r1)	;0x0001a
+	subcx.w	28(r1),	8(r1)	;0x0001c
+
+	mov	14(r1),	r13	;0x0000e
+	mov	16(r1),	r14	;0x00010
+	add	r10,	r13	;
+	addc	r11,	r14	;
+	mov	r13,	14(r1)	; 0x000e
+
+	mov	r14,	16(r1)	; 0x0010
+
+.L1030:
+	mov	18(r1),	r12	;0x00012
+	mov	20(r1),	r13	;0x00014
+	mov.b	#31,	r14	;#0x001f
+	mova	r11,	2(r1)	;
+	calla	#__mspabi_srll		;0x05a00
+	mov	6(r1),	r14	;
+	rla	r14		;
+	mov	8(r1),	r15	;
+	rlc	r15		;
+	add	r14,	r12	;
+	mov	r12,	6(r1)	;
+
+	addc	r15,	r13	;
+	mov	r13,	8(r1)	;
+
+	rlax.w	18(r1)		;#0x00012
+	rlcx.w	20(r1)		;#0x00014
+
+	mova	2(r1),	r11	;
+	clrc			
+	rrc	r11		;
+	rrc	r10		;
+
+	add	#-1,	r7	;r3 As==11
+	cmp	#0,	r7	;r3 As==00
+	jnz	.L1024    	;abs 0x7466
+	mov	#32,	26(r1)	;#0x0020, 0x001a
+
+	clr.b	r10		;
+
+	clr.b	r11		;
+
+	mov	r10,	r7	;
+	mov	r11,	30(r1)	; 0x001e
+
+	mov	#0,	10(r1)	;r3 As==00, 0x000a
+	mov	#-32768,12(r1)	;#0x8000, 0x000c
+
+.L1039:
+	mov	10(r1),	r14	;0x0000a
+	add	r7,	r14	;
+	mov	r14,	22(r1)	; 0x0016
+	mov	30(r1),	r12	;0x0001e
+	addcx.w	12(r1),	r12	;0x0000c
+	mov	r12,	24(r1)	; 0x0018
+
+	cmp	8(r1),	r9	;
+	jl	.L1043     	;abs 0x7582
+	mov	8(r1),	r12	;
+	cmp	r9,	r12	;
+	jnz	.L1041      	;abs 0x7554
+	cmp	6(r1),	r8	;
+	jnc	.L1043     	;abs 0x7582
+
+.L1041:
+	mov	6(r1),	r12	;
+	cmp	r8,	r12	;
+	jnz	.L1057    	;abs 0x760a
+	mov	8(r1),	r12	;
+	cmp	r9,	r12	;
+	jnz	.L1057    	;abs 0x760a
+
+	mov	20(r1),	r12	;0x00014
+	cmp	24(r1),	r12	;0x00018
+	jnc	.L1057    	;abs 0x760a
+	mov	24(r1),	r12	;0x00018
+	cmp	20(r1),	r12	;0x00014
+	jnz	.L1043     	;abs 0x7582
+	mov	18(r1),	r12	;0x00012
+	cmp	22(r1),	r12	;0x00016
+	jnc	.L1057    	;abs 0x760a
+
+.L1043:
+	mov	22(r1),	r7	;0x00016
+
+	addx.w	10(r1),	r7	;0x0000a
+	mov	24(r1),	r13	;0x00018
+	addcx.w	12(r1),	r13	;0x0000c
+	mov	r13,	30(r1)	; 0x001e
+
+	mov	24(r1),	r12	;0x00018
+	cmp	#0,	r12	;r3 As==00
+	jge	.L1105    	;abs 0x77b2
+
+	mov	r13,	r12	;
+	mov	r8,	r13	;
+
+	cmp	#0,	r12	;r3 As==00
+	jl	.L1106    	;abs 0x77b4
+
+	inc	r13		;
+	mov	r9,	r12	;
+
+	adc	r12		;
+
+.L1050:
+	subx.w	r8,	6(r1)	;
+	subcx.w	r9,	8(r1)	;
+
+	mov	20(r1),	r14	;0x00014
+	cmp	24(r1),	r14	;0x00018
+	jnc	.L1052     	;abs 0x75da
+	mov	24(r1),	r14	;0x00018
+	cmp	20(r1),	r14	;0x00014
+	jnz	.L1053     	;abs 0x75ea
+	mov	18(r1),	r14	;0x00012
+	cmp	22(r1),	r14	;0x00016
+	jc	.L1053     	;abs 0x75ea
+
+.L1052:
+	addx.w	#65535,	6(r1)	;0x0ffff
+	addcx.w	#65535,	8(r1)	;0x0ffff
+
+.L1053:
+	subx.w	22(r1),	18(r1)	;0x00016, 0x00012
+	subcx.w	24(r1),	20(r1)	;0x00018, 0x00014
+
+	addx.w	10(r1),	r10	;0x0000a
+
+	addcx.w	12(r1),	r11	;0x0000c
+
+	mov	r13,	r8	;
+	mov	r12,	r9	;
+
+.L1057:
+	mov	18(r1),	r12	;0x00012
+	mov	20(r1),	r13	;0x00014
+	mov.b	#31,	r14	;#0x001f
+	mova	r11,	2(r1)	;
+	calla	#__mspabi_srll		;0x05a00
+	mov	6(r1),	r14	;
+	rla	r14		;
+	mov	8(r1),	r15	;
+	rlc	r15		;
+	add	r14,	r12	;
+	mov	r12,	6(r1)	;
+
+	addc	r15,	r13	;
+	mov	r13,	8(r1)	;
+
+	rlax.w	18(r1)		;#0x00012
+	rlcx.w	20(r1)		;#0x00014
+
+	clrc			
+	rrcx.w	12(r1)		;0000c
+	rrcx.w	10(r1)		;0000a
+
+	add	#-1,	26(r1)	;r3 As==11, 0x001a
+	mova	2(r1),	r11	;
+	cmp	#0,	26(r1)	;r3 As==00, 0x001a
+	jnz	.L1039    	;abs 0x7528
+
+	bis	18(r1),	r12	;0x00012
+	bis	20(r1),	r13	;0x00014
+
+	bis	r13,	r12	;
+	cmp	#0,	r12	;r3 As==00
+	jz	.L1067     	;abs 0x7688
+
+	cmp	#-1,	r10	;r3 As==11
+	jnz	.L1107    	;abs 0x77ba
+	cmp	#-1,	r11	;r3 As==11
+	jnz	.L1107    	;abs 0x77ba
+
+	incx.w	14(r1)		;
+	adcx.w	16(r1)		;
+
+	clr.b	r10		;
+	clr.b	r11		;
+
+.L1067:
+	mov	14(r1),	r12	;0x0000e
+	mov	16(r1),	r13	;0x00010
+	rra	r13		;
+	rrc	r12		;
+
+	mov	r12,	r14	;
+	add	#0,	r14	;r3 As==00
+	mov	r14,	6(r1)	;
+
+	mov	r13,	r7	;
+
+	addc	#16352,	r7	;#0x3fe0
+
+	mov	r10,	r8	;
+	mov	r11,	r9	;
+	clrc			
+	rrc	r9		;
+	rrc	r8		;
+
+	mov	14(r1),	r12	;0x0000e
+
+	and.b	#1,	r12	;r3 As==01
+
+	cmp	#0,	r12	;r3 As==00
+	jz	.L1076     	;abs 0x76be
+
+	mov	r9,	r12	;
+	bis	#-32768,r12	;#0x8000
+	mov	r12,	r9	;
+
+.L1076:
+	mov	32(r1),	r12	;0x00020
+	mov	34(r1),	r13	;0x00022
+	mov.b	#20,	r14	;#0x0014
+	calla	#__mspabi_slll		;0x059d4
+
+	mov	6(r1),	r10	;
+
+	add	r12,	r10	;
+	addc	r13,	r7	;
+
+	jmp .L991	;mova	#29496,	r0	;0x07338
+
+.L1080:
+	add	#-21,	r10	;#0xffeb
+
+	addc	#-1,	r11	;r3 As==11
+
+	mov	10(r1),	r12	;0x0000a
+	mov	12(r1),	r13	;0x0000c
+	mov.b	#11,	r14	;#0x000b
+	mova	r11,	2(r1)	;
+	calla	#__mspabi_srll		;0x05a00
+	mov	r12,	14(r1)	; 0x000e
+
+	mov	r13,	16(r1)	; 0x0010
+
+	mov	10(r1),	r12	;0x0000a
+	mov	12(r1),	r13	;0x0000c
+	mov.b	#21,	r14	;#0x0015
+	calla	#__mspabi_slll		;0x059d4
+	mov	r12,	10(r1)	; 0x000a
+
+	mov	r13,	12(r1)	; 0x000c
+
+	mova	2(r1),	r11	;
+
+.L1087:
+	mov	14(r1),	r12	;0x0000e
+	bis	16(r1),	r12	;0x00010
+	cmp	#0,	r12	;r3 As==00
+	jz	.L1080     	;abs 0x76da
+
+.L1088:
+	bitx.w	#16,	16(r1)	;0x00010, 0x00010
+	jz	.L1101    	;abs 0x779a
+
+	mov	r8,	r13	;
+	add	#-1,	r13	;r3 As==11
+	mov	r13,	42(r1)	; 0x002a
+	mov	r9,	r14	;
+	addc	#-1,	r14	;r3 As==11
+	mov	r14,	44(r1)	; 0x002c
+
+	mov	r10,	r9	;
+	mov	r11,	r10	;
+	subx.w	42(r1),	r9	;0x0002a
+	subcx.w	44(r1),	r10	;0x0002c
+
+	mov	#32,	r14	;#0x0020
+	sub	r8,	r14	;
+
+	mov	10(r1),	r12	;0x0000a
+	mov	12(r1),	r13	;0x0000c
+	clr	r15		;
+	calla	#__mspabi_srll		;0x05a00
+
+	bis	14(r1),	r12	;0x0000e
+	bis	16(r1),	r13	;0x00010
+	mov	r12,	14(r1)	; 0x000e
+
+	mov	r13,	16(r1)	; 0x0010
+
+	mov	10(r1),	r12	;0x0000a
+	mov	12(r1),	r13	;0x0000c
+	mov	r8,	r14	;
+	clr	r15		;
+	calla	#__mspabi_slll		;0x059d4
+	mov	r12,	10(r1)	; 0x000a
+	mov	r13,	12(r1)	; 0x000c
+
+	mov	r9,	r8	;
+
+	mov	r10,	r9	;
+
+	jmp .L1008	;mova	#29616,	r0	;0x073b0
+
+.L1099:
+	mov	r8,	r10	;
+
+	mov	r13,	r11	;
+	jmp .L1087	;mova	#30488,	r0	;0x07718
+
+.L1101:
+	rlax.w	14(r1)		;#0x0000e
+	rlcx.w	16(r1)		;#0x00010
+
+	inc	r8		;
+
+	adc	r9		;
+
+	jmp .L1088	;mova	#30500,	r0	;0x07724
+
+.L1105:
+	mov	r8,	r13	;
+
+.L1106:
+	mov	r9,	r12	;
+	jmp .L1050	;mova	#30128,	r0	;0x075b0
+
+.L1107:
+	mov	r10,	r13	;
+	inc	r13		;
+	mov	r11,	r12	;
+	adc	r12		;
+	mov	r13,	r10	;
+
+	bic	#1,	r10	;r3 As==01
+	mov	r12,	r11	;
+
+	jmp .L1067	;mova	#30344,	r0	;0x07688
+
+
+
+	.global finite
+	.type finite, @function
+finite:
+	nop
+	nop
+	mov	r14,	r12	;
+
+	mov	r15,	r13	;
+	and	#32767,	r13	;#0x7fff
+
+	add	#0,	r12	;r3 As==00
+	addc	#-32752,r13	;#0x8010
+	mov.b	#31,	r14	;#0x001f
+	calla	#__mspabi_srll		;0x05a00
+
+	reta			;
+
+
+
+	.global nan
+	.type nan, @function
+nan:
+	nop
+	nop
+	clr.b	r12		;
+
+	mov	r12,	r13	;
+	mov	r12,	r14	;
+	mov	#32760,	r15	;#0x7ff8
+	reta			;
+
+
+
+	.global _fpadd_parts2
+	.type _fpadd_parts2, @function
+_fpadd_parts2:
+	nop
+	nop
+	pushm.a	#4,	r10	;20-bit words
+
+	suba	#36,	r1	;0x00024
+
+	mova	r12,	0(r1)	;
+	mova	r13,	6(r1)	;
+	mova	r14,	r7	;
+
+	mova	r12,	r8	;
+	mov	@r12,	r12	;
+
+	mov.b	#1,	r9	;r3 As==01
+	cmp	r12,	r9	;
+	jc	.L1125     	;abs 0x7830
+
+	mova	r13,	r8	;
+
+	mov	@r13,	r13	;
+
+	cmp	r13,	r9	;
+	jnc	.L1121      	;abs 0x7816
+	jmp .L1234	;mova	#32246,	r0	;0x07df6
+
+.L1121:
+	cmp	#4,	r12	;r2 As==10
+	jnz	.L1128     	;abs 0x783a
+
+	cmp	#4,	r13	;r2 As==10
+	jnz	.L1125     	;abs 0x7830
+
+	mova	@r1,	r12	;
+	cmp	2(r8),	2(r12)	;
+	jz	.L1125     	;abs 0x7830
+
+	movx.a	#82954,	0(r1)	;0x1440a
+
+.L1125:
+	mova	@r1,	r12	;
+	adda	#36,	r1	;0x00024
+
+	popm.a	#4,	r10	;20-bit words
+
+	reta			;
+
+.L1128:
+	cmp	#4,	r13	;r2 As==10
+	jnz	.L1129      	;abs 0x7842
+	jmp .L1234	;mova	#32246,	r0	;0x07df6
+
+.L1129:
+	cmp	#2,	r13	;r3 As==10
+	jnz	.L1134     	;abs 0x7870
+
+	cmp	#2,	r12	;r3 As==10
+	jnz	.L1125     	;abs 0x7830
+
+	mov.b	#14,	r14	;#0x000e
+	mova	@r1,	r13	;
+	mova	r7,	r12	;
+	calla	#memcpy		;0x061c8
+
+	mova	@r1,	r13	;
+	mov	2(r13),	r14	;
+	mova	6(r1),	r13	;
+	and	2(r13),	r14	;
+	mov	r14,	2(r7)	;
+
+.L1133:
+	mova	r7,	0(r1)	;
+	jmp .L1125	;mova	#30768,	r0	;0x07830
+
+.L1134:
+	cmp	#2,	r12	;r3 As==10
+	jnz	.L1135      	;abs 0x7878
+	jmp .L1234	;mova	#32246,	r0	;0x07df6
+
+.L1135:
+	mova	@r1,	r8	;
+
+	mov	4(r8),	18(r1)	; 0x0012
+
+	mova	6(r1),	r12	;
+	mov	4(r12),	28(r1)	; 0x001c
+
+	mov	6(r8),	4(r1)	;
+	mov	8(r8),	12(r1)	; 0x000c
+	mov	10(r8),	22(r1)	;0x0000a, 0x0016
+	mov	12(r8),	14(r1)	;0x0000c, 0x000e
+
+	mov	6(r12),	10(r1)	; 0x000a
+	mov	8(r12),	20(r1)	; 0x0014
+	mov	10(r12),26(r1)	;0x0000a, 0x001a
+	mov	12(r12),16(r1)	;0x0000c, 0x0010
+
+	mov	18(r1),	r13	;0x00012
+	sub	28(r1),	r13	;0x0001c
+	mov	r13,	24(r1)	; 0x0018
+
+	cmp	#0,	r13	;r3 As==00
+	jge	.L1155    	;abs 0x79d0
+
+	mov	28(r1),	r14	;0x0001c
+	sub	18(r1),	r14	;0x00012
+	mov	r14,	24(r1)	; 0x0018
+
+	mov.b	#63,	r8	;#0x003f
+	cmp	r14,	r8	;
+	jl	.L1197    	;abs 0x7c1e
+
+	mov	4(r1),	r8	;
+	mov	12(r1),	r9	;0x0000c
+	mov	22(r1),	r10	;0x00016
+	mov	14(r1),	r11	;0x0000e
+	mov	24(r1),	r12	;0x00018
+
+	calla	#__mspabi_srlll		;0x05a06
+
+	mov	r12,	18(r1)	; 0x0012
+
+	mov	r13,	30(r1)	; 0x001e
+	mov	r14,	32(r1)	; 0x0020
+	mov	r15,	34(r1)	; 0x0022
+	mov	#-1,	r8	;r3 As==11
+	mov	r8,	r9	;
+	mov	r8,	r10	;
+	mov	r8,	r11	;
+	mov	24(r1),	r12	;0x00018
+	calla	#__mspabi_sllll		;0x059da
+	mov	4(r1),	r8	;
+	bic	r12,	r8	;
+	mov	12(r1),	r12	;0x0000c
+	bic	r13,	r12	;
+	mov	r12,	r13	;
+	mov	22(r1),	r9	;0x00016
+	bic	r14,	r9	;
+	mov	r9,	r14	;
+	mov	14(r1),	r12	;0x0000e
+	bic	r15,	r12	;
+	mov	r12,	14(r1)	; 0x000e
+
+	clr.b	r11		;
+	mov	r11,	r9	;
+	sub	r8,	r9	;
+	mov	r9,	12(r1)	; 0x000c
+	mov.b	#1,	r15	;r3 As==01
+	cmp	r8,	r11	;
+	jnz	.L1149      	;abs 0x7948
+	mov	r9,	r15	;
+
+.L1149:
+	mov	r11,	r12	;
+	sub	r13,	r12	;
+	mov.b	#1,	r10	;r3 As==01
+	cmp	r13,	r11	;
+	jnz	.L1150      	;abs 0x7954
+	mov	r12,	r10	;
+
+.L1150:
+	mov	r12,	r9	;
+	sub	r15,	r9	;
+	mov	r9,	22(r1)	; 0x0016
+	mov.b	#1,	r15	;r3 As==01
+	cmp	r9,	r12	;
+	jnc	.L1151      	;abs 0x7964
+	clr.b	r15		;
+
+.L1151:
+	bis	r15,	r10	;
+	mov	r11,	r12	;
+	sub	r14,	r12	;
+	mov.b	#1,	r15	;r3 As==01
+	cmp	r14,	r11	;
+	jnz	.L1152      	;abs 0x7972
+	mov	r12,	r15	;
+
+.L1152:
+	mov	r12,	r9	;
+	sub	r10,	r9	;
+	mov	r9,	4(r1)	;
+	mov.b	#1,	r10	;r3 As==01
+	cmp	r9,	r12	;
+	jnc	.L1153      	;abs 0x7982
+	clr.b	r10		;
+
+.L1153:
+	bis	r10,	r15	;
+	sub	14(r1),	r11	;0x0000e
+	sub	r15,	r11	;
+	bis	12(r1),	r8	;0x0000c
+	mov	22(r1),	r9	;0x00016
+	bis	r13,	r9	;
+	mov	4(r1),	r10	;
+	bis	r14,	r10	;
+	bis	14(r1),	r11	;0x0000e
+	mov.b	#63,	r12	;#0x003f
+	calla	#__mspabi_srlll		;0x05a06
+	bis	18(r1),	r12	;0x00012
+	mov	r12,	4(r1)	;
+	bis	30(r1),	r13	;0x0001e
+	mov	r13,	12(r1)	; 0x000c
+	bis	32(r1),	r14	;0x00020
+	mov	r14,	22(r1)	; 0x0016
+	bis	34(r1),	r15	;0x00022
+	mov	r15,	14(r1)	; 0x000e
+
+	mov	28(r1),	18(r1)	;0x0001c, 0x0012
+	jmp .L1169	;mova	#31432,	r0	;0x07ac8
+
+.L1155:
+	mov.b	#63,	r9	;#0x003f
+	cmp	24(r1),	r9	;0x00018
+	jl	.L1197    	;abs 0x7c1e
+
+	cmp	#0,	24(r1)	;r3 As==00, 0x0018
+	jz	.L1169    	;abs 0x7ac8
+
+	mov	10(r1),	r8	;0x0000a
+
+	mov	20(r1),	r9	;0x00014
+	mov	26(r1),	r10	;0x0001a
+	mov	16(r1),	r11	;0x00010
+	mov	24(r1),	r12	;0x00018
+
+	calla	#__mspabi_srlll		;0x05a06
+
+	mov	r12,	28(r1)	; 0x001c
+
+	mov	r13,	30(r1)	; 0x001e
+	mov	r14,	32(r1)	; 0x0020
+	mov	r15,	34(r1)	; 0x0022
+	mov	#-1,	r8	;r3 As==11
+	mov	r8,	r9	;
+	mov	r8,	r10	;
+	mov	r8,	r11	;
+	mov	24(r1),	r12	;0x00018
+	calla	#__mspabi_sllll		;0x059da
+	mov	10(r1),	r8	;0x0000a
+	bic	r12,	r8	;
+	mov	20(r1),	r12	;0x00014
+	bic	r13,	r12	;
+	mov	r12,	r13	;
+	mov	26(r1),	r9	;0x0001a
+	bic	r14,	r9	;
+	mov	r9,	r14	;
+	mov	16(r1),	r12	;0x00010
+	bic	r15,	r12	;
+	mov	r12,	16(r1)	; 0x0010
+
+	clr.b	r11		;
+	mov	r11,	r9	;
+	sub	r8,	r9	;
+	mov	r9,	20(r1)	; 0x0014
+	mov.b	#1,	r15	;r3 As==01
+	cmp	r8,	r11	;
+	jnz	.L1163      	;abs 0x7a4a
+	mov	r11,	r15	;
+
+.L1163:
+	mov	r11,	r12	;
+	sub	r13,	r12	;
+	mov.b	#1,	r10	;r3 As==01
+	cmp	r13,	r11	;
+	jnz	.L1164      	;abs 0x7a56
+	mov	r12,	r10	;
+
+.L1164:
+	mov	r12,	r9	;
+	sub	r15,	r9	;
+	mov	r9,	24(r1)	; 0x0018
+
+	mov.b	#1,	r15	;r3 As==01
+	cmp	r9,	r12	;
+	jnc	.L1166      	;abs 0x7a66
+	clr.b	r15		;
+
+.L1166:
+	bis	r15,	r10	;
+	mov	r11,	r12	;
+	sub	r14,	r12	;
+	mov.b	#1,	r15	;r3 As==01
+	cmp	r14,	r11	;
+	jnz	.L1167      	;abs 0x7a74
+	mov	r12,	r15	;
+
+.L1167:
+	mov	r12,	r9	;
+	sub	r10,	r9	;
+	mov	r9,	10(r1)	; 0x000a
+	mov.b	#1,	r10	;r3 As==01
+	cmp	r9,	r12	;
+	jnc	.L1168      	;abs 0x7a84
+	clr.b	r10		;
+
+.L1168:
+	bis	r10,	r15	;
+	sub	16(r1),	r11	;0x00010
+	sub	r15,	r11	;
+	bis	20(r1),	r8	;0x00014
+	mov	24(r1),	r9	;0x00018
+	bis	r13,	r9	;
+	mov	10(r1),	r10	;0x0000a
+	bis	r14,	r10	;
+	bis	16(r1),	r11	;0x00010
+	mov.b	#63,	r12	;#0x003f
+	calla	#__mspabi_srlll		;0x05a06
+	bis	28(r1),	r12	;0x0001c
+	mov	r12,	10(r1)	; 0x000a
+	bis	30(r1),	r13	;0x0001e
+	mov	r13,	20(r1)	; 0x0014
+	bis	32(r1),	r14	;0x00020
+	mov	r14,	26(r1)	; 0x001a
+	bis	34(r1),	r15	;0x00022
+	mov	r15,	16(r1)	; 0x0010
+
+.L1169:
+	mova	@r1,	r13	;
+	mov	2(r13),	r12	;
+
+	mova	6(r1),	r8	;
+	cmp	2(r8),	r12	;
+	jz	.L1225    	;abs 0x7d7e
+
+	cmp	#0,	r12	;r3 As==00
+	jz	.L1202    	;abs 0x7c60
+
+	mov	10(r1),	r14	;0x0000a
+	sub	4(r1),	r14	;
+	mov.b	#1,	r10	;r3 As==01
+	cmp	r14,	10(r1)	; 0x000a
+	jnc	.L1173      	;abs 0x7aee
+	clr.b	r10		;
+
+.L1173:
+	mov	20(r1),	r12	;0x00014
+	sub	12(r1),	r12	;0x0000c
+	mov.b	#1,	r15	;r3 As==01
+	cmp	r12,	20(r1)	; 0x0014
+	jnc	.L1174      	;abs 0x7b00
+	clr.b	r15		;
+
+.L1174:
+	mov	r12,	r13	;
+	sub	r10,	r13	;
+	mov.b	#1,	r10	;r3 As==01
+	cmp	r13,	r12	;
+	jnc	.L1175      	;abs 0x7b0c
+	clr.b	r10		;
+
+.L1175:
+	bis	r10,	r15	;
+	mov	26(r1),	r9	;0x0001a
+	sub	22(r1),	r9	;0x00016
+	mov.b	#1,	r10	;r3 As==01
+	cmp	r9,	26(r1)	; 0x001a
+	jnc	.L1176      	;abs 0x7b20
+	clr.b	r10		;
+
+.L1176:
+	mov	r9,	r12	;
+	sub	r15,	r12	;
+	mov.b	#1,	r15	;r3 As==01
+	cmp	r12,	r9	;
+	jnc	.L1177      	;abs 0x7b2c
+	clr.b	r15		;
+
+.L1177:
+	bis	r15,	r10	;
+	mov	16(r1),	r11	;0x00010
+	sub	14(r1),	r11	;0x0000e
+
+.L1178:
+	sub	r10,	r11	;
+
+	cmp	#0,	r11	;r3 As==00
+	jl	.L1208    	;abs 0x7cbe
+
+	mov	#0,	2(r7)	;r3 As==00
+
+	mov	18(r1),	4(r7)	;0x00012
+
+	mov	r14,	6(r7)	;
+	mov	r13,	8(r7)	;
+	mov	r12,	10(r7)	; 0x000a
+	mov	r11,	12(r7)	; 0x000c
+
+.L1183:
+	mov.b	#1,	r11	;r3 As==01
+	clr.b	r14		;
+
+.L1184:
+	mov	6(r7),	r15	;
+	mov	8(r7),	0(r1)	;
+	mov	10(r7),	r10	;0x0000a
+	mov	12(r7),	6(r1)	;0x0000c
+
+	mov	r15,	r9	;
+	add	#-1,	r9	;r3 As==11
+	mov	r9,	10(r1)	; 0x000a
+	mov	r11,	r9	;
+	cmp	#0,	r15	;r3 As==00
+	jnz	.L1186      	;abs 0x7b7e
+	mov	r14,	r9	;
+
+.L1186:
+	mov	@r1,	r8	;
+	add	#-1,	r8	;r3 As==11
+	mov.b	#1,	r12	;r3 As==01
+	cmp	#0,	0(r1)	;r3 As==00
+	jnz	.L1187      	;abs 0x7b8c
+	clr.b	r12		;
+
+.L1187:
+	add	r8,	r9	;
+	mov	r11,	r13	;
+	cmp	r8,	r9	;
+	jnc	.L1188      	;abs 0x7b96
+	mov	r14,	r13	;
+
+.L1188:
+	bis	r13,	r12	;
+	mov	r10,	r13	;
+	add	#-1,	r13	;r3 As==11
+	mov	r13,	4(r1)	;
+	mov.b	#1,	r13	;r3 As==01
+	cmp	#0,	r10	;r3 As==00
+	jnz	.L1189      	;abs 0x7ba8
+	clr.b	r13		;
+
+.L1189:
+	add	4(r1),	r12	;
+	mov	r11,	r8	;
+	cmp	4(r1),	r12	;
+	jnc	.L1190      	;abs 0x7bb6
+	mov	r14,	r8	;
+
+.L1190:
+	bis	r8,	r13	;
+	mov	6(r1),	r8	;
+	add	#-1,	r8	;r3 As==11
+	add	r8,	r13	;
+
+	mov	#4095,	r8	;#0x0fff
+	cmp	r13,	r8	;
+	jnc	.L1192     	;abs 0x7bde
+	cmp	r8,	r13	;
+	jnz	.L1218    	;abs 0x7d22
+	cmp	#-1,	r12	;r3 As==11
+	jnz	.L1218    	;abs 0x7d22
+	cmp	#-1,	r9	;r3 As==11
+	jnz	.L1218    	;abs 0x7d22
+	mov	#-2,	r9	;#0xfffe
+	cmp	10(r1),	r9	;0x0000a
+	jc	.L1218    	;abs 0x7d22
+
+.L1192:
+	mov	#3,	0(r7)	;
+
+	mov	6(r7),	r8	;
+	mov	8(r7),	r9	;
+	mov	10(r7),	r10	;0x0000a
+	mov	12(r7),	r11	;0x0000c
+
+	mov	#8191,	r12	;#0x1fff
+	cmp	r11,	r12	;
+	jc	.L1133    	;abs 0x7868
+
+	mov.b	#1,	r12	;r3 As==01
+	calla	#__mspabi_srlll		;0x05a06
+	and.b	#1,	r8	;r3 As==01
+	bis	r8,	r12	;
+	mov	r12,	6(r7)	;
+	mov	r13,	8(r7)	;
+	mov	r14,	10(r7)	; 0x000a
+	mov	r15,	12(r7)	; 0x000c
+
+	inc	4(r7)		;
+	jmp .L1133	;mova	#30824,	r0	;0x07868
+
+.L1197:
+	cmp	18(r1),	28(r1)	;0x00012, 0x001c
+	jl	.L1200     	;abs 0x7c46
+	mov	28(r1),	18(r1)	;0x0001c, 0x0012
+
+	mov	#0,	4(r1)	;r3 As==00
+
+	mov	4(r1),	12(r1)	; 0x000c
+	mov	4(r1),	22(r1)	; 0x0016
+	mov	4(r1),	14(r1)	; 0x000e
+	jmp .L1169	;mova	#31432,	r0	;0x07ac8
+
+.L1200:
+	mov	#0,	10(r1)	;r3 As==00, 0x000a
+
+	mov	10(r1),	20(r1)	;0x0000a, 0x0014
+	mov	10(r1),	26(r1)	;0x0000a, 0x001a
+	mov	10(r1),	16(r1)	;0x0000a, 0x0010
+	jmp .L1169	;mova	#31432,	r0	;0x07ac8
+
+.L1202:
+	mov	4(r1),	r14	;
+	sub	10(r1),	r14	;0x0000a
+	mov.b	#1,	r10	;r3 As==01
+	cmp	r14,	4(r1)	;
+	jnc	.L1203      	;abs 0x7c72
+	mov	r12,	r10	;
+
+.L1203:
+	mov	12(r1),	r12	;0x0000c
+	sub	20(r1),	r12	;0x00014
+	mov.b	#1,	r15	;r3 As==01
+	cmp	r12,	12(r1)	; 0x000c
+	jnc	.L1204      	;abs 0x7c84
+	clr.b	r15		;
+
+.L1204:
+	mov	r12,	r13	;
+	sub	r10,	r13	;
+	mov.b	#1,	r10	;r3 As==01
+	cmp	r13,	r12	;
+	jnc	.L1205      	;abs 0x7c90
+	clr.b	r10		;
+
+.L1205:
+	bis	r10,	r15	;
+	mov	22(r1),	r9	;0x00016
+	sub	26(r1),	r9	;0x0001a
+	mov.b	#1,	r10	;r3 As==01
+	cmp	r9,	22(r1)	; 0x0016
+	jnc	.L1206      	;abs 0x7ca4
+	clr.b	r10		;
+
+.L1206:
+	mov	r9,	r12	;
+	sub	r15,	r12	;
+	mov.b	#1,	r15	;r3 As==01
+	cmp	r12,	r9	;
+	jnc	.L1207      	;abs 0x7cb0
+	clr.b	r15		;
+
+.L1207:
+	bis	r15,	r10	;
+	mov	14(r1),	r11	;0x0000e
+	sub	16(r1),	r11	;0x00010
+	jmp .L1178	;mova	#31542,	r0	;0x07b36
+
+.L1208:
+	mov	#1,	2(r7)	;r3 As==01
+
+	mov	18(r1),	4(r7)	;0x00012
+
+	clr.b	r15		;
+	mov	r15,	r10	;
+	sub	r14,	r10	;
+	mov.b	#1,	r9	;r3 As==01
+	cmp	r14,	r15	;
+	jnz	.L1211      	;abs 0x7cd6
+	mov	r10,	r9	;
+
+.L1211:
+	mov	r15,	r8	;
+	sub	r13,	r8	;
+	mov.b	#1,	r14	;r3 As==01
+
+	cmp	r13,	r15	;
+	jnz	.L1213      	;abs 0x7ce2
+	mov	r8,	r14	;
+
+.L1213:
+	mov	r8,	r13	;
+	sub	r9,	r13	;
+	mov.b	#1,	r9	;r3 As==01
+	cmp	r13,	r8	;
+	jnc	.L1214      	;abs 0x7cee
+	clr.b	r9		;
+
+.L1214:
+	bis	r9,	r14	;
+	mov	r15,	r8	;
+	sub	r12,	r8	;
+	mov.b	#1,	r9	;r3 As==01
+	cmp	r12,	r15	;
+	jnz	.L1215      	;abs 0x7cfc
+	mov	r8,	r9	;
+
+.L1215:
+	mov	r8,	r12	;
+	sub	r14,	r12	;
+	mov.b	#1,	r14	;r3 As==01
+	cmp	r12,	r8	;
+	jnc	.L1216      	;abs 0x7d08
+	clr.b	r14		;
+
+.L1216:
+	bis	r14,	r9	;
+	sub	r11,	r15	;
+
+	mov	r10,	6(r7)	;
+	mov	r13,	8(r7)	;
+	mov	r12,	10(r7)	; 0x000a
+	sub	r9,	r15	;
+	mov	r15,	12(r7)	; 0x000c
+	jmp .L1183	;mova	#31574,	r0	;0x07b56
+
+.L1218:
+	mov	r15,	r9	;
+	add	r15,	r9	;
+	mov	r11,	r13	;
+	cmp	r15,	r9	;
+	jnc	.L1219      	;abs 0x7d2e
+	mov	r14,	r13	;
+
+.L1219:
+	mov	@r1,	r15	;
+	rla	r15		;
+	mov.b	#1,	r12	;r3 As==01
+	cmp	@r1,	r15	;
+	jnc	.L1220      	;abs 0x7d3a
+	clr.b	r12		;
+
+.L1220:
+	add	r15,	r13	;
+	mov	r11,	r8	;
+	cmp	r15,	r13	;
+	jnc	.L1221      	;abs 0x7d44
+	mov	r14,	r8	;
+
+.L1221:
+	bis	r8,	r12	;
+	mov	r10,	r8	;
+	add	r10,	r8	;
+	mov.b	#1,	r15	;r3 As==01
+	cmp	r10,	r8	;
+	jnc	.L1222      	;abs 0x7d52
+	clr.b	r15		;
+
+.L1222:
+	add	r8,	r12	;
+	mov	r11,	r10	;
+	cmp	r8,	r12	;
+	jnc	.L1223      	;abs 0x7d5c
+	mov	r14,	r10	;
+
+.L1223:
+	bis	r10,	r15	;
+	mov	6(r1),	r10	;
+	rla	r10		;
+	mov	r9,	6(r7)	;
+	mov	r13,	8(r7)	;
+	mov	r12,	10(r7)	; 0x000a
+	add	r10,	r15	;
+	mov	r15,	12(r7)	; 0x000c
+
+	add	#-1,	4(r7)	;r3 As==11
+	jmp .L1184	;mova	#31578,	r0	;0x07b5a
+
+.L1225:
+	mov	r12,	2(r7)	;
+
+	mov	18(r1),	4(r7)	;0x00012
+
+	mov	4(r1),	r8	;
+	add	10(r1),	r8	;0x0000a
+	mov.b	#1,	r10	;r3 As==01
+	cmp	4(r1),	r8	;
+	jnc	.L1228      	;abs 0x7d9a
+	clr.b	r10		;
+
+.L1228:
+	mov	12(r1),	r13	;0x0000c
+	add	20(r1),	r13	;0x00014
+	mov.b	#1,	r15	;r3 As==01
+	cmp	12(r1),	r13	;0x0000c
+	jnc	.L1229      	;abs 0x7dac
+	clr.b	r15		;
+
+.L1229:
+	add	r13,	r10	;
+	mov.b	#1,	r12	;r3 As==01
+	cmp	r13,	r10	;
+	jnc	.L1230      	;abs 0x7db6
+	clr.b	r12		;
+
+.L1230:
+	bis	r12,	r15	;
+	mov	22(r1),	r14	;0x00016
+	add	26(r1),	r14	;0x0001a
+	mov.b	#1,	r9	;r3 As==01
+	cmp	22(r1),	r14	;0x00016
+	jnc	.L1231      	;abs 0x7dca
+	clr.b	r9		;
+
+.L1231:
+	mov	r15,	r13	;
+	add	r14,	r13	;
+	mov.b	#1,	r12	;r3 As==01
+	cmp	r14,	r13	;
+	jnc	.L1232      	;abs 0x7dd6
+	clr.b	r12		;
+
+.L1232:
+	bis	r12,	r9	;
+	mov	14(r1),	r15	;0x0000e
+	add	16(r1),	r15	;0x00010
+
+	mov	r8,	6(r7)	;
+	mov	r10,	8(r7)	;
+	mov	r13,	10(r7)	; 0x000a
+	add	r15,	r9	;
+	mov	r9,	12(r7)	; 0x000c
+	jmp .L1192	;mova	#31710,	r0	;0x07bde
+
+.L1234:
+	movx.a	6(r1),	0(r1)	;
+
+	jmp .L1125	;mova	#30768,	r0	;0x07830
+
+
+
+	.global __mspabi_addd
+	.type __mspabi_addd, @function
+__mspabi_addd:
+	nop
+	nop
+	pushm.a	#3,	r10	;20-bit words
+
+	suba	#58,	r1	;0x0003a
+
+	mov	r8,	0(r1)	;
+	mov	r9,	2(r1)	;
+	mov	r10,	4(r1)	;
+	mov	r11,	6(r1)	;
+
+	mov	r12,	8(r1)	;
+	mov	r13,	10(r1)	; 0x000a
+	mov	r14,	12(r1)	; 0x000c
+	mov	r15,	14(r1)	; 0x000e
+
+	mova	#__unpack_d,	r10	;0x05f9e
+	mova	r1,	r13	;
+	adda	#16,	r13	;0x00010
+	mova	r1,	r12	;
+
+	calla	r10		;
+
+	mova	r1,	r13	;
+	adda	#30,	r13	;0x0001e
+	mova	r1,	r12	;
+	adda	#8,	r12	;
+	calla	r10		;
+
+	mova	r1,	r14	;
+	adda	#44,	r14	;0x0002c
+	mova	r1,	r13	;
+	adda	#30,	r13	;0x0001e
+	mova	r1,	r12	;
+	adda	#16,	r12	;0x00010
+	calla	#_fpadd_parts2		;0x077f0
+
+	calla	#__pack_d		;0x05cae
+
+	adda	#58,	r1	;0x0003a
+
+	popm.a	#3,	r10	;20-bit words
+
+	reta			;
+
+
+
+	.global __mspabi_subd
+	.type __mspabi_subd, @function
+__mspabi_subd:
+	nop
+	nop
+	pushm.a	#3,	r10	;20-bit words
+
+	suba	#58,	r1	;0x0003a
+
+	mov	r8,	0(r1)	;
+	mov	r9,	2(r1)	;
+	mov	r10,	4(r1)	;
+	mov	r11,	6(r1)	;
+
+	mov	r12,	8(r1)	;
+	mov	r13,	10(r1)	; 0x000a
+	mov	r14,	12(r1)	; 0x000c
+	mov	r15,	14(r1)	; 0x000e
+
+	mova	#__unpack_d,	r10	;0x05f9e
+	mova	r1,	r13	;
+	adda	#16,	r13	;0x00010
+	mova	r1,	r12	;
+
+	calla	r10		;
+
+	mova	r1,	r13	;
+	adda	#30,	r13	;0x0001e
+	mova	r1,	r12	;
+	adda	#8,	r12	;
+	calla	r10		;
+
+	xor	#1,	32(r1)	;r3 As==01, 0x0020
+
+	mova	r1,	r14	;
+	adda	#44,	r14	;0x0002c
+	mova	r1,	r13	;
+	adda	#30,	r13	;0x0001e
+	mova	r1,	r12	;
+	adda	#16,	r12	;0x00010
+	calla	#_fpadd_parts2		;0x077f0
+
+	calla	#__pack_d		;0x05cae
+
+	adda	#58,	r1	;0x0003a
+
+	popm.a	#3,	r10	;20-bit words
+
+	reta			;
+
+
+
+	.global __mspabi_mpyd
+	.type __mspabi_mpyd, @function
+__mspabi_mpyd:
+	nop
+	nop
+	pushm.a	#4,	r10	;20-bit words
+
+	suba	#102,	r1	;0x00066
+
+	mov	r8,	44(r1)	; 0x002c
+	mov	r9,	46(r1)	; 0x002e
+	mov	r10,	48(r1)	; 0x0030
+	mov	r11,	50(r1)	; 0x0032
+
+	mov	r12,	52(r1)	; 0x0034
+	mov	r13,	54(r1)	; 0x0036
+	mov	r14,	56(r1)	; 0x0038
+	mov	r15,	58(r1)	; 0x003a
+
+	mova	#__unpack_d,	r10	;0x05f9e
+	mova	r1,	r13	;
+	adda	#60,	r13	;0x0003c
+	mova	r1,	r12	;
+
+	adda	#44,	r12	;0x0002c
+	calla	r10		;
+
+	mova	r1,	r13	;
+	adda	#74,	r13	;0x0004a
+	mova	r1,	r12	;
+	adda	#52,	r12	;0x00034
+	calla	r10		;
+
+	mov	60(r1),	r13	;0x0003c
+
+	mov.b	#1,	r12	;r3 As==01
+	cmp	r13,	r12	;
+	jnc	.L1274     	;abs 0x7f46
+
+.L1267:
+	mov	62(r1),	r13	;0x0003e
+	xor	76(r1),	r13	;0x0004c
+	clr	r12		;
+	sub	r13,	r12	;
+	bis	r13,	r12	;
+
+	rpt #15 { rrux.w	r12		;
+	mov	r12,	62(r1)	; 0x003e
+
+.L1269:
+	mova	r1,	r12	;
+	adda	#60,	r12	;0x0003c
+
+.L1270:
+	calla	#__pack_d		;0x05cae
+
+	adda	#102,	r1	;0x00066
+
+	popm.a	#4,	r10	;20-bit words
+
+	reta			;
+
+.L1274:
+	mov	74(r1),	r12	;0x0004a
+
+	mov.b	#1,	r14	;r3 As==01
+	cmp	r12,	r14	;
+	jnc	.L1279     	;abs 0x7f70
+
+.L1276:
+	mov	62(r1),	r13	;0x0003e
+	xor	76(r1),	r13	;0x0004c
+	clr	r12		;
+	sub	r13,	r12	;
+	bis	r13,	r12	;
+
+	rpt #15 { rrux.w	r12		;
+	mov	r12,	76(r1)	; 0x004c
+
+.L1278:
+	mova	r1,	r12	;
+	adda	#74,	r12	;0x0004a
+	jmp .L1270	;mova	#32570,	r0	;0x07f3a
+
+.L1279:
+	cmp	#4,	r13	;r2 As==10
+	jnz	.L1282     	;abs 0x7f80
+
+	cmp	#2,	r12	;r3 As==10
+	jnz	.L1267     	;abs 0x7f1e
+
+.L1281:
+	mova	#82954,	r12	;0x1440a
+	jmp .L1270	;mova	#32570,	r0	;0x07f3a
+
+.L1282:
+	cmp	#4,	r12	;r2 As==10
+	jnz	.L1284     	;abs 0x7f8c
+
+	cmp	#2,	r13	;r3 As==10
+	jz	.L1281     	;abs 0x7f78
+	jmp .L1276	;mova	#32592,	r0	;0x07f50
+
+.L1284:
+	mov	76(r1),	r15	;0x0004c
+	xor	62(r1),	r15	;0x0003e
+	clr	r14		;
+	sub	r15,	r14	;
+	bis	r15,	r14	;
+	rpt #15 { rrux.w	r14		;
+	mov	r14,	32(r1)	; 0x0020
+
+	cmp	#2,	r13	;r3 As==10
+	jnz	.L1287     	;abs 0x7fae
+
+	mov	r14,	62(r1)	; 0x003e
+	jmp .L1269	;mova	#32564,	r0	;0x07f34
+
+.L1287:
+	cmp	#2,	r12	;r3 As==10
+	jnz	.L1289     	;abs 0x7fbc
+
+	mov	32(r1),	76(r1)	;0x00020, 0x004c
+	jmp .L1278	;mova	#32614,	r0	;0x07f66
+
+.L1289:
+	mov	66(r1),	34(r1)	;0x00042, 0x0022
+	mov	68(r1),	38(r1)	;0x00044, 0x0026
+	mov	70(r1),	40(r1)	;0x00046, 0x0028
+	mov	72(r1),	42(r1)	;0x00048, 0x002a
+
+	mov	80(r1),	22(r1)	;0x00050, 0x0016
+	mov	82(r1),	16(r1)	;0x00052, 0x0010
+	mov	84(r1),	18(r1)	;0x00054, 0x0012
+	mov	86(r1),	20(r1)	;0x00056, 0x0014
+
+	mov	#64,	28(r1)	;#0x0040, 0x001c
+
+	clr.b	r7		;
+	mov	r7,	2(r1)	;
+	mov	r7,	4(r1)	;
+	mov	r7,	6(r1)	;
+
+	mov	r7,	0(r1)	;
+	mov	r7,	24(r1)	; 0x0018
+	mov	r7,	26(r1)	; 0x001a
+	mov	r7,	30(r1)	; 0x001e
+
+	mov	r7,	8(r1)	;
+	mov	r7,	10(r1)	; 0x000a
+	mov	r7,	12(r1)	; 0x000c
+	mov	r7,	14(r1)	; 0x000e
+
+.L1295:
+	bitx.w	#1,	34(r1)	;r3 As==01, 0x00022
+	jz	.L1319    	;abs 0x814a
+
+	mov	8(r1),	r12	;
+	add	22(r1),	r12	;0x00016
+	mov	r12,	36(r1)	; 0x0024
+	mov.b	#1,	r9	;r3 As==01
+	cmp	8(r1),	r12	;
+	jnc	.L1297      	;abs 0x803e
+	clr.b	r9		;
+
+.L1297:
+	mov	10(r1),	r13	;0x0000a
+	add	16(r1),	r13	;0x00010
+	mov.b	#1,	r12	;r3 As==01
+	cmp	10(r1),	r13	;0x0000a
+	jnc	.L1298      	;abs 0x8050
+	clr.b	r12		;
+
+.L1298:
+	add	r13,	r9	;
+	mov.b	#1,	r14	;r3 As==01
+	cmp	r13,	r9	;
+	jnc	.L1299      	;abs 0x805a
+	clr.b	r14		;
+
+.L1299:
+	bis	r14,	r12	;
+	mov	12(r1),	r13	;0x0000c
+	add	18(r1),	r13	;0x00012
+	mov.b	#1,	r10	;r3 As==01
+	cmp	12(r1),	r13	;0x0000c
+	jnc	.L1300      	;abs 0x806e
+	clr.b	r10		;
+
+.L1300:
+	add	r13,	r12	;
+	mov.b	#1,	r14	;r3 As==01
+	cmp	r13,	r12	;
+	jnc	.L1301      	;abs 0x8078
+	clr.b	r14		;
+
+.L1301:
+	bis	r14,	r10	;
+	mov	14(r1),	r15	;0x0000e
+	add	20(r1),	r15	;0x00014
+	add	r15,	r10	;
+	mov	36(r1),	8(r1)	;0x00024
+
+	mov	r9,	10(r1)	; 0x000a
+	mov	r12,	12(r1)	; 0x000c
+	mov	r10,	14(r1)	; 0x000e
+
+	add	@r1,	r7	;
+
+	mov.b	#1,	r8	;r3 As==01
+	cmp	@r1,	r7	;
+	jnc	.L1305      	;abs 0x80a0
+	clr.b	r8		;
+
+.L1305:
+	mov	24(r1),	r13	;0x00018
+	add	2(r1),	r13	;
+	mov.b	#1,	r11	;r3 As==01
+	cmp	24(r1),	r13	;0x00018
+	jnc	.L1306      	;abs 0x80b2
+	clr.b	r11		;
+
+.L1306:
+	add	r13,	r8	;
+	mov.b	#1,	r14	;r3 As==01
+	cmp	r13,	r8	;
+	jnc	.L1307      	;abs 0x80bc
+	clr.b	r14		;
+
+.L1307:
+	bis	r14,	r11	;
+	mov	26(r1),	r14	;0x0001a
+	add	4(r1),	r14	;
+	mov.b	#1,	r13	;r3 As==01
+	cmp	26(r1),	r14	;0x0001a
+	jnc	.L1308      	;abs 0x80d0
+	clr.b	r13		;
+
+.L1308:
+	add	r14,	r11	;
+	mov.b	#1,	r15	;r3 As==01
+	cmp	r14,	r11	;
+	jnc	.L1309      	;abs 0x80da
+	clr.b	r15		;
+
+.L1309:
+	bis	r15,	r13	;
+	mov	30(r1),	r15	;0x0001e
+	add	6(r1),	r15	;
+	add	r15,	r13	;
+
+	mov.b	#1,	r14	;r3 As==01
+	cmp	20(r1),	r10	;0x00014
+	jnc	.L1312     	;abs 0x8116
+	cmp	r10,	20(r1)	; 0x0014
+	jnz	.L1311     	;abs 0x8114
+	cmp	18(r1),	r12	;0x00012
+	jnc	.L1312     	;abs 0x8116
+	cmp	r12,	18(r1)	; 0x0012
+	jnz	.L1311     	;abs 0x8114
+	cmp	16(r1),	r9	;0x00010
+	jnc	.L1312     	;abs 0x8116
+	cmp	r9,	16(r1)	; 0x0010
+	jnz	.L1311     	;abs 0x8114
+	cmp	22(r1),	36(r1)	;0x00016, 0x0024
+	jnc	.L1312      	;abs 0x8116
+
+.L1311:
+	clr.b	r14		;
+
+.L1312:
+	mov	r14,	r12	;
+
+	add	r7,	r12	;
+	mov.b	#1,	r10	;r3 As==01
+
+	cmp	r14,	r12	;
+	jnc	.L1315      	;abs 0x8122
+	clr.b	r10		;
+
+.L1315:
+	add	r8,	r10	;
+	mov.b	#1,	r14	;r3 As==01
+	cmp	r8,	r10	;
+	jnc	.L1316      	;abs 0x812c
+	clr.b	r14		;
+
+.L1316:
+	clr.b	r15		;
+	add	r11,	r14	;
+	mov.b	#1,	r9	;r3 As==01
+
+	cmp	r11,	r14	;
+	jnc	.L1318      	;abs 0x8138
+	mov	r15,	r9	;
+
+.L1318:
+	bis	r9,	r15	;
+	mov	r12,	r7	;
+	mov	r10,	2(r1)	;
+	mov	r14,	4(r1)	;
+	add	r13,	r15	;
+	mov	r15,	6(r1)	;
+
+.L1319:
+	mov	@r1,	r10	;
+	rla	r10		;
+	mov.b	#1,	r13	;r3 As==01
+	cmp	@r1,	r10	;
+	jnc	.L1320      	;abs 0x8156
+	clr.b	r13		;
+
+.L1320:
+	mov	24(r1),	r14	;0x00018
+	rla	r14		;
+	mov.b	#1,	r12	;r3 As==01
+	cmp	24(r1),	r14	;0x00018
+	jnc	.L1321      	;abs 0x8166
+	clr.b	r12		;
+
+.L1321:
+	add	r14,	r13	;
+	mov.b	#1,	r15	;r3 As==01
+	cmp	r14,	r13	;
+	jnc	.L1322      	;abs 0x8170
+	clr.b	r15		;
+
+.L1322:
+	bis	r15,	r12	;
+	mov	26(r1),	r15	;0x0001a
+	rla	r15		;
+	mov.b	#1,	r14	;r3 As==01
+	cmp	26(r1),	r15	;0x0001a
+	jnc	.L1323      	;abs 0x8182
+	clr.b	r14		;
+
+.L1323:
+	add	r15,	r12	;
+	mov.b	#1,	r9	;r3 As==01
+	cmp	r15,	r12	;
+	jnc	.L1324      	;abs 0x818c
+	clr.b	r9		;
+
+.L1324:
+	bis	r9,	r14	;
+	mov	30(r1),	r15	;0x0001e
+	rla	r15		;
+	mov	r10,	0(r1)	;
+
+	mov	r13,	24(r1)	; 0x0018
+	mov	r12,	26(r1)	; 0x001a
+	add	r15,	r14	;
+	mov	r14,	30(r1)	; 0x001e
+
+	cmp	#0,	20(r1)	;r3 As==00, 0x0014
+	jge	.L1328      	;abs 0x81b0
+
+	bis	#1,	0(r1)	;r3 As==01
+
+.L1328:
+	mov	22(r1),	r10	;0x00016
+	rla	r10		;
+	mov.b	#1,	r13	;r3 As==01
+
+	cmp	22(r1),	r10	;0x00016
+	jnc	.L1330      	;abs 0x81c0
+	clr.b	r13		;
+
+.L1330:
+	mov	16(r1),	r14	;0x00010
+
+	rla	r14		;
+	mov.b	#1,	r12	;r3 As==01
+
+	cmp	16(r1),	r14	;0x00010
+	jnc	.L1333      	;abs 0x81d0
+	clr.b	r12		;
+
+.L1333:
+	add	r14,	r13	;
+	mov.b	#1,	r15	;r3 As==01
+	cmp	r14,	r13	;
+	jnc	.L1334      	;abs 0x81da
+	clr.b	r15		;
+
+.L1334:
+	bis	r15,	r12	;
+	mov	18(r1),	r15	;0x00012
+	rla	r15		;
+	mov.b	#1,	r14	;r3 As==01
+	cmp	18(r1),	r15	;0x00012
+	jnc	.L1335      	;abs 0x81ec
+	clr.b	r14		;
+
+.L1335:
+	add	r15,	r12	;
+	mov.b	#1,	r9	;r3 As==01
+	cmp	r15,	r12	;
+	jnc	.L1336      	;abs 0x81f6
+	clr.b	r9		;
+
+.L1336:
+	bis	r9,	r14	;
+	mov	20(r1),	r15	;0x00014
+	rla	r15		;
+	mov	r10,	22(r1)	; 0x0016
+
+	mov	r13,	16(r1)	; 0x0010
+	mov	r12,	18(r1)	; 0x0012
+	add	r15,	r14	;
+	mov	r14,	20(r1)	; 0x0014
+
+	mov	34(r1),	r8	;0x00022
+	mov	38(r1),	r9	;0x00026
+	mov	40(r1),	r10	;0x00028
+	mov	42(r1),	r11	;0x0002a
+	mov.b	#1,	r12	;r3 As==01
+	calla	#__mspabi_srlll		;0x05a06
+
+	mov	r12,	34(r1)	; 0x0022
+
+	mov	r13,	38(r1)	; 0x0026
+	mov	r14,	40(r1)	; 0x0028
+	mov	r15,	42(r1)	; 0x002a
+
+	add	#-1,	28(r1)	;r3 As==11, 0x001c
+
+	cmp	#0,	28(r1)	;r3 As==00, 0x001c
+	jnz	.L1295    	;abs 0x8020
+
+	mov	64(r1),	r12	;0x00040
+
+	add	78(r1),	r12	;0x0004e
+
+	add	#4,	r12	;r2 As==10
+	mov	r12,	0(r1)	;
+
+	mov	r12,	92(r1)	; 0x005c
+
+	mov	32(r1),	90(r1)	;0x00020, 0x005a
+
+	mov	28(r1),	r12	;0x0001c
+
+.L1349:
+	mov	#8191,	r13	;#0x1fff
+	cmp	6(r1),	r13	;
+	jnc	.L1373    	;abs 0x8350
+	cmp	#0,	r12	;r3 As==00
+	jz	.L1350      	;abs 0x826e
+	mov	@r1,	92(r1)	; 0x005c
+
+.L1350:
+	mov	92(r1),	r11	;0x0005c
+
+	clr.b	r12		;
+
+	mov.b	#1,	r9	;r3 As==01
+	mov	r12,	r8	;
+
+.L1353:
+	mov	#4095,	r13	;#0x0fff
+	cmp	6(r1),	r13	;
+	jnc	.L1381    	;abs 0x83aa
+
+	mov	r7,	r10	;
+	add	r7,	r10	;
+	mov	r9,	r13	;
+	cmp	r7,	r10	;
+	jnc	.L1355      	;abs 0x828e
+	mov	r8,	r13	;
+
+.L1355:
+	mov	2(r1),	r12	;
+	rla	r12		;
+	mov.b	#1,	r14	;r3 As==01
+	cmp	2(r1),	r12	;
+	jnc	.L1356      	;abs 0x829e
+	clr.b	r14		;
+
+.L1356:
+	add	r12,	r13	;
+	mov	r9,	r15	;
+	cmp	r12,	r13	;
+	jnc	.L1357      	;abs 0x82a8
+	mov	r8,	r15	;
+
+.L1357:
+	bis	r15,	r14	;
+	mov	4(r1),	r15	;
+	rla	r15		;
+	mov.b	#1,	r12	;r3 As==01
+	cmp	4(r1),	r15	;
+	jnc	.L1358      	;abs 0x82ba
+	clr.b	r12		;
+
+.L1358:
+	add	r15,	r14	;
+	mov	r9,	r7	;
+
+	cmp	r15,	r14	;
+	jnc	.L1360      	;abs 0x82c4
+	mov	r8,	r7	;
+
+.L1360:
+	bis	r7,	r12	;
+	mov	6(r1),	r15	;
+	rla	r15		;
+	mov	r10,	r7	;
+	mov	r13,	2(r1)	;
+	mov	r14,	4(r1)	;
+	add	r15,	r12	;
+	mov	r12,	6(r1)	;
+
+	cmp	#0,	14(r1)	;r3 As==00, 0x000e
+	jge	.L1363      	;abs 0x82e4
+
+	bis	#1,	r7	;r3 As==01
+
+.L1363:
+	mov	8(r1),	r14	;
+
+	rla	r14		;
+	mov	r14,	0(r1)	;
+	mov	r9,	r13	;
+
+	cmp	8(r1),	r14	;
+	jnc	.L1366      	;abs 0x82f8
+	mov	r8,	r13	;
+
+.L1366:
+	mov	10(r1),	r15	;0x0000a
+	rla	r15		;
+	mov.b	#1,	r14	;r3 As==01
+	cmp	10(r1),	r15	;0x0000a
+	jnc	.L1367      	;abs 0x8308
+	clr.b	r14		;
+
+.L1367:
+	add	r15,	r13	;
+	mov	r9,	r12	;
+
+	cmp	r15,	r13	;
+	jnc	.L1369      	;abs 0x8312
+	mov	r8,	r12	;
+
+.L1369:
+	bis	r12,	r14	;
+	mov	12(r1),	r15	;0x0000c
+	rla	r15		;
+	mov.b	#1,	r12	;r3 As==01
+	cmp	12(r1),	r15	;0x0000c
+	jnc	.L1370      	;abs 0x8324
+	clr.b	r12		;
+
+.L1370:
+	add	r15,	r14	;
+	mov	r9,	r10	;
+	cmp	r15,	r14	;
+	jnc	.L1371      	;abs 0x832e
+	mov	r8,	r10	;
+
+.L1371:
+	bis	r10,	r12	;
+	mov	14(r1),	r15	;0x0000e
+	rla	r15		;
+	mov	@r1,	8(r1)	;
+
+	mov	r13,	10(r1)	; 0x000a
+	mov	r14,	12(r1)	; 0x000c
+	add	r15,	r12	;
+	mov	r12,	14(r1)	; 0x000e
+	add	#-1,	r11	;r3 As==11
+	mov	r9,	r12	;
+	jmp .L1353	;mova	#33400,	r0	;0x08278
+
+.L1373:
+	bit	#1,	r7	;r3 As==01
+	jz	.L1377     	;abs 0x837e
+
+	mov	8(r1),	r8	;
+	mov	10(r1),	r9	;0x0000a
+	mov	12(r1),	r10	;0x0000c
+	mov	14(r1),	r11	;0x0000e
+	mov.b	#1,	r12	;r3 As==01
+	calla	#__mspabi_srlll		;0x05a06
+
+	mov	r12,	8(r1)	;
+	mov	r13,	10(r1)	; 0x000a
+	mov	r14,	12(r1)	; 0x000c
+	bis	#-32768,r15	;#0x8000
+
+	mov	r15,	14(r1)	; 0x000e
+
+.L1377:
+	mov	r7,	r8	;
+	mov	2(r1),	r9	;
+	mov	4(r1),	r10	;
+	mov	6(r1),	r11	;
+	mov.b	#1,	r12	;r3 As==01
+	calla	#__mspabi_srlll		;0x05a06
+	mov	r12,	r7	;
+
+	mov	r13,	2(r1)	;
+
+	mov	r14,	4(r1)	;
+	mov	r15,	6(r1)	;
+
+	inc	0(r1)		;
+	mov.b	#1,	r12	;r3 As==01
+	jmp .L1349	;mova	#33372,	r0	;0x0825c
+
+.L1381:
+	cmp	#0,	r12	;r3 As==00
+	jz	.L1382      	;abs 0x83b2
+	mov	r11,	92(r1)	; 0x005c
+
+.L1382:
+	mov	r7,	r15	;
+	and.b	#255,	r15	;#0x00ff
+
+	cmp.b	#-128,	r7	;#0xff80
+	jnz	.L1392     	;abs 0x841e
+
+	mov	r7,	r14	;
+	and	#256,	r14	;#0x0100
+
+	bit	#256,	r7	;#0x0100
+	jnz	.L1392     	;abs 0x841e
+
+	mov	8(r1),	r12	;
+	bis	10(r1),	r12	;0x0000a
+	bis	12(r1),	r12	;0x0000c
+	bis	14(r1),	r12	;0x0000e
+	cmp	#0,	r12	;r3 As==00
+	jz	.L1392     	;abs 0x841e
+
+	add	r7,	r15	;
+	mov.b	#1,	r13	;r3 As==01
+	cmp	r7,	r15	;
+	jnc	.L1388      	;abs 0x83e8
+	mov	r14,	r13	;
+
+.L1388:
+	clr.b	r12		;
+	add	2(r1),	r13	;
+	mov.b	#1,	r14	;r3 As==01
+	cmp	2(r1),	r13	;
+	jnc	.L1389      	;abs 0x83f8
+	mov	r12,	r14	;
+
+.L1389:
+	bis	r14,	r12	;
+	clr.b	r14		;
+	add	4(r1),	r12	;
+	mov.b	#1,	r10	;r3 As==01
+	cmp	4(r1),	r12	;
+	jnc	.L1390      	;abs 0x840a
+	mov	r14,	r10	;
+
+.L1390:
+	bis	r10,	r14	;
+
+	mov	r15,	r7	;
+	and	#-256,	r7	;#0xff00
+	mov	r13,	2(r1)	;
+	mov	r12,	4(r1)	;
+	add	r14,	6(r1)	;
+
+.L1392:
+	mov	r7,	94(r1)	; 0x005e
+	mov	2(r1),	96(r1)	; 0x0060
+	mov	4(r1),	98(r1)	; 0x0062
+	mov	6(r1),	100(r1)	; 0x0064
+
+	mov	#3,	88(r1)	; 0x0058
+
+	mova	r1,	r12	;
+	adda	#88,	r12	;0x00058
+	jmp .L1270	;mova	#32570,	r0	;0x07f3a
+
+
+
+	.global __eqdf2
+	.type __eqdf2, @function
+__eqdf2:
+	nop
+	nop
+	pushm.a	#1,	r10	;20-bit words
+
+	suba	#44,	r1	;0x0002c
+
+	mov	r12,	0(r1)	;
+	mov	r13,	2(r1)	;
+	mov	r14,	4(r1)	;
+	mov	r15,	6(r1)	;
+
+	mov	52(r1),	8(r1)	;0x00034
+	mov	54(r1),	10(r1)	;0x00036, 0x000a
+	mov	56(r1),	12(r1)	;0x00038, 0x000c
+	mov	58(r1),	14(r1)	;0x0003a, 0x000e
+
+	mova	#__unpack_d,	r10	;0x05f9e
+	mova	r1,	r13	;
+	adda	#16,	r13	;0x00010
+	mova	r1,	r12	;
+
+	calla	r10		;
+
+	mova	r1,	r13	;
+	adda	#30,	r13	;0x0001e
+	mova	r1,	r12	;
+	adda	#8,	r12	;
+	calla	r10		;
+
+	mov.b	#1,	r12	;r3 As==01
+	cmp	16(r1),	r12	;0x00010
+	jc	.L1407     	;abs 0x84b4
+
+	cmp	30(r1),	r12	;0x0001e
+	jc	.L1407     	;abs 0x84b4
+
+	mova	r1,	r13	;
+	adda	#30,	r13	;0x0001e
+	mova	r1,	r12	;
+	adda	#16,	r12	;0x00010
+	calla	#__fpcmp_parts_d		;0x060f6
+
+.L1404:
+	adda	#44,	r1	;0x0002c
+
+	popm.a	#1,	r10	;20-bit words
+
+	reta			;
+
+.L1407:
+	mov.b	#1,	r12	;r3 As==01
+	jmp .L1404	;mova	#33964,	r0	;0x084ac
+
+
+
+	.global __gtdf2
+	.type __gtdf2, @function
+__gtdf2:
+	nop
+	nop
+	pushm.a	#1,	r10	;20-bit words
+
+	suba	#44,	r1	;0x0002c
+
+	mov	r12,	0(r1)	;
+	mov	r13,	2(r1)	;
+	mov	r14,	4(r1)	;
+	mov	r15,	6(r1)	;
+
+	mov	52(r1),	8(r1)	;0x00034
+	mov	54(r1),	10(r1)	;0x00036, 0x000a
+	mov	56(r1),	12(r1)	;0x00038, 0x000c
+	mov	58(r1),	14(r1)	;0x0003a, 0x000e
+
+	mova	#__unpack_d,	r10	;0x05f9e
+	mova	r1,	r13	;
+	adda	#16,	r13	;0x00010
+	mova	r1,	r12	;
+
+	calla	r10		;
+
+	mova	r1,	r13	;
+	adda	#30,	r13	;0x0001e
+	mova	r1,	r12	;
+	adda	#8,	r12	;
+	calla	r10		;
+
+	mov.b	#1,	r12	;r3 As==01
+	cmp	16(r1),	r12	;0x00010
+	jc	.L1420     	;abs 0x852a
+
+	cmp	30(r1),	r12	;0x0001e
+	jc	.L1420     	;abs 0x852a
+
+	mova	r1,	r13	;
+	adda	#30,	r13	;0x0001e
+	mova	r1,	r12	;
+	adda	#16,	r12	;0x00010
+	calla	#__fpcmp_parts_d		;0x060f6
+
+.L1417:
+	adda	#44,	r1	;0x0002c
+
+	popm.a	#1,	r10	;20-bit words
+
+	reta			;
+
+.L1420:
+	mov	#-1,	r12	;r3 As==11
+	jmp .L1417	;mova	#34082,	r0	;0x08522
+
+
+
+	.global __ltdf2
+	.type __ltdf2, @function
+__ltdf2:
+	nop
+	nop
+	pushm.a	#1,	r10	;20-bit words
+
+	suba	#44,	r1	;0x0002c
+
+	mov	r12,	0(r1)	;
+	mov	r13,	2(r1)	;
+	mov	r14,	4(r1)	;
+	mov	r15,	6(r1)	;
+
+	mov	52(r1),	8(r1)	;0x00034
+	mov	54(r1),	10(r1)	;0x00036, 0x000a
+	mov	56(r1),	12(r1)	;0x00038, 0x000c
+	mov	58(r1),	14(r1)	;0x0003a, 0x000e
+
+	mova	#__unpack_d,	r10	;0x05f9e
+	mova	r1,	r13	;
+	adda	#16,	r13	;0x00010
+	mova	r1,	r12	;
+
+	calla	r10		;
+
+	mova	r1,	r13	;
+	adda	#30,	r13	;0x0001e
+	mova	r1,	r12	;
+	adda	#8,	r12	;
+	calla	r10		;
+
+	mov.b	#1,	r12	;r3 As==01
+	cmp	16(r1),	r12	;0x00010
+	jc	.L1433     	;abs 0x85a0
+
+	cmp	30(r1),	r12	;0x0001e
+	jc	.L1433     	;abs 0x85a0
+
+	mova	r1,	r13	;
+	adda	#30,	r13	;0x0001e
+	mova	r1,	r12	;
+	adda	#16,	r12	;0x00010
+	calla	#__fpcmp_parts_d		;0x060f6
+
+.L1430:
+	adda	#44,	r1	;0x0002c
+
+	popm.a	#1,	r10	;20-bit words
+
+	reta			;
+
+.L1433:
+	mov.b	#1,	r12	;r3 As==01
+	jmp .L1430	;mova	#34200,	r0	;0x08598
+
+
+
+	.global __mspabi_fltlid
+	.type __mspabi_fltlid, @function
+__mspabi_fltlid:
+	nop
+	nop
+	pushm.a	#4,	r10	;20-bit words
+
+	suba	#14,	r1	;0x0000e
+
+	mov	r12,	r14	;
+	mov	r13,	r15	;
+
+	mov	#3,	0(r1)	;
+
+	mov	r13,	r12	;
+
+	rpt #15 { rrux.w	r12		;
+	mov	r12,	2(r1)	;
+
+	mov	r14,	r12	;
+	bis	r13,	r12	;
+	cmp	#0,	r12	;r3 As==00
+	jnz	.L1445     	;abs 0x85da
+
+	mov	#2,	0(r1)	;r3 As==10
+
+.L1441:
+	mova	r1,	r12	;
+	calla	#__pack_d		;0x05cae
+
+.L1442:
+	adda	#14,	r1	;0x0000e
+
+	popm.a	#4,	r10	;20-bit words
+
+	reta			;
+
+.L1445:
+	cmp	#0,	r13	;r3 As==00
+	jge	.L1452     	;abs 0x8628
+
+	mov	r14,	r13	;
+	cmp	#0,	r14	;r3 As==00
+	jnz	.L1447      	;abs 0x85ea
+	cmp	#-32768,r15	;#0x8000
+	jz	.L1454     	;abs 0x8630
+
+.L1447:
+	clr.b	r8		;
+	clr.b	r9		;
+	sub	r14,	r8	;
+	subc	r15,	r9	;
+
+.L1448:
+	mov	r8,	r12	;
+	mov	r9,	r13	;
+	calla	#__clzsi2		;0x086e4
+
+	mov	r12,	r7	;
+	add	#29,	r7	;#0x001d
+
+	clr.b	r10		;
+	mov	r10,	r11	;
+	mov	r7,	r12	;
+	calla	#__mspabi_sllll		;0x059da
+	mov	r12,	6(r1)	;
+	mov	r13,	8(r1)	;
+	mov	r14,	10(r1)	; 0x000a
+	mov	r15,	12(r1)	; 0x000c
+
+	mov.b	#60,	r12	;#0x003c
+	sub	r7,	r12	;
+	mov	r12,	4(r1)	;
+	jmp .L1441	;mova	#34252,	r0	;0x085cc
+
+.L1452:
+	mov	r14,	r8	;
+	mov	r13,	r9	;
+
+	jmp .L1448	;mova	#34290,	r0	;0x085f2
+
+.L1454:
+	mov	r14,	r12	;
+	mov	#-15904,r15	;#0xc1e0
+	jmp .L1442	;mova	#34258,	r0	;0x085d2
+
+
+
+	.global __mspabi_fixdli
+	.type __mspabi_fixdli, @function
+__mspabi_fixdli:
+	nop
+	nop
+	pushm.a	#4,	r10	;20-bit words
+
+	suba	#22,	r1	;0x00016
+
+	mov	r12,	0(r1)	;
+	mov	r13,	2(r1)	;
+	mov	r14,	4(r1)	;
+	mov	r15,	6(r1)	;
+
+	mova	r1,	r13	;
+	adda	#8,	r13	;
+	mova	r1,	r12	;
+
+	calla	#__unpack_d		;0x05f9e
+
+	mov	8(r1),	r12	;
+
+	mov.b	#2,	r13	;r3 As==10
+	cmp	r12,	r13	;
+	jc	.L1477    	;abs 0x86d0
+
+	cmp	#4,	r12	;r2 As==10
+	jnz	.L1467     	;abs 0x867e
+
+	cmp	#0,	10(r1)	;r3 As==00, 0x000a
+	jz	.L1472     	;abs 0x8696
+
+.L1463:
+	clr.b	r12		;
+	mov	#-32768,r13	;#0x8000
+
+.L1464:
+	adda	#22,	r1	;0x00016
+
+	popm.a	#4,	r10	;20-bit words
+
+	reta			;
+
+.L1467:
+	mov	12(r1),	r12	;0x0000c
+
+	cmp	#0,	r12	;r3 As==00
+	jl	.L1477     	;abs 0x86d0
+
+	mov	10(r1),	r7	;0x0000a
+
+	mov.b	#30,	r14	;#0x001e
+	cmp	r12,	r14	;
+	jge	.L1473     	;abs 0x86a0
+
+	cmp	#0,	r7	;r3 As==00
+	jnz	.L1463     	;abs 0x8670
+
+.L1472:
+	mov	#-1,	r12	;r3 As==11
+	mov	#32767,	r13	;#0x7fff
+	jmp .L1464	;mova	#34422,	r0	;0x08676
+
+.L1473:
+	mov	14(r1),	r8	;0x0000e
+	mov	16(r1),	r9	;0x00010
+	mov	18(r1),	r10	;0x00012
+	mov	20(r1),	r11	;0x00014
+	mov.b	#60,	r15	;#0x003c
+	sub	r12,	r15	;
+	mov	r15,	r12	;
+	calla	#__mspabi_srlll		;0x05a06
+
+	cmp	#0,	r7	;r3 As==00
+	jz	.L1464     	;abs 0x8676
+
+	clr.b	r14		;
+	clr.b	r15		;
+	sub	r12,	r14	;
+	subc	r13,	r15	;
+	mov	r14,	r12	;
+
+	mov	r15,	r13	;
+	jmp .L1464	;mova	#34422,	r0	;0x08676
+
+.L1477:
+	clr.b	r12		;
+	clr.b	r13		;
+	jmp .L1464	;mova	#34422,	r0	;0x08676
+
+.L1478:
+	add	#-1,	r14	;r3 As==11
+	rra	r13		;
+	rrc	r12		;
+
+
+
+	.global __mspabi_sral
+	.type __mspabi_sral, @function
+__mspabi_sral:
+	nop
+	nop
+	cmp	#0,	r14	;r3 As==00
+	jnz	.L1478      	;abs 0x86d8
+	reta			;
+
+
+
+	.global __clzsi2
+	.type __clzsi2, @function
+__clzsi2:
+	nop
+	nop
+	pushm.a	#2,	r9	;20-bit words
+
+	mov.b	#255,	r14	;#0x00ff
+	cmp	#0,	r13	;r3 As==00
+	jnz	.L1485     	;abs 0x871a
+	cmp	r12,	r14	;
+	jc	.L1487     	;abs 0x872e
+	mov.b	#8,	r14	;r2 As==11
+
+.L1480:
+	clr.b	r15		;
+
+	mov.b	#32,	r8	;#0x0020
+	clr.b	r9		;
+	sub	r14,	r8	;
+	subc	r15,	r9	;
+	calla	#__mspabi_srll		;0x05a00
+
+	push	r13		;
+	push	r12		;
+	popm.a	#1,	r12	;20-bit words
+
+	mov	r8,	r13	;
+	movx.b	83016(r12),r12	;0x14448
+	sub	r12,	r13	;
+	mov	r13,	r12	;
+	popm.a	#2,	r9	;20-bit words
+
+	reta			;
+
+.L1485:
+	cmp	r13,	r14	;
+	jnc	.L1486     	;abs 0x8726
+	mov.b	#16,	r14	;#0x0010
+	jmp .L1480	;mova	#34548,	r0	;0x086f4
+
+.L1486:
+	mov.b	#24,	r14	;#0x0018
+	jmp .L1480	;mova	#34548,	r0	;0x086f4
+
+.L1487:
+	clr.b	r14		;
+	jmp .L1480	;mova	#34548,	r0	;0x086f4
+
+
+
+	.global __errno
+	.type __errno, @function
+__errno:
+	nop
+	nop
+	mova	&11266,	r12	;0x02c02
+	reta			;
+
+
+
+	.global _exit
+	.type _exit, @function
+_exit:
+	nop
+	nop
+	jmp _exit	;mova	#34618,	r0	;0x0873a
+
+
+
+	.global memmove
+	.type memmove, @function
+memmove:
+	nop
+	nop
+	pushm.a	#1,	r10	;20-bit words
+
+	pushm.a	#1,	r8	;20-bit words
+
+	mova	r12,	r15	;
+	mova	r13,	r8	;
+	mova	r14,	r13	;
+
+	cmpa	r12,	r8	;
+	jc	.L1506     	;abs 0x8796
+
+	mova	r8,	r11	;
+	adda	r14,	r11	;
+
+	cmpa	r11,	r12	;
+	jc	.L1506     	;abs 0x8796
+
+	mova	r14,	r8	;
+
+	xorx.a	#-1,	r8	;r3 As==11
+
+	clr.b	r10		;
+
+.L1496:
+	adda	#1048575,r10	;0xfffff
+
+	cmpa	r10,	r8	;
+	jnz	.L1501     	;abs 0x876c
+
+.L1498:
+	mova	r15,	r12	;
+	popm.a	#1,	r8	;20-bit words
+
+	popm.a	#1,	r10	;20-bit words
+
+	reta			;
+
+.L1501:
+	mova	r13,	r12	;
+	adda	r10,	r12	;
+	adda	r15,	r12	;
+	mova	r11,	r14	;
+	adda	r10,	r14	;
+
+	mov.b	@r14,	0(r12)	;
+	jmp .L1496	;mova	#34652,	r0	;0x0875c
+
+.L1503:
+	mova	r8,	r10	;
+	adda	r12,	r10	;
+
+	mova	r15,	r14	;
+	adda	r12,	r14	;
+	mov.b	@r10,	0(r14)	;
+	adda	#1,	r12	;
+
+.L1505:
+	cmpa	r12,	r13	;
+	jnz	.L1503     	;abs 0x877e
+	jmp .L1498	;mova	#34660,	r0	;0x08764
+
+.L1506:
+	clr.b	r12		;
+
+	jmp .L1505	;mova	#34702,	r0	;0x0878e
+
+
+
+	.global memset
+	.type memset, @function
+memset:
+	nop
+	nop
+	pushm.a	#1,	r10	;20-bit words
+
+	adda	r12,	r14	;
+
+	mova	r12,	r10	;
+
+.L1510:
+	cmpa	r14,	r10	;
+	jnz	.L1513      	;abs 0x87aa
+
+	popm.a	#1,	r10	;20-bit words
+
+	reta			;
+
+.L1513:
+	adda	#1,	r10	;
+
+	mov.b	r13,	-1(r10)	; 0xffff
+	jmp .L1510	;mova	#34722,	r0	;0x087a2

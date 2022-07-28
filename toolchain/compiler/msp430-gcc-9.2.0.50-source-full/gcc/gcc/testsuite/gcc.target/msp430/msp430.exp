@@ -1,0 +1,351 @@
+# Copyright (C) 2015-2019 Free Software Foundation, Inc.
+
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 3 of the License, or
+# (at your option) any later version.
+# 
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+# 
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.  
+
+# GCC testsuite that uses the `dg.exp' driver.
+
+# Exit immediately if this isn't the right target.
+if { ![istarget msp430-*-*] } then {
+    return
+}
+
+# Save the value of the global board_info->ldflags variable, so we can reset it
+# before exiting in case it gets changed during these tests.
+proc msp430_set_old_board_info_ldflags { } {
+    global msp430_old_board_ldflags
+    global board_info
+    if { [board_info [target_info name] exists ldflags] } {
+	set msp430_old_board_ldflags "[board_info [target_info name] ldflags]"
+    }
+}
+
+# This resets the value of the global board_info->ldflags variable to whatever
+# it was first saved as by the msp430_set_old_board_info_ldflags proc.
+proc msp430_reset_board_info_ldflags { } {
+    global msp430_old_board_ldflags
+    global board_info
+    if { ![info exists msp430_old_board_ldflags] } {
+	error "msp430_old_board_ldflags does not exist.
+	Ensure 'msp430_set_old_board_info_ldflags' is called before\
+	'msp430_reset_board_info_ldflags'."
+    }
+    set board_info([target_info name],ldflags) $msp430_old_board_ldflags
+}
+
+# Return the name of the mulilib directory GCC uses when invoked with 'cmd_opts'
+# as arguments.
+proc msp430_get_multidir { cmd_opts test_file } {
+    if { [string match "csv_*" [file tail $test_file]] } {
+	append cmd_opts " -I[file dirname $test_file] -mdisable-device-warnings"
+    }
+    set cmd "[board_info [target_info name] compiler] $cmd_opts \
+	--print-multi-dir"
+    set tmp [remote_exec host $cmd]
+    set retval [lindex $tmp 0]
+    set multidir [lindex $tmp 1]
+    if { $retval == 0 } {
+	if { [lsearch {430 . large} \
+	    [set multidir [string trim $multidir]]]  == -1 } {
+	    error "Unexpected multidir found: $multidir"
+	}
+	return $multidir
+    } else {
+	error "Error executing $cmd"
+    }
+}
+
+proc check_effective_target_430_selected { } {
+    return [check-flags [list "" { *-*-* } { "-mcpu=msp430" } { "" } ]]
+}
+
+proc check_effective_target_msp430_region_not_lower { } {
+    return [check-flags [list "" { *-*-* } { "-mdata-region=none" "-mdata-region=upper" "-mdata-region=either" } { "" } ]]
+}
+
+proc check_effective_target_msp430_region_lower { } {
+    return [check-flags [list "" { *-*-* } { "*" } { "-mdata-region=none" "-mdata-region=upper" "-mdata-region=either" } ]]
+}
+
+proc check_effective_target_msp430_region_upper { } {
+    return [check-flags [list "" { *-*-* } { "-mdata-region=upper" "-mcode-region=upper" } { "" } ]]
+}
+
+proc check_effective_target_msp430_hwmul_not_none { } {
+    return [check-flags [list "" { *-*-* } \
+    { "-mhwmult=16bit" "-mhwmult=32bit" "-mhwmult=f5series" } { "" } ]]
+}
+
+proc check_effective_target_msp430_hwmul_not_16bit { } {
+    return [check-flags [list "" { *-*-* } \
+    { "-mhwmult=f5series" "-mhwmult=32bit" } { "" } ]]
+}
+
+proc check_effective_target_msp430_hwmul_not_32bit { } {
+    return [check-flags [list "" { *-*-* } \
+    { "-mhwmult=16bit" "-mhwmult=f5series" } { "" } ]]
+}
+
+proc check_effective_target_msp430_hwmul_not_f5 { } {
+    return [check-flags [list "" { *-*-* } \
+    { "-mhwmult=16bit" "-mhwmult=32bit" } { "" } ]]
+}
+
+# When tests are run using "make check", ldflags are polluted with -B and -L
+# options specific to a multilib. Link tests requiring a different multilib
+# would normally fail.
+#
+# In this situation, the linker does find and select the libgcc objects from
+# the correct multilib, however libgloss objects from the default multilib ("."
+# i.e msp430x) are always used. This causes issues if we want to run link tests
+# for -mcpu=msp430 or -mlarge.
+#
+# By extracting the multilib dir GCC thinks is needed for this test and set of
+# options, we can fix up the paths passed to -B and -L so the libgloss objects
+# from the correct multilib are selected.
+#
+# This directive should only be used if this behaviour is explicitly required,
+# as otherwise this proc has less functionality than the default "dg-options"
+# directive.
+#
+# The regex string from dg.exp to grep for dg-* directives does not account for
+# numbers, so if the proc name was dg-msp430-options it would never get called.
+proc dg-msp-options { args } {
+    if { [llength $args] != 2 } {
+	error "dg-msp-options only supports a single argument, use regular \
+	dg-options directive if a target needs to be selected."
+	return
+    }
+    global board_info
+    upvar tool_flags test_tool_flags
+    upvar prog test_file
+    set opts [lindex $args 1]
+    if { [board_info [target_info name] exists ldflags] } {
+	msp430_reset_board_info_ldflags
+	set ldflags "[board_info [target_info name] ldflags]"
+	# This tests whether we might need to correct the multilib dir for
+	# libgloss objects such as crt0.o.
+	if { [regexp {\-B\S+libgloss} $ldflags] } {
+	    if { [board_info [target_info name] exists multitop] } {
+		set multitop "[board_info [target_info name] multitop]"
+		set multidir [msp430_get_multidir "$opts $test_tool_flags" \
+		    $test_file]
+		set newmultitop $multitop
+		set default_multidir_regex "/\.($|/$)"
+		set large_multidir_regex "/large($|/$)"
+		set fourthirty_multidir_regex "/430($|/$)"
+		if { ![regexp $default_multidir_regex $multitop] 
+		    && ![regexp $large_multidir_regex $multitop]
+		    && ![regexp $fourthirty_multidir_regex $multitop] } {
+		    error "The board_info->multitop value of '$multitop'\
+		    is not caught by the any of the following regex strings:
+		    '$default_multidir_regex'
+		    '$large_multidir_regex'
+		    '$fourthirty_multidir_regex'.
+		    If this multitop value is valid then the regex needs\
+		    to be extended."
+		}
+		if { $multidir eq "430" } {
+		    set newmultitop "[regsub $default_multidir_regex \
+			$multitop {/430}]"
+		} elseif { $multidir eq "large" } {
+		    set newmultitop "[regsub $default_multidir_regex \
+			$multitop {/large}]"
+		}
+		if { $newmultitop != $multitop } {
+		    set board_info([target_info name],ldflags) \
+		    [string map "$multitop $newmultitop" "$ldflags"]
+		    # No need to set board_info->multitop, as the ldflags
+		    # change is only temporary, and multitop is not used
+		    # when building the test.
+		}
+	    } else {
+		# FIXME extract the multilib dir from ldflags -B value
+		error "board_info->multitop does not exist"
+	    }
+	}
+    }
+    upvar dg-extra-tool-flags extra-tool-flags
+    append extra-tool-flags $opts
+}
+
+# Return a list of msp430-specific options we can run the test with.
+# The mcu name is extracted from the file name, not from the -mmcu option
+# specified in the test file.
+# An alternative would be to check the
+# -mmcu option in the test file, but this is simpler and gives some finer
+# control over which tests make use of this functionality.
+proc msp430_get_supported_opts { test_file } {
+    global board_info
+    # If the mcu name is not recognized, run the test as normal without
+    # additional options.
+    if { ![regexp {[a-z0-9]+430[a-z0-9_]+(?=\.c)} $test_file mcu_name] } {
+	return { "" }
+    }
+    # If the testsuite has been invoked with specific MSP430 options, don't run
+    # in this torture style.
+    set multi_flags [board_info [target_info name] multilib_flags]
+    if { [string match "*mlarge*" $multi_flags]
+	|| [string match "*msmall*" $multi_flags]
+	|| [string match "*mcpu*" $multi_flags]
+	|| [string match "*mmcu*" $multi_flags]
+	|| [string match "*mhwmult*" $multi_flags] } {
+	return { "" }
+    }
+    # All mcus will compile all mhwmult options without error, but the compiler
+    # will warn, so ensure dg-warning directives are set up in the test sources.
+    set supported_opts {"" -mhwmult=none -mhwmult=16bit -mhwmult=32bit -mhwmult=f5series}
+    # Don't run -mcpu=msp430 tests if the mlarge multilib is being tested
+    if { ![string match "*mlarge*" [board_info [target_info name] \
+	multilib_flags]] } {
+	lappend supported_opts -mcpu=msp430 
+    }
+    # Default multilib supported by the MCU i.e. its ISA is msp430x
+    if { [msp430_get_multidir "-mmcu=$mcu_name" $test_file] eq "." } {
+	lappend supported_opts -mcpu=msp430x -mcpu=msp430xv2 -mlarge
+    }
+    return $supported_opts
+}
+
+# Run each test file in 'tests' with every supported msp430 specific option for
+# the mcu specified by the test.
+proc msp430_device_permutations_runtest { tests default_cflags } {
+    # The specific tests being run
+    global runtests
+    foreach { test_file } $tests {
+	if { ![runtest_file_p $runtests $test_file] } {
+	    continue
+	}
+ 	# Don't run torture style tests on every method of locating devices.csv
+ 	# The device name passed to -mmcu in the csv_using_* tests do not exist
+ 	# in the hard-coded data, so to ensure the test fails if method can't
+ 	# find the device data.
+ 	if { [file tail $test_file] eq "csv_using_installed.c" } {
+ 	    msp430_test_installed_device_data $test_file $default_cflags
+ 	    continue
+ 	# The path passed to -mdevices-csv-loc is not used to infer an
+ 	# include dir to find msp430.h, so define TESTING_HARD_DATA to prevent
+ 	# msp430.h being included.
+	# Generally we would pass -mdevices-csv-loc as the first argument,
+	# because we need it to always be passed.  But passing it as the
+	# second argument will prevent the device.csv path showing in the
+	# summary output for the testresult.  This means we won't get
+	# X->UNTESTED or UNTESTED->X results for this test if the path
+	# changes.
+ 	} elseif { [file tail $test_file] eq "csv_using_option.c" } {
+ 	    dg-runtest $test_file \
+ 		"-DTESTING_HARD_DATA $default_cflags " \
+ 		"-mdevices-csv-loc=[file dirname $test_file]/devices.csv "
+ 	    continue
+ 	} elseif { [file tail $test_file] eq "csv_using_env_var.c" } {
+ 	    setenv MSP430_GCC_INCLUDE_DIR [file dirname $test_file]
+ 	    verbose -log "MSP430_GCC_INCLUDE_DIR=[file dirname $test_file]"
+ 	    dg-runtest $test_file "" "$default_cflags"
+ 	    setenv MSP430_GCC_INCLUDE_DIR ""
+ 	    verbose -log "MSP430_GCC_INCLUDE_DIR=\"\""
+ 	    continue
+ 	}
+	foreach { mcu_flags } [msp430_get_supported_opts $test_file] {
+	    if { [string match "csv_*" [file tail $test_file]] } {
+		dg-runtest $test_file "$mcu_flags" "-I[file dirname $test_file] $default_cflags"
+	    } else {
+		# If not testing using devices.csv, then don't test if include
+		# paths are set up properly, by defining TESTING_HARD_DATA to
+		# remove the inclusion of msp430.h in devices-main.c.
+		dg-runtest $test_file "$mcu_flags" "-DTESTING_HARD_DATA $default_cflags"
+	    }
+	}
+    }
+}
+
+# Return $TOOLCHAIN_ROOT/msp430-elf/include/devices/
+proc get_installed_device_data_path { } {
+    set compiler [lindex [regexp -all -inline {\S+} \
+	[board_info [target_info name] compiler]] 0]
+    # $compiler is actually a file, but normalize will still get us the desired
+    # result.
+    return [file normalize \
+	"$compiler/../../msp430-elf/include/devices/devices.csv"]
+}
+
+# If the devices.csv is installed in
+# $TOOLCHAIN_ROOT/msp430-elf/include/devices/, rename it so it doesn't
+# interfere with the hard-coded device data tests.
+proc msp430_hide_installed_devices_data { } {
+    set devices_path [get_installed_device_data_path]
+    if { [file exists $devices_path] } {
+	file rename $devices_path "$devices_path.bak"
+    }
+}
+
+# Restore devices.csv if renamed by msp430_hide_installed_devices_data.
+proc msp430_restore_installed_devices_data { } {
+    set devices_path [get_installed_device_data_path]
+    if { [file exists "$devices_path.bak"] } {
+	file rename "$devices_path.bak" $devices_path 
+    }
+}
+
+proc msp430_test_installed_device_data { name default_cflags } {
+    global subdir
+    msp430_restore_installed_devices_data 
+    set devices_path [get_installed_device_data_path]
+    if { [file exists $devices_path] } {
+	dg-runtest $name "" "$default_cflags"
+    } else {
+	set shorter_name "$subdir/[file tail $name]"
+	verbose -log "$shorter_name not supported, $devices_path doesn't exist."
+	unsupported $shorter_name
+    }
+    msp430_hide_installed_devices_data 
+}
+
+# Load support procs.
+load_lib gcc-dg.exp
+
+# The '-pedantic-errors' option in the global variable DEFAULT_CFLAGS that is
+# set by other drivers causes an error when the __int20 type is used, so remove
+# this option from DEFAULT_CFLAGS for the msp430 tests.
+global DEFAULT_CFLAGS
+if [info exists DEFAULT_CFLAGS] then {
+    set MSP430_DEFAULT_CFLAGS \
+      [ string map { "-pedantic-errors" "" } $DEFAULT_CFLAGS ]
+} else {
+   set MSP430_DEFAULT_CFLAGS ""
+}
+
+# Initialize `dg'.
+dg-init
+
+msp430_hide_installed_devices_data
+
+# Main loop.
+dg-runtest [lsort [glob -nocomplain $srcdir/$subdir/*.\[cCS\]]] \
+	"" $MSP430_DEFAULT_CFLAGS
+
+dg-runtest [lsort [glob -nocomplain $srcdir/$subdir/metasym-location/*.\[cCS\]]] \
+	"" "-L$srcdir/$subdir/metasym-location/ $MSP430_DEFAULT_CFLAGS"
+
+msp430_set_old_board_info_ldflags
+
+msp430_device_permutations_runtest \
+    [lsort [glob -nocomplain $srcdir/$subdir/devices/*.\[cCS\]]] \
+    "$MSP430_DEFAULT_CFLAGS"
+
+# Reset any possibly changed ldflags by dg-msp-options
+msp430_reset_board_info_ldflags
+msp430_restore_installed_devices_data 
+
+# All done.
+dg-finish
