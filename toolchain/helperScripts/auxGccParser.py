@@ -1,3 +1,8 @@
+''' 
+    Author: Michele Grisafi
+    Email: michele.grisafi@unitn.it
+    License: MIT 
+'''
 ################################################
 # This script iterates over the assembly code of
 # an application and performs some operations 

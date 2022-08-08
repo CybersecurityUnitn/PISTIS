@@ -1,3 +1,8 @@
+/* 
+    Author: Michele Grisafi
+    Email: michele.grisafi@unitn.it
+    License: MIT 
+*/
 //Function that should clean the RAM
 __attribute__((section(".tcm:code"))) void secureCleaner(){
     //Backup and clean

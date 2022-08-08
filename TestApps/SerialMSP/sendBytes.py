@@ -1,4 +1,8 @@
-
+''' 
+    Author: Michele Grisafi
+    Email: michele.grisafi@unitn.it
+    License: MIT 
+'''
 import serial, sys, time
 if len(sys.argv) < 3:
     print("Wrong Syntax.\nCorrect syntax is: python {} bytes serialPort".format(sys.argv[0]))

@@ -1,3 +1,8 @@
+/* 
+    Author: Michele Grisafi
+    Email: michele.grisafi@unitn.it
+    License: MIT 
+*/
 #include <msp430.h> 
 #include <string.h>
 

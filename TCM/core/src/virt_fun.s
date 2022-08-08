@@ -1,3 +1,6 @@
+;    Author: Michele Grisafi
+;    Email: michele.grisafi@unitn.it
+;    License: MIT 
 ;This file includes all of the virtual functions
 
 ;#include "core.h"

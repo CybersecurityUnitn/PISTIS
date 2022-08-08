@@ -1,3 +1,8 @@
+''' 
+    Author: Michele Grisafi
+    Email: michele.grisafi@unitn.it
+    License: MIT 
+'''
 import sys,logging, os, subprocess, re
 
 objcopy = "msp430-elf-objcopy"

@@ -1,3 +1,8 @@
+ 
+#    Author: Michele Grisafi
+#    Email: michele.grisafi@unitn.it
+#    License: MIT 
+
 # paths to libraries and binaries for the various tools
 GCC_TOOL_ROOT := ../toolchain/compiler/msp430-gcc-9.2.0.50_linux64
 LIBRARIES_BACKUP_DIR = $(GCC_TOOL_ROOT)/../msp430-gcc-9.2.0.50_linux64_backup

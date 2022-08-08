@@ -1,4 +1,9 @@
 #!/usr/bin/env python3
+''' 
+    Author: Michele Grisafi
+    Email: michele.grisafi@unitn.it
+    License: MIT 
+'''
 import sys, os, binascii
 import hmac, hashlib
 sys.path += [ os.path.join(os.path.split(__file__)[0], 'libs') ]

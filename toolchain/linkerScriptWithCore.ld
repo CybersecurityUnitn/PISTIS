@@ -1,3 +1,8 @@
+/* 
+    Author: Michele Grisafi
+    Email: michele.grisafi@unitn.it
+    License: MIT 
+*/
 /* ============================================================================ */
 /* Copyright (c) 2019, Texas Instruments Incorporated                           */
 /*  All rights reserved.                                                        */

@@ -1,3 +1,6 @@
+;    Author: Michele Grisafi
+;    Email: michele.grisafi@unitn.it
+;    License: MIT 
 ; dstSR = 10000 synch with virt_fun.s
 ; dstPC = 10002	synch with virt_fun.s
 ; secureSwitch = 10004 synch with virt_fun.safe

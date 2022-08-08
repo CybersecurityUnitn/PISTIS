@@ -1,3 +1,8 @@
+/* 
+    Author: Michele Grisafi
+    Email: michele.grisafi@unitn.it
+    License: MIT 
+*/
 #include <stdint.h>
 #include "Hacl_HMAC.h"
 #include <msp430.h>

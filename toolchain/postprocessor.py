@@ -1,3 +1,8 @@
+''' 
+    Author: Michele Grisafi
+    Email: michele.grisafi@unitn.it
+    License: MIT 
+'''
 import sys,re,logging, os
 
 # set to false to support external gcc libraries (which use reserved registries).

@@ -1,3 +1,8 @@
+''' 
+    Author: Michele Grisafi
+    Email: michele.grisafi@unitn.it
+    License: MIT 
+'''
 import sys
 if len(sys.argv) < 4:
     print("""Wrong Syntax.\nCorrect syntax is: python {} cycles clockName divider\n

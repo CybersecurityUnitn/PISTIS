@@ -1,3 +1,8 @@
+''' 
+    Author: Michele Grisafi
+    Email: michele.grisafi@unitn.it
+    License: MIT 
+'''
 import sys,re,logging
 from string import Template
 

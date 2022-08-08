@@ -1,3 +1,6 @@
+;    Author: Michele Grisafi
+;    Email: michele.grisafi@unitn.it
+;    License: MIT 
 .text
     .section	.tcm:codeUpper,"ax",@progbits
     .balign 2

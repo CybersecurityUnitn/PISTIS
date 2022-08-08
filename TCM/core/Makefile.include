@@ -1,3 +1,7 @@
+#    Author: Michele Grisafi
+#    Email: michele.grisafi@unitn.it
+#    License: MIT 
+
 # '-c' Compile and assemble, but do not link.
 # '-mdata-region=lower' the compiler assumes data is in the lower region of memory
 ASSEMBLER_ARGS_CORE := -c -mmcu=msp430f5529 -mhwmult=f5series -I"$(INCLUDE_GCC)" -I"$(ROOT_DIR)" -I"$(COMP_INCLUDE)" \

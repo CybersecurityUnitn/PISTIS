@@ -1,3 +1,8 @@
+/* 
+    Author: Michele Grisafi
+    Email: michele.grisafi@unitn.it
+    License: MIT 
+*/
 #include "msp430.h"
 #include "raHelper.h"
 __attribute__((section(".tcm:rodata"))) const uint32_t backupAddress = 0x0001c400;

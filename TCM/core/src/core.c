@@ -1,3 +1,8 @@
+/* 
+    Author: Michele Grisafi
+    Email: michele.grisafi@unitn.it
+    License: MIT 
+*/
 // Basic MSP430 and driverLib #includes
 #include "msp430.h"
 #include "stdlib.h"

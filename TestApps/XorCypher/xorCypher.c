@@ -1,3 +1,8 @@
+/* 
+    Author: Michele Grisafi
+    Email: michele.grisafi@unitn.it
+    License: MIT 
+*/
 #include <msp430.h>
 
 const char key[] = "fioeosijiefi435jf394f93c9m3m9230cm293e48";

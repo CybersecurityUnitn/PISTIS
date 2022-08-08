@@ -1,3 +1,8 @@
+/* 
+    Author: Michele Grisafi
+    Email: michele.grisafi@unitn.it
+    License: MIT 
+*/
 /**
  * This file contains all of the hooks which should be callable from the untrusted application
  **/

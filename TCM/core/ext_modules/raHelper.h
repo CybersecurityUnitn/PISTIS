@@ -1,3 +1,8 @@
+/* 
+    Author: Michele Grisafi
+    Email: michele.grisafi@unitn.it
+    License: MIT 
+*/
 #ifndef HEADER_FILE_RA_HELPER
 #define HEADER_FILE_RA_HELPER
 #include "core.h"

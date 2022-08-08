@@ -1,4 +1,10 @@
 #!/bin/python3
+
+''' 
+    Author: Michele Grisafi
+    Email: michele.grisafi@unitn.it
+    License: MIT 
+'''
 import matplotlib.pyplot as plt
 import pandas as pd
 import os

@@ -1,5 +1,11 @@
 #!/bin/bash
 
+ 
+#    Author: Michele Grisafi
+#    Email: michele.grisafi@unitn.it
+#    License: MIT 
+
+
 INPUT=executionTimes.csv
 OLDIFS=$IFS
 IFS=','

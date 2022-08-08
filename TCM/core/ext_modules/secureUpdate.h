@@ -1,3 +1,8 @@
+/* 
+    Author: Michele Grisafi
+    Email: michele.grisafi@unitn.it
+    License: MIT 
+*/
 #ifndef HEADER_FILE_SEC_UPDATE
 #define HEADER_FILE_SEC_UPDATE
 #include "core.h"
