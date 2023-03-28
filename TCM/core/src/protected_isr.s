@@ -1,6 +1,9 @@
 ;    Author: Michele Grisafi
 ;    Email: michele.grisafi@unitn.it
 ;    License: MIT 
+;   This code represent that various Interrupt Service Routines used safely by Pistis.
+;   Each one will set up the correct address in R4 and then jump to a global handler.
+
 ; dstSR = 10000 synch with virt_fun.s
 ; dstPC = 10002	synch with virt_fun.s
 ; secureSwitch = 10004 synch with virt_fun.safe

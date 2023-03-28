@@ -15,7 +15,8 @@ void encrypt(char* str, int length);
 int main(void)
 {
     WDTCTL = WDTPW | WDTHOLD;   // stop watchdog timer
-
+    P4DIR |= BIT2; //Set up also analyser
+    P4OUT |= BIT2; //Start logical analyser
     long encodings = 10;
     char str1[] = "Hi, this is a test string. It's purpose is to test the functionig of the xor function";//String of length 245 chars + terminating char
     //char str3[] = "01234567890123456789";
@@ -35,7 +36,7 @@ int main(void)
         encrypt(str2,len2);
         i++;
     }
-
+    P4OUT &= (~BIT2); //Stop analyser
     return 0;
 }
 

@@ -18,8 +18,7 @@ public class Battery {
 	public static void main(String[] args) {
 		
 		if(args.length < 2){
-			System.out.println("Please, specify the destination file and the execution time:
-			\njava Battery.java <destinationFilePath> <executionTime(ms)>");
+			System.out.println("Please, specify the destination file and the execution time:\njava Battery.java <destinationFilePath> <executionTime(ms)>");
 		}else{
 			//Get path of destination file
 			String path = args[0];

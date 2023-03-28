@@ -3,6 +3,10 @@
     Email: michele.grisafi@unitn.it
     License: MIT 
 */
+/*
+    This file contains helper function to handle the remote attestation.
+    Specifically, it takes care of backing up and restoring the RAM content.
+*/
 #include "msp430.h"
 #include "raHelper.h"
 __attribute__((section(".tcm:rodata"))) const uint32_t backupAddress = 0x0001c400;

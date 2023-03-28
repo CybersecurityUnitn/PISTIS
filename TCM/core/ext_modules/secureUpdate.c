@@ -3,6 +3,12 @@
     Email: michele.grisafi@unitn.it
     License: MIT 
 */
+/*
+    Secure Update TA that initiate an UART connection to receive an application image.
+    The image will be received in chunks, each one acknowledged, and then deployed
+    Following PISTIS memory map. Prior to the deployment, this TA will call the verifier
+    module to attest the safety of the binary.    
+*/
 #include "msp430.h"
 #include "stdlib.h"
 #include "core.h"
@@ -14,6 +20,10 @@
 //Perform verification of the received application
 #define VERIFY 1 
 
+#define BEGUG_ANALYSER 0
+
+//The number of bytes used by the TCM after the 0xffee address. 
+#define OVERFLOWTCM 70
 
 
 //the lenght of the metadata encoding the image length
@@ -33,10 +43,9 @@ volatile uint16_t rcvBufCount;
  *  Initiate update of the application via serial communication
  */
 __attribute__((section(".tcm:code"))) void secureUpdate(){
-
     // stop watchdog timer
     WDTCTL = WDTPW | WDTHOLD; 
-
+ 
     //Disable interrupts during setup phase  
     __dint();
 
@@ -47,9 +56,7 @@ __attribute__((section(".tcm:code"))) void secureUpdate(){
     uint8_t canRead = 0;
     memset(rcvBuf,0,RCV_LIMIT);
     
-    /** TRY CONF **/
-    
-    
+
     /* SET UP THE UART INTERFACE FOR RX and TX */
     
     //P4SEL = 0x20;
@@ -66,8 +73,8 @@ __attribute__((section(".tcm:code"))) void secureUpdate(){
     /* ENABLE INTERRUPTS FOR RX*/
     UCA1IE |= UCRXIE;
 
-    /* SET UP LEDS for feedback */
-    P1DIR |= BIT0; //Set 4.0 pin in output (red LED)
+    /* SET UP LEDS for feedback. */
+    //P1DIR |= BIT0; //Set 1.0 pin in output (red LED)
     P4DIR |= BIT7; //Set 4.7 pin in output (green LED)
     P4OUT &= 0x7f; //Turn off the green LED
     P1OUT &= 0xfe; //Turn off the red LED
@@ -83,9 +90,16 @@ __attribute__((section(".tcm:code"))) void secureUpdate(){
     
     
     /* Replace app's vector table for UART with the one used by PISTIS */
-    uint16_t vector_base = 0xfe00; //Address of first IVT entry
+    uint16_t vector_base = 0xfe00; //Address of first IVT segment (we cannot use 0xff80 because we must perform at least a segment erase)
     uint16_t vector_uart = 0xffdc; //Address of the UART IVT entry
     uint16_t reset_vector = 0xfffe; //Address of the reset IVT entry
+
+    //Create an array of 70 bytes to store the TCM virtual functions after 0xfe00 (which gets deleted)
+    uint16_t tcmFunctions[OVERFLOWTCM];
+    //Copy the TCM virtual functions to the array
+    for(uint16_t i=0;i<OVERFLOWTCM/2;i++){
+        tcmFunctions[i] = *(uint16_t *)(vector_base+(i*2));
+    }
     #if DYNAMIC_BACKUP
     //Save the old content of the IVT
     volatile uint32_t oldISR[32];
@@ -95,11 +109,15 @@ __attribute__((section(".tcm:code"))) void secureUpdate(){
     //oldISR[22] = 0xFB70FB68;
     #endif
 
+    
+
     /* ERASE IVT */
     FCTL3 = FWPW; //Unlock memory controller
     FCTL1 = FWPW + ERASE; //Set erase mode 512 Bytes
     *((uint16_t *)vector_base) = 0;
     while ((FCTL3 & BUSY) == BUSY); //Wait for erasure
+
+    
 
     /* Replace IVT entries */
     FCTL3 = FWPW; //Unlock memory controller
@@ -108,6 +126,12 @@ __attribute__((section(".tcm:code"))) void secureUpdate(){
     *((uint16_t *)vector_uart)=(INTERRUPT_ISR);
     //Set the reset vector the the verification function
     *((uint16_t *)reset_vector)=0xc400;
+
+    //Copy back the TCM virtual functions
+    for(uint16_t i=0;i<OVERFLOWTCM/2;i++){
+        *((uint16_t *)(vector_base+(i*2))) = tcmFunctions[i];
+    }
+    
 
     __eint(); //enable global interrupts
 
@@ -120,7 +144,7 @@ __attribute__((section(".tcm:code"))) void secureUpdate(){
         if(!canRead && rcvBufCount==dataLengthBytes){ 
             //Store the first 2 bytes received over UART in the dataLength field
             dataLength = (uint16_t)rcvBuf[0]<<8 | (uint16_t)rcvBuf[1];
-              
+            
             //The reception can resume
             canRead =1;
             rcvBufCount=0;
@@ -190,10 +214,19 @@ __attribute__((section(".tcm:code"))) void secureUpdate(){
             *(uint16_t *)(vector_base) = 0;
             while ((FCTL3 & BUSY) == BUSY); //Wait for erasure
 
-            // Restore default secure ISRs
-            vector_base = 0xff80;
+            
+
+            //Copy back the TCM virtual functions
             FCTL3 = FWPW;
             FCTL1 = FWPW + BLKWRT;
+            for(uint16_t i=0;i<OVERFLOWTCM/2;i++){
+                *((uint16_t *)(vector_base+(i*2))) = tcmFunctions[i];
+            }
+            
+            // Restore default secure ISRs
+
+            vector_base = 0xff80;
+            
             for(int i=0;i<(128/4);i++){
                 *(uint32_t *)(vector_base+(i*4)) = oldISR[i];
             }
@@ -228,13 +261,23 @@ __attribute__((section(".tcm:code"))) void launchVerification(uint16_t lastAppAd
     #if VERIFY
     //Red led is the first verification
     P1OUT |= BIT0; //Set output to 1
+    
     //Perform both code and CFI verification. This will erase the RoData of the app!
     bool codeStatus = verify(appBottomText,lastAppAddress,0);
+
+    
     bool cfiStatus = verify(appBottomText,lastAppAddress,1);
 
+    
     //IF failed verification then reject the update
     if(codeStatus == VERIFIED && cfiStatus == VERIFIED){
     #endif
+        #if BEGUG_ANALYSER
+        //Analyser on 4.0
+        P4DIR |= BIT0; //Set output to 1
+        P4OUT |= BIT0; //Set output to 1
+        #endif
+        
         /* Clear RoData section from CFI temporary data */
         FCTL3 = FWPW; //Unlock memory controller
         FCTL1 = FWPW + MERAS; //Set erase mode BANK
@@ -250,6 +293,11 @@ __attribute__((section(".tcm:code"))) void launchVerification(uint16_t lastAppAd
         launchAppCode();
     #if VERIFY
     }else{
+        #if BEGUG_ANALYSER
+        //Analyser on 4.3
+        P4DIR |= BIT3; //Set output to 1
+        P4OUT |= BIT3; //Set output to 1
+        #endif
         __asm("\n\tBR #secureUpdate");
     }
     #endif

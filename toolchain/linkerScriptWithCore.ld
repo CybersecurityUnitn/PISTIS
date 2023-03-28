@@ -1,8 +1,3 @@
-/* 
-    Author: Michele Grisafi
-    Email: michele.grisafi@unitn.it
-    License: MIT 
-*/
 /* ============================================================================ */
 /* Copyright (c) 2019, Texas Instruments Incorporated                           */
 /*  All rights reserved.                                                        */
@@ -431,9 +426,6 @@ SECTIONS
     /****** lower text ******/
     KEEP (./core/obj/*(.lowtext))
     KEEP (./core/obj/*(.lower.text.* .lower.text))
-
-    /* Exit */
-    KEEP (*(.text.*exit*))
 
     /* Store the libraries functions in the TCM code so that they don't get replaced during the secureUpdate. */
     /* We might want to keep them in the untrusted section although we must store the memset, memcpy and other */

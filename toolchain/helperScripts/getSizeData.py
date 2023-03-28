@@ -1,8 +1,6 @@
-''' 
-    Author: Michele Grisafi
-    Email: michele.grisafi@unitn.it
-    License: MIT 
-'''
+#    Author: Michele Grisafi
+#    Email: michele.grisafi@unitn.it
+#    License: MIT 
 import os, subprocess, sys,os, csv , ntpath
  
 
@@ -51,11 +49,14 @@ def compileDir(directoryToScan):
             print("Compiling " + entry.name)
             
             #Copy all of the application files
-            os.system('cp ' + entry.path+"/* " + "src/")
+            os.system('cp ' + entry.path+"/*.c " + "src/")
 
             #Make the application
             result = subprocess.run(['make'], stdout=subprocess.PIPE,stderr=subprocess.PIPE).stdout.decode('utf-8')
-            
+            result = subprocess.run(['make','libraries'], stdout=subprocess.PIPE,stderr=subprocess.PIPE).stdout.decode('utf-8')
+            result = subprocess.run(['make','clean'], stdout=subprocess.PIPE,stderr=subprocess.PIPE).stdout.decode('utf-8')
+            result = subprocess.run(['make'], stdout=subprocess.PIPE,stderr=subprocess.PIPE).stdout.decode('utf-8')
+   
             #The compilation was successfull
             if(result.find("File is") != -1):
 
@@ -84,10 +85,9 @@ def compileDir(directoryToScan):
                 #Clean the directory and remove the instrumented helper files
                 #Compile the application without the instrumentation
                 result = subprocess.run(['make','clean'], stdout=subprocess.PIPE,stderr=subprocess.PIPE).stdout.decode('utf-8')
-                result = subprocess.run(['mv','src/injectData.c','src/injectData.c.old'], stdout=subprocess.PIPE,stderr=subprocess.PIPE).stdout.decode('utf-8')
-                result = subprocess.run(['mv','src/helper.s','src/helper.s.old'], stdout=subprocess.PIPE,stderr=subprocess.PIPE).stdout.decode('utf-8')
+                result = subprocess.run(['rm','src/*.asm'], stdout=subprocess.PIPE,stderr=subprocess.PIPE).stdout.decode('utf-8')
 
-                result = subprocess.run(['make','USE_NEW_LIB=0','VERIFY=0'], stdout=subprocess.PIPE,stderr=subprocess.PIPE).stdout.decode('utf-8')
+                result = subprocess.run(['make','original'], stdout=subprocess.PIPE,stderr=subprocess.PIPE).stdout.decode('utf-8')
 
                 #Application compiled
                 if(result.find("File is") != -1):

@@ -1,11 +1,10 @@
-''' 
-    Author: Michele Grisafi
-    Email: michele.grisafi@unitn.it
-    License: MIT 
-'''
+#    Author: Michele Grisafi
+#    Email: michele.grisafi@unitn.it
+#    License: MIT 
 import sys,logging, os, subprocess, re
 
 objcopy = "msp430-elf-objcopy"
+readelf = "msp430-elf-readelf"
 debugFiles = False # set to True if we want to inspect the content of the various temporary files.
 if len(sys.argv) < 3:
     print("The number of arguments is inappropriate.\nCorrect syntax is: {} inputFile.out outputFile.out [bssSize]".format(sys.argv[0]))
@@ -24,7 +23,7 @@ outputFile = open(outputFile,"ab")
 
 
 # EXTRACT INFO FROM READELF UTILITY
-result = subprocess.run(['readelf','-S','-W',inputFile],stdout=subprocess.PIPE)
+result = subprocess.run([readelf,'-S','-W',inputFile],stdout=subprocess.PIPE)
 
 #Set default sizes
 codeSize = 0

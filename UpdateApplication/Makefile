@@ -147,6 +147,11 @@ ASSEMBLER_ARGS_APP := -c -mmcu=msp430f5529 -mhwmult=f5series -I"$(INCLUDE_GCC)" 
 # All Target
 all: verification
 
+#Original application without any modification
+original:
+	$(COMPILER) -mhwmult=f5series -mmcu=msp430f5529 -O$(OPTIMISATION) -w -mlarge -T"$(LD_SRCS)" -Wl,-Map,"$(OUTPUT_MAP)" -I"$(INCLUDE_GCC)" -Wl,--no-relax -Wl,--disable-sec-transformation -Wl,--allow-multiple-definition $(APPSRC_FILES) $(LIBS) -o"$(OUTPUT_FILE_NO_METADATA)"
+	$(MAKE) addMeta 
+
 #$(eval FILE_LENGTH := $(shell stat -c "%s" $(OUTPUT_FILE_NO_METADATA)))
 #Add metadata to output file
 addMeta: $(OUTPUT_FILE_NO_METADATA)
@@ -249,9 +254,19 @@ $(APPASM_DIR)/%.s : $(APPSRC_DIR)/%.c
 	@echo ' '
 
 
+LIBRARY_COUNT=1
+HELPER=0
 # Instrment libraries
 libraries:
-	@python3 ../toolchain/helperScripts/auxGccParser.py
+	@python3 ../toolchain/helperScripts/auxGccParser.py src/helper${LIBRARY_COUNT}.s $(LIBRARY_COUNT)
+	
+	@[ -s src/helper${LIBRARY_COUNT}.s ] && echo -e "${ORANGE} just created helper${LIBRARY_COUNT}.s${DEFAULT}" || echo -e "${ORANGE} just created EMPTY helper${LIBRARY_COUNT}.s${DEFAULT}"
+	@[ -s src/helper${LIBRARY_COUNT}.s ] && $(MAKE) clean || echo skipping make clean
+	@[ -s src/helper${LIBRARY_COUNT}.s ] && $(MAKE) || echo skipping make
+	@echo -e "${ORANGE} just finished invoking main to create helper${LIBRARY_COUNT}.s ${DEFAULT}"
+	@[ -s src/helper${LIBRARY_COUNT}.s ] && $(MAKE) libraries LIBRARY_COUNT=${LIBRARY_COUNT}1 || echo skipping make libraries
+	@[ ! -s src/helper${LIBRARY_COUNT}.s ] && rm src/helper${LIBRARY_COUNT}.s || echo ""
+	@[ ! -f src/helper${LIBRARY_COUNT}.s ] && echo -e "${GREEN} Finished instrumenting libraries. ${DEFAULT}" || echo ""
 	
 
 

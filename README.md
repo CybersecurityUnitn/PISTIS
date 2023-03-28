@@ -104,64 +104,45 @@ Following, there is a list of instructions and broad guidelines on how to compil
 ## Pre requisites
 - **linux**: build-essential python3 pip3
 - **pip3**: pyserial [matplotlib] [pandas]
-- MSP430F5529 board with USB cable
+- MSP430F5529 board with USB cable (we use a MSP-EXP430F5529LP)
 - Code Composer Studio with msp430 libraries [official link](https://www.ti.com/tool/CCSTUDIO)
 - (optional) MSP430 debugger (e.g. MSP430F5529Launchpad version) [board link](https://www.ti.com/tool/MSP-EXP430F5529LP)
 - (optional) IAR workbench msp430 Kickstart edition [official link](https://www.iar.com/products/architectures/iar-embedded-workbench-for-msp430/#containerblock_3096)
 - (optional) Java for the execution of powerConsumption measurement scripts.
 
 
-## (optional) Loading the custom BSL
-Some functionalities of PISTIS are only available if we modify the BSL section of the FLASH. Specifically, we want to reduce some of its codebase in order to make room for the sensitive data. Moreover, we want to modify its interface (z-area) to allow the TCM to interact with it without restrictions. 
-To modify the bootloader we need to use IAR workbench msp430. Specifically, we can open the `BSL/IAR_BSL_Source/IAR_v5_MSP430F552x_USB/` project and replace some of the project files with the ones found in `BSL/modifiedFiles/`. After compiling and uploading the BSL, the MSP430 board will be equipped with the PISTIS Safe Storage segment.
-
-### (optional) Loading the key
-Before loading the TCM, we need to load a cryptographic key on the device so that it can be used by the various Trusted Applications (TAs). Note that this step is optional: a cryptographic key is only needed by some specific TAs, e.g. Remote Attestation. Still, the TCM offers some security guarantees which are independent of the PISTIS Safe Storage.
-In order to load the key, we can use the `BSL/loadKey.c` application by flashing it on the device, e.g. via CCS Studio. This application will take care of unlocking the BSL and storing a pre-defined key (which can be modified in the c file) on it, locking it afterwards.
-
-## Loading PISTIS TCM (with the first untrusted application)
-In order to secure the microcontroller, the TCM (i.e. the root of trust for our architecture) needs to be loaded before any other program. The folder `TCM/` contains all of the required files for the compilation of PISTIS TCM, also allowing an untrusted application to be loaded with it. The following steps must be performed:
+## Loading PISTIS TCM (with the default untrusted application)
+In order to secure the microcontroller, the TCM (i.e. the root of trust for our architecture) needs to be loaded before any other program. The folder `TCM/` contains all of the required files for the compilation of PISTIS TCM. Although it is possible to also load an untrusted application right away, to be loaded with the TCM, currently the toolchain does not fully support it. The first initialisation should be perfomed with the default application. 
+The following steps must be performed:
 - (optional) Copy all of the required untrusted application's source files inside the `TCM/app/src/` folder. The default application only calls the *receiveUpdate()* function from the TCMHooks to initiate a secure update. If such function is not required, or the secureupdate module is not loaded, it should be changed. If no application is loaded, the default one will be. This will initiate a secure update and thus wait for any deployable on the UART communication.
 - (optional) Modify the `TCM/Makefile` file to update the binaries paths. By default the toolchain will use the self-contained compiler in this repository.
-- Generate the deployable image using the `make` command from inside the `TCM/` folder.
-- Load the `TCM/deployable.out` image on the device, e.g. using Code Composer Studio 'load' function.
-- Reset the board to start the verification. The application will eventually start (if not rejected). See section "LED Signals" for debugging.
+- Generate the secure deployable image of the TCM using the `make` command from inside the `TCM/` folder. This will generate a `deployable.out` binary (if curious, you can check it with *readelf* to see how it is structured).
+- Load the `TCM/deployable.out` image on the device, e.g. using Code Composer Studio 'load' function. If everything was loaded correctly, you should see the following:
+    1. The red LED blinks 10 times
+    2. The red LED turns on for verification (a few seconds)
+    3. The green LED turns on --> ready for incoming updates
+- You can also reset the board to start the verification from the beginning.
+If you see any other combination of LED check section "LED Signals" for debugging.
 
 ## Applications updates / Remote deployments
 ### Compiling the update/application 
 In order to securely deploy an application via PISTIS, a properly crafted update must be compiled. To automate this process, PISTIS offers the folder `UpdateApplication/` which contains the Makefile that must be used. Precisely, the following steps are required to compile the untrusted update:
-- Copy all of the source files of the application ('*.c' and '*.s') to the `UpdateApplication/src/` folder. If the folder does not exist it should be created. These files will be compiled.
-- (Optional): create the helper files, required by applications that make use of standard static libraries. (see Section "Instrumenting libraries").
-- Execute the `make` command, optionally using the option `VERIFY=0 USE_NEW_LIB=0` to prevent the image from being instrumented. This will generate the executable `deployable.out`.
-
-
-### Instrumenting libraries
-Applications using common libc functions, such as *memset*, *memcpy* and similar, need a few extra steps in order to correctly work. Since our untrusted toolchain (i.e. the prepocessor and modifier scripts) only works with source files, it cannot be used to instrument the statically linked binaries. Such binary code derives from statically linked libraries, e.g. the libc library, for instance whenever functions such as *malloc* are required. The binary code is therefore appended to the rest of the instrumented application binary whenever compiling with the GCC linker. Although future work is the complete instrumentation of such libraries, for now the instrumentation is semi-automatic. Specifically, we need to extract the statically linked binary code, convert it to assembly and feed it to our toolchain to be instrumented. 
-
-To make things easier, our modified linker script places the explicit application binary code (i.e. derived from the files in `UpdateApplication/src/`) under the **.appText** code section. Sectios allow the code to be organised in the binary, also enabling the linked to correctly place them in the correct memory section. Although our custom appText section is placed alongside the rest of the application code, by default in the **.text** section, this division allows us to easily spot the statically linked code. More precisely, we can fetch it by extracting only the **.text** and the **.lower.text** sections from the assembly dump of the binary file. These sections will indeed only contain the code not derived from our source files, i.e. the statically linked binary code. 
-
-To facilitate this process, we propose a python script that automatically fetches the library code, creating an `UpdateApplication/src/helper.s` file. From the `UpdateApplication/` folder, execute `python3 ../toolchain/helperScripts/auxGccParser.py` or simply execute `make libraries`. The auxiliary script **auxGccParser** extracts the library code from the deployable and performs some optimisations. This will create the new file `UpdateApplication/src/helper.s` containing the **uninstrumented** code. 
-
-On top of creating a new assembly file, the **auxGccParser** script will output to console some possible optimisations, e.g. "Possible optimisation with calla r7 found". These are dynamic calls found in the binary code that could be replaced with some static calls, thus improving the performance of the code. With the current toolchain, such optimisations are mere suggestions that require manual verification and inspection. Beware that  some of them could not be valid! To figure out which are indeed valid and apply them, a manual inspection is required. Specifically, the following steps should/could be performed. Examining the newly created file `UpdateApplication/src/helper.s`, for each optimisation mentioned by the output of the above script, do the following:
-- Find the dynamic call in question, e.g. `calla r7`, by searching the file.
-- Look for the instruction that assign a value to the concerning register (e.g. `mova	#_sbrk_r,	r7`, which loads the address of `_sbrk_r` into `r7`). **NB:** this instruction must be looked for among the assembly instructions **preceding** the dynamic call.
-- Replace the dynamic call (e.g. `calla r7`) with a call to the label used in the definition (e.g. `calla #_sbrk_r`).
-- Remove the assignation (e.g. `mova	#_sbrk_r,	r7`) since no longer needed.
-
-Note that it might not be trivial deciding whether the optimisation is valid or not: some might seem valid but might instead break the application. As a rule of thumb, the optimisation is valid as long as there is no other register assignation (e.g. for `r7`) between the dynamic call and the spotted assignation. This means that the call will indeed be only to that static address (e.g. `_sbrk_r`). 
-**NB**: be aware of the jumps that might make the analysis of the code non-linear.
-
-- `make clean && make`: recompile the application with the newly created files. This will instrument the new code and create a PISTIS-compliant binary.
+- Copy all of the source files of the application ('*.c' and '*.s') to the `UpdateApplication/src/` folder. If the folder does not exist it should be created. These are the files that will be compiled.
+- Execute the `make` command. This will generate the first executable `deployable.out`. 
+- Execute the `make libraries` command to generate some helper files for the instrumentation of the standard library code (check section "Library instrumentation" for more details).
+- Execute the `make clean && make` command to generate the final executable `deployable.out` containing the instrumented code for both the application and the standard libraries used by it. NB: this executable is not an ELF file because it contains extra metadata added for PISTIS. To check the original ELF file you can inspect `appWithoutMetadata.out`.
+- Proceed with the deployment
 
 
 
 ### Deploying untrusted update
-An application update can only be performed if the MCU is in the receiving update state (see Section **LED signals**). In order to enter this state, the running program must call the `callReceiveUpdate()` function from the `TCMhook.h` header file. When the MCU is ready to receive the update, the following steps are required:
-- Execute the `loadProgram.sh` giving the application name (e.g. `deployable.out`) and the serial port name (e.g. `/dev/ttsyAC2` on Linux or `COM4` on Windows) and  as parameters. NB: The serial port might change across executions.
-The TCM will then verify the image and execute it if safe.
+An application update can only be performed if the MCU is in the receiving update state (see Section **LED signals**). In order to enter this state, the running program must call the `callReceiveUpdate()` function from the `TCMhook.h` header file (as is the case when loading the TCM with the default application). When the MCU is ready to receive the update execute the `/toolchain/loadProgram.py` python script, passing as arguments the final application binary (e.g. `deployable.out`) and the serial port name (e.g. `/dev/ttsyAC2` on Linux or `COM4` on Windows). NB: The serial port might change across executions or systems, please check the serial ports available on your system (especially those that become available as soon as the MCU board is plugged through the USB port).
+
+If the serial port is correct, the script will start uploading the various chunks of the application, waiting for some acknowledgments. As soon as the upload is finished, the script will output a *File sent* to the terminal and the TCM will begin its deployment operations.
+As soon as the TCM receives the image it will verify it. If the image is verified with success and the binary does not contain unsafe code (as should be the case if properly compiled using PISTIS toolchain), then it should be lunched by the TCM. Otherwise, the TCM will restart the update process and wait for another valid image. 
 
 
-Be aware that the code presented is compatible with the MSP430 family of microcontroller. However, the code, along with some of the toolchain components, needs to be updated to work with anything different than an MSP430f5529.
+Be aware that the code in this repository is compatible with the MSP430 family of microcontroller. However, the code, along with some of the toolchain components, needs to be updated to work with anything different than an MSP430f5529 MCU.
 
 
 ## LED signals
@@ -173,8 +154,23 @@ The following table shows the current PISTIS' usage of the various LEDs.
 |   ON      | ON      | *reserved*       |
 |   OFF     | OFF     | Application started       |
 |   OFF     | ON      | Verification of code in progress       |
+|   OFF     | blink*10      | MCU has been reset, starting secure boot       |
 
 
+
+## (optional) Loading the custom BSL
+Some functionalities of PISTIS are only available if we modify the BSL section of the FLASH. Specifically, we want to reduce some of its codebase in order to make room for the sensitive data. Moreover, we want to modify its interface (z-area) to allow the TCM to interact with it without restrictions. 
+To modify the bootloader we need to use IAR workbench msp430, which is a closed-source IDE. Fortunately, we can use its free kickstart edition to modify part of the BSL to support our TCM safe Storage segment. 
+The following steps must be be permed:
+- Make a copy of the project `BSL/IAR_BSL_Source/IAR_v5_MSP430F552x_USB/` folder.
+- Open the local copy with IAR workbench.
+- Copy the files in the `BSL/modifiedFiles/` folder to the local copy of the project (these should be placed in the various subdirectories). 
+- Compile the project and upload it to the MCU. 
+After compiling and uploading the BSL, the MSP430 board will be equipped with the PISTIS Safe Storage segment.
+
+### (optional) Loading the key
+Before loading the TCM, we need to load a cryptographic key on the device so that it can be used by the various Trusted Applications (TAs). Note that this step is optional: a cryptographic key is only needed by some specific TAs, e.g. Remote Attestation. Still, the TCM offers some security guarantees which are independent of the PISTIS Safe Storage.
+In order to load the key, we can use the `BSL/loadKey.c` application by flashing it on the device, e.g. via CCS Studio. This application will take care of unlocking the BSL and storing a pre-defined key (which can be modified in the source file) on it, locking the BSL afterwards.
 
 
 # Technical details
@@ -198,3 +194,20 @@ The following table shows the current PISTIS' usage of the various LEDs.
 |0x14400-1c3ff|App RoData| Read Only data for the application|
 |0x1c400-243ff|Reserved|Used for incoming data|
 
+
+## Library instrumentation
+Applications using common libc functions, such as *memset*, *memcpy* and similar, need a few extra steps in order to correctly work. Since our untrusted toolchain (i.e. the prepocessor and modifier scripts) only works with source files, it cannot be used to instrument the statically linked binaries. Such binary code derives from statically linked libraries, e.g. the libc library, for instance whenever functions such as *malloc* are required. The binary code is therefore appended to the rest of the instrumented application binary whenever compiling with the GCC linker. The instrumentation of the binary code is automatically performed by our toolchain (althogh it might not be optimal).
+
+In order to fully optimise the library code used by an application, the following steps should be performed, some of which are manual.
+First, our modified linker script assigns the explicit application binary code (i.e. only the binary code derived from the files in `UpdateApplication/src/`, without the libc libraries) to the **.appText** code section. Code sections allow the code to be organised in the binary, allowing the linker to place them in the different parts of the memory. Although our custom .appText section is placed alongside the rest of the application code, which by default would be assigned to the **.text** section, this separation allows us to easily spot the statically linked code. More precisely, while **.appText** will contain our source code, **.text** and **.lower.text** will only contain the code of the libraries. We can therefore fetch it by extracting only the **.text** and the **.lower.text** sections from the assembly dump of the binary file. These sections will indeed only contain the code not derived from our source files, i.e. the statically linked binary code. 
+
+To facilitate this process, we propose an auxiliary script **auxGccParser** that extracts the library code from the deployable and performs some optimisations. This will create the new file `UpdateApplication/src/helper.s` containing the **uninstrumented** code. 
+
+On top of creating a new assembly file, the **auxGccParser** script will output to console some possible optimisations, e.g. "Possible optimisation with calla r7 found". These are dynamic calls found in the binary code that could be replaced with some static calls, thus improving the performance of the code. With the current toolchain, such optimisations are mere suggestions that require manual verification and inspection. Beware that  some of them could not be valid! To figure out which are indeed valid and apply them, a manual inspection is required. Specifically, the following steps should/could be performed. Examining the newly created file `UpdateApplication/src/helper.s`, for each optimisation mentioned by the output of the above script, do the following:
+- Find the dynamic call in question, e.g. `calla r7`, by searching the file.
+- Look for the instruction that assign a value to the concerning register (e.g. `mova	#_sbrk_r,	r7`, which loads the address of `_sbrk_r` into `r7`). **NB:** this instruction must be looked for among the assembly instructions **preceding** the dynamic call.
+- Replace the dynamic call (e.g. `calla r7`) with a call to the label used in the definition (e.g. `calla #_sbrk_r`).
+- Remove the assignation (e.g. `mova	#_sbrk_r,	r7`) since no longer needed.
+
+Note that it might not be trivial deciding whether the optimisation is valid or not: some might seem valid but might instead break the application. As a rule of thumb, the optimisation is valid as long as there is no other register assignation (e.g. for `r7`) between the dynamic call and the spotted assignation. This means that the call will indeed be only to that static address (e.g. `_sbrk_r`). 
+**NB**: be aware of the jumps that might make the analysis of the code non-linear.

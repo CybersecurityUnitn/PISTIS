@@ -1,7 +1,8 @@
 ;    Author: Michele Grisafi
 ;    Email: michele.grisafi@unitn.it
 ;    License: MIT 
-;This file includes all of the virtual functions
+
+;   This file includes all of the virtual functions used by the TCM.
 
 ;#include "core.h"
 ; TODO: the current safe bra and calla use CMPX.A which is ineffective. Use something different.

@@ -1,8 +1,6 @@
-''' 
-    Author: Michele Grisafi
-    Email: michele.grisafi@unitn.it
-    License: MIT 
-'''
+#    Author: Michele Grisafi
+#    Email: michele.grisafi@unitn.it
+#    License: MIT 
 import sys,re,logging
 from string import Template
 
@@ -168,7 +166,7 @@ write_addx  = "write_addx_fun"
 write_addc  = "write_addc_fun"
 write_addcx = "write_addcx_fun"
 write_dadd  = "write_dadd_fun"
-write_daddx= "write_daddx_fun"
+write_daddx = "write_daddx_fun"
 write_sub   = "write_sub_fun"
 write_subx  = "write_subx_fun"
 write_subc  = "write_subc_fun"
@@ -255,7 +253,7 @@ def execReplace(match,labelToCall,mode=0,offset=0):
     newInstructions = Template(
         "\n\n; Old Instruction: $old\n"
         "\tMOV SR, $srPointer\n"
-        "\tDINT\nNOP\n"
+        "\tDINT\n\tNOP\n"
         "$mov"
         "\t$jump #$safeBr\n"
         ";End safe sequence\n\n"
@@ -354,7 +352,7 @@ def writeReplaceTwoOp(extended,match,labelToCall,offset=1):
         newEntry = Template(
         "\n\n; Old Instruction: $old\n"
         "\tMOV SR, $srPointer\n"
-        "\tDINT\nNOP\n"
+        "\tDINT\n\tNOP\n"
         "\t$mov $src, $srcPointer\n"
         "\t$mov $dstRegister, $dstPointer\n" 
         "\tADDA #$offset, $dstPointer\n"
@@ -367,7 +365,7 @@ def writeReplaceTwoOp(extended,match,labelToCall,offset=1):
         newEntry = Template(
         "\n\n; Old Instruction: $old\n"
         "\tMOV SR, $srPointer\n"
-        "\tDINT\nNOP\n"
+        "\tDINT\n\tNOP\n"
         "\t$mov $src, $srcPointer\n"
         "\t$mov PC, $dstPointer\n" 
         "\tADDA #$offset, $dstPointer\n"
@@ -382,7 +380,7 @@ def writeReplaceTwoOp(extended,match,labelToCall,offset=1):
         newEntry = Template(
         "\n\n; Old Instruction: $old\n"
         "\tMOV SR, $srPointer\n"
-        "\tDINT\nNOP\n"
+        "\tDINT\n\tNOP\n"
         "\t$mov $src, $srcPointer\n"
         "\t$mov $dstRegister, $dstPointer\n" 
         "\tCALL #$safeCall\n"
@@ -397,7 +395,7 @@ def writeReplaceTwoOp(extended,match,labelToCall,offset=1):
         newEntry = Template(
             "\n\n; Old Instruction: $old\n"
             "\tMOV SR, $srPointer\n"
-            "\tDINT\nNOP\n"
+            "\tDINT\n\tNOP\n"
             "\t$mov $src, $srcPointer\n"
             "\t$mov #$dst, $dstPointer\n" #dst without &
             "\tCALL #$safeCall\n"
@@ -421,7 +419,7 @@ def writeReplacePop(extended,match,labelToCall,offset=1):
     newEntry = Template(
         "\n; Old Instruction: $old\n"
         "\tMOV SR, $srPointer\n"
-        "\tDINT\nNOP\n"
+        "\tDINT\n\tNOP\n"
         "\t$mov @SP+, $srcPointer\n"
         "\t$mov $dst, $dstPointer\n"
         "\tCALL #$safeCall\n"
@@ -445,7 +443,7 @@ def writeReplacePush(extended,match,labelToCall,offset=1):
     newEntry = Template(
         "\n\n; Old Instruction: $old\n"
         "\tMOV SR, $srPointer\n"
-        "\tDINT\nNOP\n"
+        "\tDINT\n\tNOP\n"
         "\tDECD SP\n"
         "\t$mov $src, $srcPointer\n"
         "\t$mov SP, $dstPointer\n"

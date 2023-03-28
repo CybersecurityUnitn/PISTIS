@@ -1,6 +1,7 @@
 ;    Author: Michele Grisafi
 ;    Email: michele.grisafi@unitn.it
 ;    License: MIT 
+; This file contains the helper functions for RA that backup and restore the system registers.
 .text
     .section	.tcm:codeUpper,"ax",@progbits
     .balign 2

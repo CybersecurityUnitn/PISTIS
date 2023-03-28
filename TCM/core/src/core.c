@@ -3,14 +3,17 @@
     Email: michele.grisafi@unitn.it
     License: MIT 
 */
+/*
+    Core TCM, containing the verification task that makes sure an image is compliant
+    with the AC policy.
+*/
 // Basic MSP430 and driverLib #includes
 #include "msp430.h"
 #include "stdlib.h"
 #include "core.h"
-#include "secureUpdate.h"
 
 #define REJECT 1 /* IF SET to 1 THEN WE REJECT THE APPLICATION WHEN AN INSTRUCTION FAILS VERIFICATION*/
-#define DEBUG 0 /* IF SET TO 1 WE TAKE NOTE OF WHAT WORD CAUSED THE VERIFICATION TO FAIL*/
+#define DEBUG 1 /* IF SET TO 1 WE TAKE NOTE OF WHAT WORD CAUSED THE VERIFICATION TO FAIL*/
 
 /** These constants need to be synchronised with the linker script and the various toolchain scripts **/
 __attribute__((section(".tcm:rodata"))) const uint16_t appTopRam            = 0x43FF;
@@ -96,7 +99,15 @@ __attribute__((section(".tcm:codeStart"))) void secureBoot(){
     //Disable interrupts during verification.
     __dint();
 
-    P1DIR |= BIT0; // Set 4.0 pin in output (red LED)
+    P1DIR |= BIT0; // Set 1.0 pin in output (red LED)
+
+    //Turn on red led 10 times to indicate that the device is booting
+    for(int i = 0; i < 10; i++){
+        P1OUT ^= BIT0; // Toggle red LED
+        for(int j = 0; j < 10000; j++){ // Delay{
+            __asm("nop");
+        }
+    }
     P1OUT |= BIT0; // Set output to 1 (red LED)
 
     // check whether code has been instrumented correctly
@@ -109,8 +120,10 @@ __attribute__((section(".tcm:codeStart"))) void secureBoot(){
 
     //If both verification succeed then launch the application
     if(codeStatus == VERIFIED && cfiStatus == VERIFIED){
+        
         launchAppCode();
     }else{
+        //If verification fails then reset the device
         WDTCTL = 6; //Reset
     }
 }
@@ -132,6 +145,7 @@ __attribute__((section(".tcm:code"))) void launchAppCode(){
     __eint();
     //Restore Stack
     __asm("mov #0x43ff, r1");
+
     //Jump to beginning of application
     __asm("\n\tBR #4400h");
 }
@@ -156,7 +170,9 @@ __attribute__((section(".tcm:code"))) bool verify(uint16_t address, uint16_t las
     //Check whether it is an update (we know the code size)
     /*TODO: find alternative checks. This one has a false positive when update 
     code is as big as app memory*/
-    cfiDataHolder = lastAddress == appTopText ? appBottomROdata : elfAddress;
+    //If we know the lastAddress then we are updating --> we use the appBottomRoData since it hasn't yet been filled
+    //OTherwise we don't touch it and use the eldAddress location
+    cfiDataHolder = lastAddress == appTopText ?  elfAddress : appBottomROdata;
 
     if(!cfi){
         //Erase CFI data holder section

@@ -1,8 +1,3 @@
-/* 
-    Author: Michele Grisafi
-    Email: michele.grisafi@unitn.it
-    License: MIT 
-*/
 /* ============================================================================ */
 /* Copyright (c) 2019, Texas Instruments Incorporated                           */
 /*  All rights reserved.                                                        */
@@ -41,6 +36,8 @@
 
 OUTPUT_ARCH(msp430)
 ENTRY(_start)
+
+_start = 0x4400 ;
 
 MEMORY {
   SFR              : ORIGIN = 0x0000, LENGTH = 0x0010 /* END=0x0010, size 16 */
@@ -499,7 +496,7 @@ SECTIONS
   /DISCARD/ : { *(.note.GNU-stack) }
 
   /***************************** INJECTION RULES *************************/
-  _rodata_inj_start = 0x00014400;
+  /*_rodata_inj_start = 0x00014400;
   _data_inj_start = 0x00002c00;
 
   .rodata _rodata_inj_start :
@@ -528,7 +525,7 @@ SECTIONS
   .heap _heap_start_ (NOLOAD):
   {
       KEEP(*(.heap_hijack)) ;
-  }
+  }*/
 }
 
 

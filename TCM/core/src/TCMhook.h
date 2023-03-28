@@ -9,7 +9,7 @@
 #ifndef HEADER_FILE_TCM_HOOK
 #define HEADER_FILE_TCM_HOOK
 
-#define callReceiveUpdate() ({asm("CALL #receiveUpdate");})
+#define callReceiveUpdate() ({asm("BR #receiveUpdate");})
 
 //typedef void func(void);
 //func* callReceiveUpdate = (func*)0xFE3E; /* This needs to be synchronised with the linker scripts */
