@@ -341,7 +341,7 @@ for f in sys.argv[2:]:
         ######  BR + BRA checks #######
         
         elif(match := staticBr.search(line)):
-            if(not checkAddress(match.group(2),bottomInstructionMemory,topInstructionMemory,20)): #BR won't allow more than 16 bits
+            if(match.group(2) != "0xfe3e" and not checkAddress(match.group(2),bottomInstructionMemory,topInstructionMemory,20)): #BR won't allow more than 16 bits
                 #Either jump to forbidden area or read from bootloader
                 logging.debug("Violating memory isolation with a BR/BRA #{}: '{}'".format(cnt,match.group(0)))
                 reject = 1
@@ -350,7 +350,7 @@ for f in sys.argv[2:]:
         ######  CALL + CALLA checks #######
         
         elif(match := staticCall.search(line)):
-            if(not checkAddress(match.group(2),bottomInstructionMemory,topInstructionMemory,20)): #BR won't allow more than 16 bits
+            if( not checkAddress(match.group(2),bottomInstructionMemory,topInstructionMemory,20)): #BR won't allow more than 16 bits
                 #Either jump to forbidden area or read from bootloader
                 logging.debug("Violating memory isolation with a CALL/CALLA #{}: '{}'".format(cnt,match.group(0)))
                 reject = 1
