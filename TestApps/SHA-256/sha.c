@@ -205,10 +205,13 @@ int main(void)
     P4OUT &= 0x7f;
     P1OUT &= 0xfe;
     P4OUT |= BIT7; //Green led symbolises it started
-	//TA0CTL = TASSEL_2 + ID_3 + MC_2; // Start the timer with frequency of 32768 Hz
+	
     uint8_t hash[32];
-    calc_sha_256(hash, "GDReWGcDRLww2kr1s1EghwwJDwypvufEw8TbRZ70elWBVFzbSuYvIEeG0i1i", 60);
-	//register unsigned int stop = TA0R; // Stop timer
+    const void * begin = (void *)0x4400;
+
+	//Compute HASH of 128 bytes from 'begin' address
+    calc_sha_256(hash, begin, 128);
+	
     P1OUT |= BIT0; // Red light
-    //while(1);
+	while(1);
 }

@@ -1,0 +1,42 @@
+﻿MSP430-GCC 9.3.0.31 Release Notes
+---
+GCC
+* Improved GCC cost model for MSP430 instructions.
+  - The compiler now makes better decisions about many aspects of code
+    generation, resulting in reduced code size and improved performance.
+* Added a hardware multiply library function for muliplication of 64-bit operands
+  with a 64-bit result (__mspabi_mpyll), for devices with "f5series" or "32bit"
+  hardware multiply support.
+* Improved code generation to make better use of the hardware multiplier for
+  multiplication of 16-bit and 32-bit operands.
+* Fixed an unclear error message emitted when using the deprecated -minrt option.
+* Fixed libgcc names being emitted for some hardware multiply library functions
+  instead of the MSPABI names.
+* Fixed the "location" attribute incorrectly allowing placement at address
+  0x10000 without -mlarge.
+* Removed warning emitted when using string arguments to the "interrupt"
+  attribute.
+* Updated GCC internal documentation for the "interrupt" attribute.
+
+Binutils
+* Added linker warning for when an interrupt vector section name is not matched
+  by the linker script.
+* Fixed linker inability to perform relaxation on object files containing a
+  .gcc_except_table section, which is sometimes generated when compiling with
+  -fexceptions.
+* Added R_MSP430_SUB_ULEB128, R_MSP430_SET_ULEB128, R_MSP430X_SUB_ULEB128,
+  and R_MSP430X_SET_ULEB128 relocation types for performing a subtraction
+  operation within .uleb128 assembler directives.
+* Fixed the built-in default linker script not defining the "_start" symbol, or
+  keeping ".crt*" sections.
+
+GDB
+* Fixed incorrect simulation of unsigned widening multiplication using "32bit" or
+  "f5series" hardware multiply.
+
+Newlib (C Library)
+* No changes.
+
+Other
+* Updated README-apply-patches.sh to handle the new GCC release tag naming
+  convention.

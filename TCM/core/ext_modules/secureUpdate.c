@@ -73,11 +73,7 @@ __attribute__((section(".tcm:code"))) void secureUpdate(){
     /* ENABLE INTERRUPTS FOR RX*/
     UCA1IE |= UCRXIE;
 
-    /* SET UP LEDS for feedback. */
-    //P1DIR |= BIT0; //Set 1.0 pin in output (red LED)
-    P4DIR |= BIT7; //Set 4.7 pin in output (green LED)
-    P4OUT &= 0x7f; //Turn off the green LED
-    P1OUT &= 0xfe; //Turn off the red LED
+   
 
     
     //Erase code update storage segment
@@ -135,8 +131,22 @@ __attribute__((section(".tcm:code"))) void secureUpdate(){
 
     __eint(); //enable global interrupts
 
+    /* SET UP LEDS for feedback. */
+
+    P4DIR |= BIT7; //Set 4.7 pin in output (green LED)
+    P4OUT &= 0x7f; //Turn off the green LED
+    P1OUT &= 0xfe; //Turn off the red LED
+    
+    //Turn on green led 10 times to indicate that the device is ready to receive an update
+    for(int i = 0; i < 10; i++){
+        P4OUT ^= BIT7; // Toggle green LED
+        for(int j = 0; j < 10000; j++){ // Delay
+            __asm("nop");
+        }
+    }
     //Green led: ready for incoming packets
     P4OUT |= BIT7; //Set output to 1
+
     
     //Cycle and wait for the update
     while(1){
@@ -261,7 +271,12 @@ __attribute__((section(".tcm:code"))) void launchVerification(uint16_t lastAppAd
     #if VERIFY
     //Red led is the first verification
     P1OUT |= BIT0; //Set output to 1
-    
+    #if BEGUG_ANALYSER
+        //Analyser on 4.2
+        P4DIR |= BIT2; //Set output to 1
+        P4OUT |= BIT2; //Set output to 1
+    #endif
+
     //Perform both code and CFI verification. This will erase the RoData of the app!
     bool codeStatus = verify(appBottomText,lastAppAddress,0);
 

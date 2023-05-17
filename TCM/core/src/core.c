@@ -13,7 +13,7 @@
 #include "core.h"
 
 #define REJECT 1 /* IF SET to 1 THEN WE REJECT THE APPLICATION WHEN AN INSTRUCTION FAILS VERIFICATION*/
-#define DEBUG 1 /* IF SET TO 1 WE TAKE NOTE OF WHAT WORD CAUSED THE VERIFICATION TO FAIL*/
+#define DEBUG 0 /* IF SET TO 1 WE TAKE NOTE OF WHAT WORD CAUSED THE VERIFICATION TO FAIL*/
 
 /** These constants need to be synchronised with the linker script and the various toolchain scripts **/
 __attribute__((section(".tcm:rodata"))) const uint16_t appTopRam            = 0x43FF;
@@ -91,8 +91,6 @@ volatile uint32_t cfiDataHolder;
 __attribute__((section(".tcm:codeStart"))) void secureBoot(){
 
     WDTCTL = WDTPW | WDTHOLD;   // stop watchdog timer
-    //Restore Stack
-    __asm("mov #0x43ff, r1"); 
 
     //TODO: disable interrupts inside the BSL.
     
@@ -143,8 +141,6 @@ __attribute__((section(".tcm:code"))) void launchAppCode(){
 
     //Enable interrupts
     __eint();
-    //Restore Stack
-    __asm("mov #0x43ff, r1");
 
     //Jump to beginning of application
     __asm("\n\tBR #4400h");

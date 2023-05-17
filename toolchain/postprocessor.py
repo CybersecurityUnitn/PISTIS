@@ -253,19 +253,20 @@ for f in sys.argv[2:]:
     while line:    
         newEntry = line
 
-        #Replace the pushm, pushma, CALLA and RETA instructions
+        #Replace the pushm, pushma,  instructions
+        # TODO:CALLA and RETA are not replaced because tehy mess up the stack: we need to replace them when we are still using labels, not addresses --> use -msmall in the makefile to use them, but then we need to fix the libraries. 
         if(regPushm.search(line)):
             newEntry = re.sub(regPushm,replacePushm,line)
         elif(regPushma.search(line)):
             newEntry = re.sub(regPushma,replacePushma,line)
-        elif(match := callaInstr.search(line)):
+        """ elif(match := callaInstr.search(line)):
             if (REPLACE_ADDR_INSTR):
                 logging.debug("Found CALLA")
                 newEntry = re.sub(match.group(1),"CALL",line)
         elif(match := retaInstr.search(line)):
             if (REPLACE_ADDR_INSTR):
                 logging.debug("Found RETA")
-                newEntry = re.sub(match.group(1),"RET",line)
+                newEntry = re.sub(match.group(1),"RET",line) """
         modifiedMain.write(newEntry)
         line = input.readline()
     
@@ -276,36 +277,28 @@ for f in sys.argv[2:]:
 # Insert the NOP slides
 #####################################
 callInstruction = re.compile("CALLA?\s+\S*\s*",re.I)
-functionInstruction = re.compile("\@function\n((?!\.).*):\n")
+functionInstruction = re.compile("@function\n(\_|\w|\d)*:\n",re.I|re.M)
 
-counter = 0
 for f in sys.argv[2:]:
     inputName = f
     input = open(inputName, 'r')
     logging.debug("Parsing file {} adding NOP slides after CALL instructions".format(inputName))
     modifiedMain = open(inputName+".tmp", 'w')
 
-    line = input.readline()
-    while line:
-        counter += 1    
-        newEntry = line
-
-        #Found a CALL, insert 2 NOP to enable return
-        if(callInstruction.search(line)):
-            newEntry = line + "\t; NOP slide!\n\tNOP\n\tNOP\n\t; End NOP slide\n\t"
-            logging.debug("Found call on line {} for NOP {}".format(counter,line))
-        
-        #Found a function, insert two NOP CALLs to it
-        if(functionInstruction.search(line)):
-            newEntry = line + "\t; NOP slide!\n\tNOP\n\tNOP\n\t; End NOP slide\n\t"
-
-        modifiedMain.write(newEntry)
-        line = input.readline()
+    file_contents = input.read()
+    modified_content = re.sub(callInstruction,lambda x: x.group(0) + "\t; NOP slide!\n\tNOP\n\tNOP\n\t; End NOP slide\n\t",file_contents)
+    
+    modified_content = re.sub(functionInstruction,lambda x: x.group(0) + "\t; NOP slide!\n\tNOP\n\tNOP\n\t; End NOP slide\n\t",modified_content)
+    
+    modifiedMain.write(modified_content)
     
     input.close()
     modifiedMain.close()
     #Overwrite file
     os.rename(inputName+".tmp",inputName)
+
+
+
 
 
 # Verify the file for some forbidden operation

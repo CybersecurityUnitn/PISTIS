@@ -4,6 +4,7 @@
 GCC_TOOL_ROOT := ../toolchain/compiler/msp430-gcc-9.2.0.50_linux64
 LIBRARIES_BACKUP_DIR = $(GCC_TOOL_ROOT)/../msp430-gcc-9.2.0.50_linux64_backup
 COMPILER := $(GCC_TOOL_ROOT)/bin/msp430-elf-gcc-9.2.0
+#COMPILER := ../toolchain/compiler/msp430-gcc-9.3.0.31_linux64/bin/msp430-elf-gcc-9.3.0
 OBJ_COPY := $(GCC_TOOL_ROOT)/bin/msp430-elf-objcopy
 COMP_INCLUDE := $(GCC_TOOL_ROOT)/msp430-elf/include
 INCLUDE_GCC := $(GCC_TOOL_ROOT)/../include_gcc
