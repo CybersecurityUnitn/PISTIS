@@ -150,11 +150,11 @@ The following table shows the current PISTIS' usage of the various LEDs.
 
 | Green LED | Red LED | Description |
 | --------- | ------- | ----------- |
-|   ON      | OFF     | The TCM is waiting for an income update       |    
+|   blink*10 → ON      | OFF     | The TCM is waiting for an income update       |    
 |   ON      | ON      | *reserved*       |
 |   OFF     | OFF     | Application started       |
 |   OFF     | ON      | Verification of code in progress       |
-|   OFF     | blink*10      | MCU has been reset, starting secure boot       |
+|   OFF     | blink*10 → ON     | MCU has been reset, starting secure boot       |
 
 
 
@@ -196,13 +196,14 @@ In order to load the key, we can use the `BSL/loadKey.c` application by flashing
 
 
 ## Library instrumentation
-Applications using common libc functions, such as *memset*, *memcpy* and similar, need a few extra steps in order to correctly work. Since our untrusted toolchain (i.e. the prepocessor and modifier scripts) only works with source files, it cannot be used to instrument the statically linked binaries. Such binary code derives from statically linked libraries, e.g. the libc library, for instance whenever functions such as *malloc* are required. The binary code is therefore appended to the rest of the instrumented application binary whenever compiling with the GCC linker. The instrumentation of the binary code is automatically performed by our toolchain (althogh it might not be optimal).
+Applications using common libc functions, such as *memset*, *memcpy* and similar, need a few extra steps in order to correctly work. Since our untrusted toolchain (i.e. the prepocessor and modifier scripts) only works with source files, it cannot be used to instrument the statically linked binaries. Such binary code derives from statically linked libraries, e.g. the libc library, for instance whenever functions such as *malloc* are required. The binary code is therefore appended to the rest of the instrumented application binary whenever compiling with the GCC linker. The instrumentation of the binary code is automatically performed by our toolchain (althogh it might not be optimal in some cases).
 
 In order to fully optimise the library code used by an application, the following steps should be performed, some of which are manual.
 First, our modified linker script assigns the explicit application binary code (i.e. only the binary code derived from the files in `UpdateApplication/src/`, without the libc libraries) to the **.appText** code section. Code sections allow the code to be organised in the binary, allowing the linker to place them in the different parts of the memory. Although our custom .appText section is placed alongside the rest of the application code, which by default would be assigned to the **.text** section, this separation allows us to easily spot the statically linked code. More precisely, while **.appText** will contain our source code, **.text** and **.lower.text** will only contain the code of the libraries. We can therefore fetch it by extracting only the **.text** and the **.lower.text** sections from the assembly dump of the binary file. These sections will indeed only contain the code not derived from our source files, i.e. the statically linked binary code. 
 
 To facilitate this process, we propose an auxiliary script **auxGccParser** that extracts the library code from the deployable and performs some optimisations. This will create the new file `UpdateApplication/src/helper.s` containing the **uninstrumented** code. 
 
+### Optimisations
 On top of creating a new assembly file, the **auxGccParser** script will output to console some possible optimisations, e.g. "Possible optimisation with calla r7 found". These are dynamic calls found in the binary code that could be replaced with some static calls, thus improving the performance of the code. With the current toolchain, such optimisations are mere suggestions that require manual verification and inspection. Beware that  some of them could not be valid! To figure out which are indeed valid and apply them, a manual inspection is required. Specifically, the following steps should/could be performed. Examining the newly created file `UpdateApplication/src/helper.s`, for each optimisation mentioned by the output of the above script, do the following:
 - Find the dynamic call in question, e.g. `calla r7`, by searching the file.
 - Look for the instruction that assign a value to the concerning register (e.g. `mova	#_sbrk_r,	r7`, which loads the address of `_sbrk_r` into `r7`). **NB:** this instruction must be looked for among the assembly instructions **preceding** the dynamic call.
@@ -211,3 +212,8 @@ On top of creating a new assembly file, the **auxGccParser** script will output 
 
 Note that it might not be trivial deciding whether the optimisation is valid or not: some might seem valid but might instead break the application. As a rule of thumb, the optimisation is valid as long as there is no other register assignation (e.g. for `r7`) between the dynamic call and the spotted assignation. This means that the call will indeed be only to that static address (e.g. `_sbrk_r`). 
 **NB**: be aware of the jumps that might make the analysis of the code non-linear.
+
+
+# Debug and measurements
+In order to debug PISTIS or to run measurements, it might be useful to run PISTIS in Code Composer Studio (CCS). To facilitate this, the archive `debugCCSProject.zip` contains an exported CCS project. This can be imported in CCS and used to debug the various components of PISTIS.
+Measurements can be computed using the internal clocks as well in debug mode, or with a logical analyser for a more accurate evaluation.

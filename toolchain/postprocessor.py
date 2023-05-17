@@ -288,6 +288,7 @@ for f in sys.argv[2:]:
     file_contents = input.read()
     modified_content = re.sub(callInstruction,lambda x: x.group(0) + "\t; NOP slide!\n\tNOP\n\tNOP\n\t; End NOP slide\n\t",file_contents)
     
+    #TODO: Only insert the NOP slide if there are dynamic calls. Otherwise, it is useless because the function will always be called with a static call (that does not check for the NOP slide)
     modified_content = re.sub(functionInstruction,lambda x: x.group(0) + "\t; NOP slide!\n\tNOP\n\tNOP\n\t; End NOP slide\n\t",modified_content)
     
     modifiedMain.write(modified_content)
