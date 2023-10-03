@@ -10,6 +10,10 @@
 #define REJECTED 1
 #define VERIFIED 0
 #define MAX_BUFFER 256
+#define true 1
+#define false 0
+#define KEY_SIZE 64
+#define KEY_LOCATION 0x1400
 
 
 typedef unsigned char uint8_t;
@@ -20,17 +24,20 @@ typedef signed int int16_t;
 typedef signed char int8_t;
 typedef unsigned char bool;
 
-
+#define verify_app_inst(address, lastAddress) verify(address, lastAddress, false)
+#define verify_app_cfi(address, lastAddress) verify(address, lastAddress, true)
 
 
 //Functions
-void secureBoot();
+static void secureBoot();
 void launchAppCode();
 bool verify(uint16_t address, uint16_t lastAddress,bool cfi);
-bool cfiCheck(uint32_t destination);
-int8_t binarySearch(int16_t low, int16_t high, uint16_t key);
+static bool cfiCheck(uint32_t destination);
+static int8_t binarySearch(int16_t low, int16_t high, uint16_t key);
 bool isImmediateSafeValue(uint32_t destination);
-void flushBufferToFlash();
+static void flushBufferToFlash();
+void getSecureKey(uint8_t * key);
+void setSecureKey(uint8_t * key);
 
 /* VIRTUAL FUNCTIONS */
 //They are declared in assembly in the virt_fun.s file

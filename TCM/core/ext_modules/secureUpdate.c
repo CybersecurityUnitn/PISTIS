@@ -278,10 +278,10 @@ __attribute__((section(".tcm:code"))) void launchVerification(uint16_t lastAppAd
     #endif
 
     //Perform both code and CFI verification. This will erase the RoData of the app!
-    bool codeStatus = verify(appBottomText,lastAppAddress,0);
+    bool codeStatus = verify_app_inst(appBottomText,lastAppAddress);
 
     
-    bool cfiStatus = verify(appBottomText,lastAppAddress,1);
+    bool cfiStatus = verify_app_cfi(appBottomText,lastAppAddress);
 
     
     //IF failed verification then reject the update

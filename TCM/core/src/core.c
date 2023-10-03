@@ -88,7 +88,7 @@ volatile uint32_t cfiDataHolder;
 /**
  *  Initiate the secure boot of the device. Use codeStart section to force address to 0xC400
  */ 
-__attribute__((section(".tcm:codeStart"))) void secureBoot(){
+__attribute__((section(".tcm:codeStart"))) static void secureBoot(){
 
     WDTCTL = WDTPW | WDTHOLD;   // stop watchdog timer
 
@@ -109,10 +109,10 @@ __attribute__((section(".tcm:codeStart"))) void secureBoot(){
     P1OUT |= BIT0; // Set output to 1 (red LED)
 
     // check whether code has been instrumented correctly
-    bool codeStatus = verify(appBottomText,appTopText,0);
+    bool codeStatus = verify_app_inst(appBottomText,appTopText);
     
     // check whether control integrity is preserved
-    bool cfiStatus = verify(appBottomText,appTopText,1);
+    bool cfiStatus = verify_app_cfi(appBottomText,appTopText);
 
     //TODO: verify if addresses in User IVT corresponds to valid addresses
 
@@ -1155,6 +1155,57 @@ __attribute__((section(".tcm:code"))) void flushBufferToFlash(){
     }
     return;
 }
+#ifdef KEY_APIS
+/**
+** Function that reads the secret key from the key storage area
+** PARAMS:
+** - key: pointer to the array where the key will be stored
+*/
+__attribute__((section(".tcm:code"))) void getSecureKey(uint8_t * key){
+    /* Unlock the BSL by jumping to its entry points after the proper configuration */
+    /* The current implementation works but testing it incurs in buggy behaviour on the CCS IDE */
+    __asm("MOV #0xDEAD, R13");
+    __asm("MOV #0xBEEF, R14");
+    __asm("MOV #0x01, R12"); // 1 = unlock
+    __asm("CALLA #0x1002");
+    
+    /* Copy the key from the now-readable BSL. The key was loaded at pos 0x1400 */
+    memcpy(key,(uint8_t * ) KEY_LOCATION,KEY_SIZE); //Load the key from the BSL
+    
+    /* Lock the BSL by jumping to its entry points after the proper configuration */
+    __asm("MOV #0xDEAD, R13");
+    __asm("MOV #0xBEEF, R14");
+    __asm("MOV #0x02, R12"); // 2 = lock
+    __asm("CALLA #0x1002");
+}
 
+/**
+** Function that reads the secret key from the key storage area
+** PARAMS:
+** - key: pointer to the array where the key will be stored
+*/
+__attribute__((section(".tcm:code"))) void setSecureKey(uint8_t * key){
+    /* Unlock the BSL by jumping to its entry points after the proper configuration */
+    /* The current implementation works but testing it incurs in buggy behaviour on the CCS IDE */
+    __asm("MOV #0xDEAD, R13");
+    __asm("MOV #0xBEEF, R14");
+    __asm("MOV #0x01, R12"); // 1 = unlock
+    __asm("CALLA #0x1002");
+    
+    //Erase key area
+    FCTL3 = FWPW; //Unlock memory controller
+    FCTL1 = FWPW + MERAS; //Set erase mode BANK
+    *(uint8_t * )KEY_LOCATION = 0;
+    while ((FCTL3 & BUSY) == BUSY); //Wait for erasure
 
+    /* Copy the key from the now-readable BSL. */
+    memcpy((uint8_t * ) KEY_LOCATION,key,KEY_SIZE); //Load the key from the BSL
+    
+    /* Lock the BSL by jumping to its entry points after the proper configuration */
+    __asm("MOV #0xDEAD, R13");
+    __asm("MOV #0xBEEF, R14");
+    __asm("MOV #0x02, R12"); // 2 = lock
+    __asm("CALLA #0x1002");
+}
+#endif 
 
