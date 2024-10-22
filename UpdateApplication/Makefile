@@ -30,7 +30,7 @@ METADATA := $(TOOLCHAIN_DIR)/metadata.py
 RM := rm -rf
 
 #GCC optimisation level for user application
-OPTIMISATION := 3
+OPTIMISATION := 0
 
 #Additional flags to be used in compilation
 EXTRA_FLAGS := #-fno-peel-loops #-fpeel-loops #-fgcse-after-reload -fipa-cp-clone -floop-interchange -floop-unroll-and-jam -fpredictive-commoning -fsplit-loops -fsplit-paths -ftree-loop-distribution -ftree-loop-vectorize -ftree-partial-pre -ftree-slp-vectorize -funswitch-loops -fvect-cost-model -fvect-cost-model=dynamic -fversion-loops-for-strides -fpeel-loops 

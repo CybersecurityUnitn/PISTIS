@@ -11,6 +11,7 @@
 
 //This address must be synched with #receiveUpdate in the rest of the repository
 #define callReceiveUpdate() ({asm("BR #0xfe3e");})
+#define callAttestCode() ({asm("BR #0xFE42");})
 
 
 #endif

@@ -88,7 +88,7 @@ volatile uint32_t cfiDataHolder;
 /**
  *  Initiate the secure boot of the device. Use codeStart section to force address to 0xC400
  */ 
-__attribute__((section(".tcm:codeStart"))) static void secureBoot(){
+__attribute__((section(".tcm:codeStart"))) void secureBoot(){
 
     WDTCTL = WDTPW | WDTHOLD;   // stop watchdog timer
 

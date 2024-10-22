@@ -188,6 +188,7 @@ MEMORY {
   
   /** Auxiliary functions which can be called by the untrusted application **/
   RECEIVE_UPDATE   : ORIGIN = 0xFE3E, LENGTH = 0x0004 /* Sync it with the TCMhook*/
+  ATTEST_CODE      : ORIGIN = 0xFE42, LENGTH = 0x0004 /* Sync it with the TCMhook*/
   
 
   /** New safe IVT integrity protected **/

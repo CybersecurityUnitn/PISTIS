@@ -29,7 +29,7 @@ typedef unsigned char bool;
 
 
 //Functions
-static void secureBoot();
+void secureBoot();
 void launchAppCode();
 bool verify(uint16_t address, uint16_t lastAddress,bool cfi);
 static bool cfiCheck(uint32_t destination);
